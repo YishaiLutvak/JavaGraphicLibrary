@@ -1,37 +1,26 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
 public class Cylinder extends RadialGeometry {
-    Point3D a;
-    Point3D b;
+    Point3D CenterBottom;
+    Ray ray;
+    double height;
 
-    public Cylinder(double _radius, Point3D a, Point3D b) {
+    public Cylinder(double _radius, Point3D centerBottom, Ray ray, double height) {
         super(_radius);
-        this.a = a;
-        this.b = b;
+        CenterBottom = centerBottom;
+        this.ray = ray;
+        this.height = height;
     }
 
-    public Cylinder(RadialGeometry _rg, Point3D a, Point3D b) {
+    public Cylinder(RadialGeometry _rg, Point3D centerBottom, Ray ray, double height) {
         super(_rg);
-        this.a = a;
-        this.b = b;
-    }
-
-    public Point3D getA() {
-        return a;
-    }
-
-    public Point3D getB() {
-        return b;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString()+
-                "a=" + a +
-                ", b=" + b;
+        CenterBottom = centerBottom;
+        this.ray = ray;
+        this.height = height;
     }
 
     @Override
