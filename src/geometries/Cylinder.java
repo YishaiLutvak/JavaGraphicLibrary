@@ -1,34 +1,36 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 /**
- * Cilinder is a class that represent a cylinder in 3D
- * by radius ray that start in the base and height from the base
+ * Cilinder class represents a cylinder in 3D Cartesian coordinate system
+ * by radius, ray that start in the base, and height from the base
  * @author Michael Bergshtein and Ishay Lutvak
  */
-public class Cylinder extends RadialGeometry {
-    Ray ray;
-    double height;
+public class Cylinder extends Tube {
+    double _height;
 
     /****************Constructors***************/
-    public Cylinder(double _radius, Ray ray, double height) {
-        super(_radius);
-        this.ray = ray;
-        this.height = height;
-    }
-
-    public Cylinder(RadialGeometry _rg, Ray ray, double height) {
-        super(_rg);
-        this.ray = ray;
-        this.height = height;
+    /**
+     * constactor by two doubles and Ray values
+     * @param radius for radius of Tube
+     * @param ray for center of tube
+     * @param height for height of tube
+     */
+    public Cylinder (double radius, Ray ray, double height) {
+        super(radius, ray);
+        this._height = height;
     }
 
     /****************methods*****************/
     @Override
     public Vector getNormal(Point3D p) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "height= " + _height;
     }
 }
