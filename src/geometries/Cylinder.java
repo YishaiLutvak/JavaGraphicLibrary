@@ -26,7 +26,7 @@ public class Cylinder extends RadialGeometry {
         this.height = height;
     }
 
-    /**********methods*****************/
+    /****************methods*****************/
     @Override
     public Vector getNormal(Point3D p) {
         return null;
