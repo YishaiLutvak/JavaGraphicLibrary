@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 /**
  * Vector class represents vector in 3D Cartesian coordinate system
  * by Point3D
@@ -14,7 +12,7 @@ public class Vector {
      */
     protected Point3D _head;
 
-    /*****************constractors***************/
+    /***************constractors***************/
     /**
      * constractor with one point for the vector head
      * @param _head
@@ -27,12 +25,12 @@ public class Vector {
 
     /**
      * constractors gets three coordinates and create the head
-     * @param _x
-     * @param _y
-     * @param _z
+     * @param x for x coordinate
+     * @param y for y coordinate
+     * @param z for z coordinate
      */
-    public Vector(Coordinate _x,Coordinate _y,Coordinate _z) {
-        Point3D p =  new Point3D(_x, _y, _z);
+    public Vector(Coordinate x,Coordinate y,Coordinate z) {
+        Point3D p =  new Point3D(x, y, z);
         if (p.equals(Point3D.ZERO)) {
             throw new IllegalArgumentException();
         }
@@ -41,12 +39,12 @@ public class Vector {
 
     /**
      * constractor gets three values of coordinates of the head
-     * @param _x
-     * @param _y
-     * @param _z
+     * @param x for x coordinate
+     * @param y for y coordinate
+     * @param z for z coordinate
      */
-    public Vector(double _x,double _y,double _z)  {
-        Point3D p =  new Point3D(_x, _y, _z);
+    public Vector(double x,double y,double z)  {
+        Point3D p =  new Point3D(x, y, z);
         if (p.equals(Point3D.ZERO))
             throw new IllegalArgumentException();
         this._head = p;
@@ -160,7 +158,7 @@ public class Vector {
     }
 
     /**
-     *   Acting a normlize of the vector
+     * Acting a normlize of the vector
      * @return a new vector cop of this vector after normalization
      */
     public Vector normalized () {
@@ -176,11 +174,8 @@ public class Vector {
         return _head.equals(vector._head);
     }
 
-
     @Override
     public String toString() {
         return "head= " + _head.toString();
     }
-
-
 }

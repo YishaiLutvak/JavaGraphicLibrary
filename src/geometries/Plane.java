@@ -2,8 +2,6 @@ package geometries;
 
 import primitives.*;
 
-import java.util.Objects;
-
 /**
  * Plane class represents a plan in 3D Cartesian coordinate system
  * by point and normal

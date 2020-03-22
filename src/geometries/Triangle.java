@@ -2,8 +2,6 @@ package geometries;
 
 import primitives.Point3D;
 
-import java.util.Objects;
-
 /**
  * Triangle class represents a triangle in 3D Cartesian coordinate system
  * by three vertexes
@@ -42,7 +40,4 @@ public class Triangle extends Polygon {
                 ", _plane=" + _plane
                 ;
     }
-
-
-
 }

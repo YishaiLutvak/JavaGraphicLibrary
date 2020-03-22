@@ -3,8 +3,6 @@ package geometries;
 import primitives.Point3D;
 import primitives.Vector;
 
-import java.util.Objects;
-
 /**
  * Sphere class represents a sphere in 3D Cartesian coordinate system
  * by center and radius
@@ -42,9 +40,5 @@ public class Sphere extends RadialGeometry {
     public Vector getNormal(Point3D p) {
         return null;
     }
-
-
-
-
 
 }

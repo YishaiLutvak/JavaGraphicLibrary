@@ -43,8 +43,4 @@ public class Tube extends RadialGeometry {
         return super.toString()+
                 ", ray= " + _ray;
     }
-
-
-
-
 }

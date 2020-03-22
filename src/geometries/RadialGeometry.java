@@ -1,7 +1,5 @@
 package geometries;
 
-import java.util.Objects;
-
 /**
  * Abstract class to represent all geometry shapes
  * that have a radius like circle cylinder and tube
@@ -39,8 +37,5 @@ public abstract class RadialGeometry implements Geometry {
     public String toString() {
         return "radius= " + _radius;
     }
-
-
-
 }
 

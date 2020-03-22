@@ -1,6 +1,6 @@
 package primitives;
 
-import java.util.Objects;
+import static primitives.Util.*;
 
 /**
  * Ray class represents a ray in 3D Cartesian coordinate system
@@ -22,7 +22,7 @@ public class Ray {
     public Ray(Point3D point, Vector vector) {
         this._start = point;
         //Ensures that the ray's vector is normalized
-        if (vector.length() == 1) {
+        if (isZero(vector.length() - 1)) {
             this._direction = vector;
         }
         else {
@@ -38,13 +38,11 @@ public class Ray {
     public Vector get_direction() {
         return _direction;
     }
-    /*********************methods*****************/
+    /******************methods*****************/
     @Override
     public String toString() {
         return "start= " + _start +
                 ", direction= " + _direction;
-
-
     }
 
     @Override
@@ -55,6 +53,4 @@ public class Ray {
         return _start.equals( ray._start) &&
                 _direction.equals(ray._direction);
     }
-
-
 }
