@@ -1,29 +1,44 @@
 package primitives;
-import static primitives.Util.isZero;
 
+/**
+ * Ray class represents a ray in 3D Cartesian coordinate system
+ * by point and vector
+ * @author Michael Bergshtein and Yishai Lutvak
+ */
 public class Ray {
-    Point3D _p0;
-    Vector _dir;
+    /**
+     * Point and vector for the ray
+     */
+    protected Point3D _start;
+    protected Vector _direction;
 
-    public Ray(Point3D _p0, Vector _dir) {
-        try {
-            if(isZero
-                    (Math.sqrt(
-                            _dir._head.get_x().get()*_dir._head.get_x().get()+
-                                    _dir._head.get_y().get()*_dir._head.get_y().get() +
-                                    _dir._head.get_z().get()*_dir._head.get_z().get()
-                    )
-                    -1)
-            )
-                throw new IllegalArgumentException();
-
+    /**
+     * constractor by point and vector
+     * @param point for the ray's starting point
+     * @param vector for the direction of the ray
+     */
+    public Ray(Point3D point, Vector vector) {
+        this._start = point;
+        //Ensures that the ray's vector is normalized
+        if (vector.length() == 1) {
+            this._direction = vector;
         }
-        catch (Exception ex) {
-//צריך להוסיף פה מה לעשות
+        else {
+            this._direction = vector.normalized();
         }
-        this._p0 = _p0;
-        this._dir = _dir;
     }
 
+    public Point3D get_start() {
+        return _start;
+    }
 
+    public Vector get_direction() {
+        return _direction;
+    }
+
+    @Override
+    public String toString() {
+        return "start= " + _start +
+                ", direction= " + _direction;
+    }
 }

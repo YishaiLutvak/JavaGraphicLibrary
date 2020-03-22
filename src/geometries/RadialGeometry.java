@@ -1,25 +1,37 @@
 package geometries;
 
 /**
- * abstract class to represent all geometry shapes
+ * Abstract class to represent all geometry shapes
  * that have a radius like circle cylinder and tube
+ * by length of the radius
+ * @author Michael Bergshtein and Yishai Lutvak
  */
 public abstract class RadialGeometry implements Geometry {
+    /**
+     * radius of radial geometry
+     */
     double _radius;
 
-    /************constractors**********************/
-    public RadialGeometry(double _radius) {
-        this._radius = _radius;
+    /**************constractors*****************/
+    /**
+     * constactor by double value
+     * @param radius for the length of the radius
+     */
+    public RadialGeometry(double radius) {
+        this._radius = radius;
     }
-
-    public RadialGeometry(RadialGeometry _rg) {
-        this._radius = _rg._radius;
+    /**
+     * copy constractor
+     * @param rg for the length of the radius
+     */
+    public RadialGeometry(RadialGeometry rg) {
+        this._radius = rg._radius;
     }
 
     /************admin**************/
     @Override
     public String toString() {
-        return "radius=" + _radius;
+        return "radius= " + _radius;
     }
 }
 

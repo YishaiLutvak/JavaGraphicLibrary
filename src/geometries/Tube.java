@@ -1,40 +1,44 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 /**
- * Class that represent infinite cylinder in 3D
- * @author Michael Bergshtein and Ishay Lutvak
+ * Class that represent infinite cylinder in 3D Cartesian coordinate system
+ * by radius ang ray
+ * @author Michael Bergshtein and Yishay Lutvak
  */
 public class Tube extends RadialGeometry {
-    Ray ray;
+    /**
+     * The ray is located in the center of Tube
+     */
+    protected Ray _ray;
 
     /*********************constractors*********************/
-    public Tube(double _radius, Ray ray) {
-        super(_radius);
-        this.ray = ray;
+    /**
+     * constractor by double and Ray values
+     * @param radius for the length of the radius
+     * @param ray for the center of the tube
+     */
+    public Tube(double radius, Ray ray) {
+        super(radius);
+        this._ray = ray;
     }
 
-    public Tube(RadialGeometry _rg, Ray ray) {
-        super(_rg);
-        this.ray = ray;
-    }
-/***************getters*********************/
+    /******************getters*******************/
     public Ray getRay() {
-        return ray;
+        return _ray;
     }
 
-    /******************methods****************/
-    @Override
-    public String toString() {
-        return super.toString()+
-                ", ray=" + ray;
-    }
+    /******************methods******************/
 
     @Override
     public Vector getNormal(Point3D p) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                ", ray= " + _ray;
     }
 }

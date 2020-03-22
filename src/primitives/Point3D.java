@@ -1,37 +1,38 @@
 package primitives;
 
 /**
- * class that represent point in 3D by cartesian representive
- * @author Michael Bergshtein and Ishay Lutvak
+ * Point3D class represents point in 3D Cartesian coordinate system
+ * by three coordinates
+ * @author Michael Bergshtein and Yishay Lutvak
  */
 public class Point3D {
     /**
      * Three coordinates of x,y,z
      */
-    Coordinate _x;
-    Coordinate _y;
-    Coordinate _z;
+    protected Coordinate _x;
+    protected Coordinate _y;
+    protected Coordinate _z;
 /***************constractors***********************/
     /**
      * constractor by 3 coordinates
-     * @param _x for x coordinate
-     * @param _y for y coordinate
-     * @param _z for z coordinate
+     * @param x for x coordinate
+     * @param y for y coordinate
+     * @param z for z coordinate
      */
-    public Point3D(Coordinate _x, Coordinate _y, Coordinate _z) {
-        this._x = _x;
-        this._y = _y;
-        this._z = _z;
+    public Point3D(Coordinate x, Coordinate y, Coordinate z) {
+        this._x = x;
+        this._y = y;
+        this._z = z;
     }
 
     /**
      * constactor by coordinates values
-     * @param _x for value of coordinate x
-     * @param _y for value of coordinate y
-     * @param _z for value of coordinate z
+     * @param x for value of coordinate x
+     * @param y for value of coordinate y
+     * @param z for value of coordinate z
      */
-    public Point3D(double _x, double _y, double _z) {
-        this(new Coordinate( _x),new Coordinate( _y),new Coordinate( _z));
+    public Point3D (double x, double y, double z) {
+        this (new Coordinate( x),new Coordinate( y),new Coordinate( z));
     }
 
     /**
@@ -76,11 +77,9 @@ public class Point3D {
 
     @Override
     public String toString() {
-        return "(" +
-                _x +
+        return "(" + _x +
                 ", " + _y +
-                ", " + _z +
-                ')';
+                ", " + _z + ")";
     }
 
     /**
@@ -99,7 +98,7 @@ public class Point3D {
     /**
      *
      * @param p another point
-     * @return the square of the distansd between the points
+     * @return the square of the distance between the points
      */
 
     public double distanceSquared (Point3D p){
@@ -122,11 +121,11 @@ public class Point3D {
      * @param v a vector to add
      * @return a point we get if we add the vector to the point
      */
-    public Point3D add(Vector v){
+    public Point3D add (Vector v){
         return new Point3D(
-              _x.get() +v._head.get_x().get(),
-                _y.get() +v._head.get_y().get(),
-                _z.get() +v._head.get_z().get()
+              _x.get() + v._head.get_x().get(),
+                _y.get() + v._head.get_y().get(),
+                _z.get() + v._head.get_z().get()
         );
     }
 }
