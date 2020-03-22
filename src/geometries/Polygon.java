@@ -1,11 +1,14 @@
 package geometries;
 
 import java.util.List;
+import java.util.Objects;
+
 import primitives.*;
 import static primitives.Util.*;
 
 /**
- * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate system
+ * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
+ * system
  *
  * @author Dan
  */
@@ -24,13 +27,18 @@ public class Polygon implements Geometry {
      * path. The polygon must be convex.
      *
      * @param vertices list of vertices according to their order by edge path
-     * @throws IllegalArgumentException in any case of illegal combination of vertices:
+     * @throws IllegalArgumentException in any case of illegal combination of
+     *                                  vertices:
      *                                  <ul>
      *                                  <li>Less than 3 vertices</li>
-     *                                  <li>Consequent vertices are in the same point
-     *                                  <li>The vertices are not in the same plane</li>
-     *                                  <li>The order of vertices is not according to edge path</li>
-     *                                  <li>Three consequent vertices lay in the same line (180&#176; angle between two
+     *                                  <li>Consequent vertices are in the same
+     *                                  point
+     *                                  <li>The vertices are not in the same
+     *                                  plane</li>
+     *                                  <li>The order of vertices is not according
+     *                                  to edge path</li>
+     *                                  <li>Three consequent vertices lay in the
+     *                                  same line (180&#176; angle between two
      *                                  consequent edges)
      *                                  <li>The polygon is concave (not convex></li>
      *                                  </ul>
@@ -49,8 +57,8 @@ public class Polygon implements Geometry {
 
         // Subtracting any subsequent points will throw an IllegalArgumentException
         // because of Zero Vector if they are in the same point
-        Vector edge1 = vertices[0].subtract(vertices[vertices.length - 1]);
-        Vector edge2 = vertices[1].subtract(vertices[0]);
+        Vector edge1 = vertices[vertices.length - 1].subtract(vertices[vertices.length - 2]);
+        Vector edge2 = vertices[0].subtract(vertices[vertices.length - 1]);
 
         // Cross Product of any subsequent edges will throw an IllegalArgumentException
         // because of Zero Vector if they connect three vertices that lay in the same
@@ -62,7 +70,7 @@ public class Polygon implements Geometry {
         // the
         // polygon is convex ("kamur" in Hebrew).
         boolean positive = edge1.crossProduct(edge2).dotProduct(n) > 0;
-        for (int i = 2; i < vertices.length; ++i) {
+        for (int i = 1; i < vertices.length; ++i) {
             // Test that the point is in the same plane as calculated originally
             if (!isZero(vertices[i].subtract(vertices[0]).dotProduct(n)))
                 throw new IllegalArgumentException("All vertices of a polygon must lay in the same plane");
@@ -78,4 +86,8 @@ public class Polygon implements Geometry {
     public Vector getNormal(Point3D point) {
         return _plane.getNormal();
     }
+
+
+
+
 }

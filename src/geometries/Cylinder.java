@@ -2,13 +2,15 @@ package geometries;
 
 import primitives.*;
 
+import java.util.Objects;
+
 /**
  * Cilinder class represents a cylinder in 3D Cartesian coordinate system
  * by radius, ray that start in the base, and height from the base
  * @author Michael Bergshtein and Ishay Lutvak
  */
 public class Cylinder extends Tube {
-    double _height;
+   protected double _height;
 
     /****************Constructors***************/
     /**
@@ -20,6 +22,10 @@ public class Cylinder extends Tube {
     public Cylinder (double radius, Ray ray, double height) {
         super(radius, ray);
         this._height = height;
+    }
+    /************getters************/
+    public double get_height() {
+        return _height;
     }
 
     /****************methods*****************/
@@ -33,4 +39,9 @@ public class Cylinder extends Tube {
         return super.toString() +
                 "height= " + _height;
     }
+
+
+
+
+
 }

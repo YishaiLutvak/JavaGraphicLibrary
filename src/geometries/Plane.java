@@ -2,14 +2,16 @@ package geometries;
 
 import primitives.*;
 
+import java.util.Objects;
+
 /**
  * Plane class represents a plan in 3D Cartesian coordinate system
  * by point and normal
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public class Plane implements Geometry{
-    Point3D _point;
-    Vector _normal;
+   protected Point3D _point;
+   protected Vector _normal;
 
     /**********constractors**********/
     /**
@@ -33,6 +35,15 @@ public class Plane implements Geometry{
         _normal = null;
     }
 
+    /*************getters***********/
+    public Point3D get_point() {
+        return _point;
+    }
+
+    public Vector get_normal() {
+        return _normal;
+    }
+
     /*************methods*************/
     @Override
     public Vector getNormal(Point3D p) {
@@ -48,4 +59,8 @@ public class Plane implements Geometry{
         return "point= " + _point +
                 ", normal= " + _normal;
     }
+
+
+
+
 }

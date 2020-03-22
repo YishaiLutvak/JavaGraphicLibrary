@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.Objects;
+
 /**
  * Class that represent infinite cylinder in 3D Cartesian coordinate system
  * by radius ang ray
@@ -41,4 +43,8 @@ public class Tube extends RadialGeometry {
         return super.toString()+
                 ", ray= " + _ray;
     }
+
+
+
+
 }
