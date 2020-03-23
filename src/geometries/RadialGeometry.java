@@ -13,6 +13,7 @@ public abstract class RadialGeometry implements Geometry {
    protected double _radius;
 
     /**************constractors*****************/
+
     /**
      * constactor by double value
      * @param radius for the length of the radius
@@ -20,19 +21,23 @@ public abstract class RadialGeometry implements Geometry {
     public RadialGeometry(double radius) {
         this._radius = radius;
     }
+
     /**
-     * copy constractor
+         * copy constractor
      * @param rg for the length of the radius
      */
     public RadialGeometry(RadialGeometry rg) {
         this._radius = rg._radius;
     }
-    /************getters**********/
+
+    /************getters***********/
+
     public double get_radius() {
         return _radius;
     }
 
-    /************admin**************/
+    /************admin************/
+
     @Override
     public String toString() {
         return "radius= " + _radius;

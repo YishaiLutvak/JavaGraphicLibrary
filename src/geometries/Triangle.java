@@ -11,12 +11,12 @@ public class Triangle extends Polygon {
     /************constractor**************/
     /**
      * constractor by 3 Point3D
-     * @param vertexA for A vertex
-     * @param vertexB for B vertex
-     * @param vertexC for C vertex
+     * @param vertex_A for A vertex
+     * @param vertex_B for B vertex
+     * @param vertex_C for C vertex
      */
-    public Triangle(Point3D vertexA ,Point3D vertexB,Point3D vertexC) {
-        super(vertexA,vertexB,vertexC);
+    public Triangle(Point3D vertex_A ,Point3D vertex_B,Point3D vertex_C) {
+        super(vertex_A,vertex_B,vertex_C);
     }
 
     /**************getters*****************/
@@ -35,9 +35,9 @@ public class Triangle extends Polygon {
     /****************admin**************/
     @Override
     public String toString() {
-        return
-                "_vertices=" + _vertices +
-                ", _plane=" + _plane
-                ;
+        return "vertex A= " + super._vertices.get(0) +
+                " vertex B= " + super._vertices.get(1) +
+                " vertex C= " + super._vertices.get(2) +
+                ", plane= " + _plane;
     }
 }

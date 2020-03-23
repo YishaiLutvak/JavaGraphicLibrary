@@ -13,7 +13,7 @@ public class Tube extends RadialGeometry {
     /**
      * The ray is located in the center of Tube
      */
-    protected Ray _ray;
+    protected Ray _axisRay;
 
     /*********************constractors*********************/
     /**
@@ -23,12 +23,13 @@ public class Tube extends RadialGeometry {
      */
     public Tube(double radius, Ray ray) {
         super(radius);
-        this._ray = ray;
+        this._axisRay = ray;
     }
 
     /******************getters*******************/
+
     public Ray getRay() {
-        return _ray;
+        return _axisRay;
     }
 
     /******************methods******************/
@@ -41,6 +42,6 @@ public class Tube extends RadialGeometry {
     @Override
     public String toString() {
         return super.toString()+
-                ", ray= " + _ray;
+                ", ray= " + _axisRay;
     }
 }

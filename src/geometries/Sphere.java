@@ -26,19 +26,21 @@ public class Sphere extends RadialGeometry {
     }
 
     /**************getters***************/
+
     public Point3D getCenter() {
         return _center;
     }
 
     /**************methods****************/
-    @Override
-    public String toString() {
-        return super.toString() + ", center= " + _center;
-    }
 
     @Override
     public Vector getNormal(Point3D p) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", center= " + _center;
     }
 
 }

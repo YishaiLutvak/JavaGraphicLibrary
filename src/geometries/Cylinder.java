@@ -21,20 +21,22 @@ public class Cylinder extends Tube {
         super(radius, ray);
         this._height = height;
     }
+
     /************getters************/
+
     public double get_height() {
         return _height;
     }
 
+
     /****************methods*****************/
+
     @Override
-    public Vector getNormal(Point3D p) {
-        return null;
-    }
+    public Vector getNormal(Point3D p) { return null; }
 
     @Override
     public String toString() {
         return super.toString() +
-                "height= " + _height;
+                ", height= " + _height;
     }
 }
