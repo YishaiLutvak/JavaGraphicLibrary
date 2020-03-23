@@ -13,15 +13,6 @@ public class Vector {
     protected Point3D _head;
 
     /***************constractors***************/
-    /**
-     * constractor with one point for the vector head
-     * @param _head
-     */
-    public Vector(Point3D _head) {
-        if (_head.equals(Point3D.ZERO))
-            throw new IllegalArgumentException();
-        this._head = _head;
-    }
 
     /**
      * constractors gets three coordinates and create the head
@@ -32,7 +23,7 @@ public class Vector {
     public Vector(Coordinate x,Coordinate y,Coordinate z) {
         Point3D p =  new Point3D(x, y, z);
         if (p.equals(Point3D.ZERO)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Point 3D (0.0, 0.0, 0.0) not valid for vector head");
         }
         this._head = p;
     }
@@ -46,8 +37,18 @@ public class Vector {
     public Vector(double x,double y,double z)  {
         Point3D p =  new Point3D(x, y, z);
         if (p.equals(Point3D.ZERO))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Point 3D (0.0, 0.0, 0.0) not valid for vector head");
         this._head = p;
+    }
+
+    /**
+     * constractor with one point for the vector head
+     * @param head
+     */
+    public Vector(Point3D head) {
+        if (head.equals(Point3D.ZERO))
+            throw new IllegalArgumentException("Point 3D (0.0, 0.0, 0.0) not valid for vector head");
+        this._head = head;
     }
 
     /**
@@ -63,14 +64,15 @@ public class Vector {
     }
 
 
-    /***************methods**************************/
+    /*******************methods**********************/
     /**
      *sustruction of vectors
      * @param v another vector to substract it
      * @return a new vector arter sustraction
      */
     public Vector subtract (Vector v) {
-        return new Vector(_head.get_x().get() - v._head.get_x().get(),
+        return new Vector(
+                _head.get_x().get() - v._head.get_x().get(),
                 _head.get_y().get() - v._head.get_y().get(),
                 _head.get_z().get() - v._head.get_z().get());
     }
@@ -81,7 +83,8 @@ public class Vector {
      * @return a new vector after adding
      */
     public Vector add (Vector v) {
-        return new Vector(_head.get_x().get() + v._head.get_x().get(),
+        return new Vector(
+                _head.get_x().get() + v._head.get_x().get(),
                 _head.get_y().get() + v._head.get_y().get(),
                 _head.get_z().get() + v._head.get_z().get());
     }
@@ -92,7 +95,8 @@ public class Vector {
      * @return the vector after production
      */
     public Vector scale (double d) {
-        return new Vector(_head.get_x().get()*d,
+        return new Vector(
+                _head.get_x().get()*d,
                 _head.get_y().get()*d,
                 _head.get_z().get()*d);
     }
@@ -115,16 +119,17 @@ public class Vector {
      * @return a vector for the result of cross product
      */
     public Vector crossProduct(Vector edge2) {
-        if(_head.get_x().get()/edge2._head.get_x().get() == _head.get_y().get()/edge2._head.get_y().get() &&
-                        _head.get_x().get()/edge2._head.get_x().get() == _head.get_z().get()/edge2._head.get_z().get())
+        //Checks that both vectors are not on the same straight line
+        if (this.normalized().equals(edge2.normalized()) || this.normalized().equals(edge2.normalized().scale(-1)))
+        /*if(_head.get_x().get()/edge2._head.get_x().get() == _head.get_y().get()/edge2._head.get_y().get() &&
+                        _head.get_x().get()/edge2._head.get_x().get() == _head.get_z().get()/edge2._head.get_z().get())*/
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("two vectors on the same straight line are not valid for cross product");
         }
         return new Vector(new Point3D(
                 _head.get_y().get()*edge2._head.get_z().get() - _head.get_z().get()*edge2._head.get_y().get(),
                 _head.get_z().get()*edge2._head.get_x().get() - _head.get_x().get()*edge2._head.get_z().get(),
-                _head.get_x().get()*edge2._head.get_y().get() - _head.get_y().get()*edge2._head.get_x().get()
-        ));
+                _head.get_x().get()*edge2._head.get_y().get() - _head.get_y().get()*edge2._head.get_x().get()));
     }
 
     /**
@@ -132,9 +137,10 @@ public class Vector {
      * @return the length of the vector squared
      */
     public double lengthSquared() {
-        return ((_head.get_x().get())*(_head.get_x().get())+
+        return _head.distanceSquared(Point3D.ZERO);
+        /*return ((_head.get_x().get())*(_head.get_x().get())+
                 (_head.get_y().get())*(_head.get_y().get())+
-                (_head.get_z().get())*(_head.get_z().get()));
+                (_head.get_z().get())*(_head.get_z().get()));*/
     }
 
     /**

@@ -65,6 +65,53 @@ public class Point3D {
     }
 
     /*****************methods******************/
+
+    /**
+     *
+     * @param p another point
+     * @return a vector from p to this point
+     */
+    public Vector subtract(Point3D p) {
+        return new Vector(new Point3D(
+                this._x.get() - p._x.get(),
+                this._y.get() - p._y.get(),
+                this._z.get() - p._z.get()
+        ));
+    }
+
+    /**
+     *
+     * @param v a vector to add
+     * @return a point we get if we add the vector to the point
+     */
+    public Point3D add (Vector v){
+        return new Point3D(
+                _x.get() + v._head.get_x().get(),
+                _y.get() + v._head.get_y().get(),
+                _z.get() + v._head.get_z().get()
+        );
+    }
+
+    /**
+     *
+     * @param p another point
+     * @return the square of the distance between the points
+     */
+    public double distanceSquared (Point3D p){
+        return (_x.get() - p.get_x().get())*(_x.get() - p.get_x().get())+
+                (_y.get() - p.get_y().get())*(_y.get() - p.get_y().get())+
+                (_z.get() - p.get_z().get())*(_z.get() - p.get_z().get());
+    }
+
+    /**
+     *
+     * @param p another point
+     * @return the distance between the points
+     */
+    public double distance (Point3D p){
+        return Math.sqrt(distanceSquared(p));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,50 +129,4 @@ public class Point3D {
                 ", " + _z + ")";
     }
 
-    /**
-     *
-     * @param p another point
-     * @return a vector from p to this point
-     */
-    public Vector subtract(Point3D p) {
-        return new Vector(new Point3D(
-                this._x.get() - p._x.get(),
-                this._y.get() - p._y.get(),
-                this._z.get() - p._z.get()
-        ));
-    }
-
-    /**
-     *
-     * @param p another point
-     * @return the square of the distance between the points
-     */
-
-    public double distanceSquared (Point3D p){
-        return (_x.get() - p.get_x().get())*(_x.get() - p.get_x().get())+
-                (_y.get() - p.get_y().get())*(_y.get() - p.get_y().get())+
-                (_z.get() - p.get_z().get())*(_z.get() - p.get_z().get());
-    }
-
-    /**
-     *
-     * @param p another point
-     * @return the distance between the points
-     */
-    public double distance (Point3D p){
-        return Math.sqrt(distanceSquared(p));
-    }
-
-    /**
-     *
-     * @param v a vector to add
-     * @return a point we get if we add the vector to the point
-     */
-    public Point3D add (Vector v){
-        return new Point3D(
-              _x.get() + v._head.get_x().get(),
-                _y.get() + v._head.get_y().get(),
-                _z.get() + v._head.get_z().get()
-        );
-    }
 }

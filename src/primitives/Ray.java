@@ -9,7 +9,7 @@ import static primitives.Util.*;
  */
 public class Ray {
     /**
-     * Point and vector for the ray
+     * point and vector for the ray
      */
     protected Point3D _start;
     protected Vector _direction;
@@ -30,7 +30,17 @@ public class Ray {
         }
     }
 
+    /**
+     * copy constractor
+     * @param ray
+     */
+    public Ray(Ray ray) {
+        this._start = ray._start;
+        this._direction = ray._direction;
+    }
+
     /******************gettters****************/
+
     public Point3D get_start() {
         return _start;
     }
@@ -38,19 +48,21 @@ public class Ray {
     public Vector get_direction() {
         return _direction;
     }
+
     /******************methods*****************/
-    @Override
-    public String toString() {
-        return "start= " + _start +
-                ", direction= " + _direction;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ray ray = (Ray) o;
-        return _start.equals( ray._start) &&
+        return _start.equals(ray._start) &&
                 _direction.equals(ray._direction);
+    }
+
+    @Override
+    public String toString() {
+        return "start= " + _start +
+                ", direction= " + _direction;
     }
 }

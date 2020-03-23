@@ -1,7 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
 
 /**
  *Geometry is the common interface for all geometries
