@@ -3,7 +3,7 @@ package primitives;
 /**
  * Vector class represents vector in 3D Cartesian coordinate system
  * by Point3D
- * @author Michael Bergshtein and Yishay Lutvak
+ * @author Michael Bergshtein 305643033 and Yishay Lutvak 304909864
  */
 
 public class Vector {
