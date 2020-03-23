@@ -121,8 +121,6 @@ public class Vector {
     public Vector crossProduct(Vector edge2) {
         //Checks that both vectors are not on the same straight line
         if (this.normalized().equals(edge2.normalized()) || this.normalized().equals(edge2.normalized().scale(-1)))
-        /*if(_head.get_x().get()/edge2._head.get_x().get() == _head.get_y().get()/edge2._head.get_y().get() &&
-                        _head.get_x().get()/edge2._head.get_x().get() == _head.get_z().get()/edge2._head.get_z().get())*/
         {
             throw new IllegalArgumentException("two vectors on the same straight line are not valid for cross product");
         }
@@ -138,9 +136,6 @@ public class Vector {
      */
     public double lengthSquared() {
         return _head.distanceSquared(Point3D.ZERO);
-        /*return ((_head.get_x().get())*(_head.get_x().get())+
-                (_head.get_y().get())*(_head.get_y().get())+
-                (_head.get_z().get())*(_head.get_z().get()));*/
     }
 
     /**
