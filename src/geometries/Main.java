@@ -1,5 +1,10 @@
-//Michael Bergshtein 305643033
+//Michael Bergshtein
+//305643033
+//michael155750@gmail.com
+
 //Yishay Lutvak 304909864
+//304909864
+//ylutvak@gmail.com
 
 package geometries;
 
