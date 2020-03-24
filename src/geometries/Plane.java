@@ -21,7 +21,14 @@ public class Plane implements Geometry{
      */
     public Plane(Point3D point_A, Point3D point_B, Point3D point_C) {
         _p = point_A;
-        _normal = null;
+
+        //Calculate the normal by creating two vectors between the points
+        Vector U = new Vector(point_B.subtract(point_A));
+        Vector V = new Vector(point_C.subtract(point_A));
+        Vector N = U.crossProduct(V);
+        N.normalize();
+
+        _normal = N.scale(-1);
     }
 
     /**
@@ -46,9 +53,7 @@ public class Plane implements Geometry{
 
     /*************methods*************/
     @Override
-    public Vector getNormal(Point3D p) {
-        return _normal;
-    }
+    public Vector getNormal(Point3D p) { return _normal; }
 
     public Vector getNormal() { return getNormal(_p); }
 
