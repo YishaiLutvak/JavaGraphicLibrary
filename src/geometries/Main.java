@@ -50,11 +50,7 @@ public final class Main {
         // test Cross-Product
         try { // test zero vector
             v1.crossProduct(v2);
-            //שגיאה שצריך לתקן
-            //
             out.println("ERROR: crossProduct() for parallel vectors does not throw an exception");
-            //
-            //
         } catch (Exception e) {}
         Vector vr = v1.crossProduct(v3);
         if (!isZero(vr.length() - v1.length() * v3.length()))

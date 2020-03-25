@@ -42,11 +42,16 @@ public class Plane implements Geometry{
     }
 
     /*************getters***********/
-
+    /**
+     * @return point
+     */
     public Point3D get_point() {
         return _p;
     }
 
+    /**
+     * @return normal
+     */
     public Vector get_normal() {
         return _normal;
     }

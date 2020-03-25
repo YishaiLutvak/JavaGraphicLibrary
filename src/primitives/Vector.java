@@ -43,7 +43,7 @@ public class Vector {
 
     /**
      * constractor with one point for the vector head
-     * @param head
+     * @param head of the vector
      */
     public Vector(Point3D head) {
         if (head.equals(Point3D.ZERO))
@@ -53,7 +53,7 @@ public class Vector {
 
     /**
      * copy constractor
-     * @param vector
+     * @param vector to copy
      */
     public Vector(Vector vector) {
         this._head = vector._head;
@@ -66,9 +66,9 @@ public class Vector {
 
     /*******************methods**********************/
     /**
-     *sustruction of vectors
-     * @param v another vector to substract it
-     * @return a new vector arter sustraction
+     * subtraction of vectors
+     * @param v another vector to subtract it
+     * @return a new vector after subtraction
      */
     public Vector subtract (Vector v) {
         return new Vector(
@@ -79,7 +79,7 @@ public class Vector {
 
     /**
      * add vector v to current vector
-     * @param v
+     * @param v a vector
      * @return a new vector after adding
      */
     public Vector add (Vector v) {
@@ -91,7 +91,7 @@ public class Vector {
 
     /**
      * product the vector in scalar
-     * @param d the scalar
+     * @param d a scalar
      * @return the vector after production
      */
     public Vector scale (double d) {
@@ -104,7 +104,7 @@ public class Vector {
     /**
      *
      * Acting dot product between this vector and v
-     * @param v
+     * @param v a vector
      * @return a double number for the scalar that it the result of production
      */
     public double dotProduct(Vector v) {
@@ -131,7 +131,6 @@ public class Vector {
     }
 
     /**
-     *
      * @return the length of the vector squared
      */
     public double lengthSquared() {
@@ -139,7 +138,6 @@ public class Vector {
     }
 
     /**
-     *
      * @return the length of the vector
      */
     public double length() {

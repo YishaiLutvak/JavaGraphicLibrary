@@ -32,6 +32,9 @@ public abstract class RadialGeometry implements Geometry {
 
     /************getters***********/
 
+    /**
+     * @return radius
+     */
     public double get_radius() {
         return _radius;
     }

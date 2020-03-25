@@ -20,14 +20,24 @@ public class Triangle extends Polygon {
     }
 
     /**************getters*****************/
+
+    /**
+     * @return vertex A
+     */
     public Point3D getVertexA() {
         return super._vertices.get(0);
     }
 
+    /**
+     * @return vertex B
+     */
     public Point3D getVertexB() {
         return super._vertices.get(1);
     }
 
+    /**
+     * @return vertex C
+     */
     public Point3D getVertexC() {
         return super._vertices.get(2);
     }

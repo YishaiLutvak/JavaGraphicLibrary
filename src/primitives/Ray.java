@@ -32,7 +32,7 @@ public class Ray {
 
     /**
      * copy constractor
-     * @param ray
+     * @param ray to copy
      */
     public Ray(Ray ray) {
         this._start = ray._start;
@@ -41,10 +41,16 @@ public class Ray {
 
     /******************gettters****************/
 
+    /**
+     * @return start point of ray
+     */
     public Point3D get_start() {
         return _start;
     }
 
+    /**
+     * @return direction of ray
+     */
     public Vector get_direction() {
         return _direction;
     }

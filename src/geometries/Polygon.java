@@ -5,10 +5,9 @@ import primitives.*;
 import static primitives.Util.*;
 
 /**
- * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
- * system
+ * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate system
  *
- * @author Dan
+ * @author Dan Zilberstein
  */
 public class Polygon implements Geometry {
     /**
@@ -37,8 +36,8 @@ public class Polygon implements Geometry {
      *                                  to edge path</li>
      *                                  <li>Three consequent vertices lay in the
      *                                  same line (180&#176; angle between two
-     *                                  consequent edges)
-     *                                  <li>The polygon is concave (not convex></li>
+     *                                  consequent edges)</li>
+     *                                  <li>The polygon is concave (not convex)</li>
      *                                  </ul>
      */
     public Polygon(Point3D... vertices) {

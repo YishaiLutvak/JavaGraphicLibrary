@@ -37,7 +37,7 @@ public class Point3D {
 
     /**
      * copy constractor
-     * @param point
+     * @param point to copy
      */
     public Point3D(Point3D point) {
         this._x = point.get_x();
@@ -52,14 +52,23 @@ public class Point3D {
 
     /***************getters***************/
 
+    /**
+     * @return x coordinate
+     */
     public Coordinate get_x() {
         return new Coordinate(_x);
     }
 
+    /**
+     * @return y coordinate
+     */
     public Coordinate get_y() {
         return new Coordinate(_y);
     }
 
+    /**
+     * @return z coordinate
+     */
     public Coordinate get_z() {
         return new Coordinate(_z);
     }

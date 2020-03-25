@@ -28,7 +28,7 @@ public final class Coordinate {
     /**
      * Copy constructor for coordinate
      *
-     * @param other
+     * @param other coordinate
      */
     public Coordinate(Coordinate other) {
         _coord = other._coord;

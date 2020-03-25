@@ -28,6 +28,9 @@ public class Tube extends RadialGeometry {
 
     /******************getters*******************/
 
+    /**
+     * @return axisRay
+     */
     public Ray getRay() {
         return _axisRay;
     }

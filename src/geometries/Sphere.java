@@ -15,6 +15,10 @@ public class Sphere extends RadialGeometry {
     protected Point3D _center;
 
     /****************constractors****************/
+    /**
+     * @param radius of sphere
+     * @param center of sphere
+     */
     public Sphere(double radius, Point3D center) {
         /**
          * constractor by double and Point3D values
@@ -26,7 +30,9 @@ public class Sphere extends RadialGeometry {
     }
 
     /**************getters***************/
-
+    /**
+     * @return center
+     */
     public Point3D getCenter() {
         return _center;
     }
