@@ -9,7 +9,7 @@ public class VectorTest {
 
     @Test
     public void subtract() {
-        
+
         // ============ Equivalence Partitions Tests ==============
 
         Vector v1 = new Vector(1.0, 1.0, 1.0);
