@@ -10,7 +10,7 @@ public abstract class RadialGeometry implements Geometry {
     /**
      * radius of radial geometry
      */
-   protected double _radius;
+    protected double _radius;
 
     /**************constractors*****************/
 
@@ -23,7 +23,7 @@ public abstract class RadialGeometry implements Geometry {
     }
 
     /**
-         * copy constractor
+     * copy constractor
      * @param rg for the length of the radius
      */
     public RadialGeometry(RadialGeometry rg) {
