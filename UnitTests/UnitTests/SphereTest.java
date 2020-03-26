@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CylinderTest {
+public class SphereTest {
 
     @Test
-    public void get_height() {
+    public void getCenter() {
     }
 
     @Test

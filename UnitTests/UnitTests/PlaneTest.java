@@ -4,10 +4,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TubeTest {
+public class PlaneTest {
 
     @Test
-    public void getRay() {
+    public void get_point() {
+    }
+
+    @Test
+    public void get_normal() {
     }
 
     @Test
@@ -15,6 +19,6 @@ public class TubeTest {
     }
 
     @Test
-    public void testToString() {
+    public void testGetNormal() {
     }
 }
