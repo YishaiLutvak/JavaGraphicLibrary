@@ -7,93 +7,108 @@ import static org.junit.Assert.*;
 
 /**
  * Testing Vectors
- *  @author Michael Bergshtein and Yishay Lutvak
+ *  @author Michael Bergshtein and Yishai Lutvak
  */
 public class VectorTest {
 
+    /**
+     * Test method for {@link primitives.Vector#subtract(Vector)}.
+     */
     @Test
-    public void subtract() {
+    public void testSubtract() {
+        Vector v1 = new Vector(1.0, 1.0, 1.0);
 
         // ============ Equivalence Partitions Tests ==============
-
-        Vector v1 = new Vector(1.0, 1.0, 1.0);
         Vector v2 = new Vector(-2.0, -2.0, -2.0);
 
+        // Test that subtraction result of the first vector from the second is proper
         Vector exepted1 = v1.subtract(v2);
-        assertEquals(exepted1, (new Vector(3.0, 3.0, 3.0)));
+        assertEquals("Subtraction result of the first vector from the second is not proper",
+                exepted1, (new Vector(3.0, 3.0, 3.0)));
 
+        // Test that subtraction result of the second vector from the first is proper
         Vector exepted2 = v2.subtract(v1);
-        assertEquals(exepted2, (new Vector(-3.0, -3.0, -3.0)));
+        assertEquals("Subtraction result of the second vector from the first is not proper",
+                exepted2, (new Vector(-3.0, -3.0, -3.0)));
 
         // =============== Boundary Values Tests ==================
+        // test zero vector from subtraction result of vectors
         try {
             Vector exepted3 = v1.subtract(v1);
-            fail("Vector cannot be subtracted by itself because the result will be zero (0,0,0)");
+            fail("Subtraction result of vectors that gives zero (0,0,0) does not throw an exception");
         } catch (IllegalArgumentException ex) { }
     }
 
-
+    /**
+     * Test method for {@link primitives.Vector#add(Vector)}.
+     */
     @Test
-    public void add() {
-        // ============ Equivalence Partitions Tests ==============
-
+    public void testAdd() {
         Vector v1 = new Vector(1.0, 1.0, 1.0);
+
+        // ============ Equivalence Partitions Tests ==============
         Vector v2 = new Vector(-2.0, -2.0, -2.0);
+        // Test that adding result of vectors is proper
+        Vector exepted = v1.add(v2);
+        assertEquals("Adding result of vectors is not proper",exepted,(new Vector(-1.0,-1.0,-1.0)));
 
-        Vector exepted1 = v1.add(v2);
-        assertEquals(exepted1,(new Vector(-1.0,-1.0,-1.0)));
-
-        Vector exepted2 = v2.add(v1);
-        assertEquals(exepted2,(new Vector(-1.0,-1.0,-1.0)));
         // =============== Boundary Values Tests ==================
+        Vector v3 = new Vector(-1.0, -1.0, -1.0);
+        // test zero vector from Adding result of vectors
         try {
-            v1.add(new Vector(-1.0,-1.0,-1.0));
-            fail("Vector cannot be multiplied by its double-1 because the result will be zero (0,0,0)");
+            v1.add(v3);
+            fail("Adding result of vectors that gives zero (0,0,0) does not throw an exception");
         } catch (IllegalArgumentException ex) { }
     }
 
+    /**
+     * Test method for {@link primitives.Vector#scale(double)}.
+     */
     @Test
-    public void scale() {
-        // ============ Equivalence Partitions Tests ==============
-
+    public void testScale() {
         Vector v1 = new Vector(1.0, 1.0, 1.0);
 
+        // ============ Equivalence Partitions Tests ==============
+
+        // Test that multiplication result of vector and scalar 1 is proper
         Vector expected1 = v1.scale(1);
-        assertEquals(expected1,v1);
+        assertEquals("multiplication result of vector and scalar 1 is not proper",expected1,v1);
 
+        // Test that multiplication result of vector and scalar positive number is proper
         Vector expected2 =  v1.scale(2);
-        assertEquals(expected2,(new Vector(2.0,2.0,2.0)));
+        assertEquals("multiplication result of vector and scalar positive number is not proper",
+                expected2,(new Vector(2.0,2.0,2.0)));
 
+        // Test that multiplication result of vector and scalar negative number is proper
         Vector expected3 =  v1.scale(-2);
-        assertEquals(expected3,(new Vector(-2.0,-2.0,-2.0)));
+        assertEquals("multiplication result of vector and scalar negative number is not proper",
+                expected3,(new Vector(-2.0,-2.0,-2.0)));
 
         // =============== Boundary Values Tests ==================
-
+        // test zero vector from Multiply by Scalar 0
         try {
             v1.scale(0);
             fail("Vector cannot be multiplied by a zero scale because the result will be zero (0,0,0)");
         } catch (IllegalArgumentException ex) { }
     }
 
+    /**
+     * Test method for {@link primitives.Vector#dotProduct(Vector)}.
+     */
     @Test
-    public void dotProduct() {
+    public void testDotProduct() {
         // ============ Equivalence Partitions Tests ==============
-
+        // Test that dotProduct result of vectors is proper
         Vector v1 = new Vector(3.5,-5,10);
         Vector v2 = new Vector(2.5,7,0.5);
-
-        assertTrue(Double.compare(v1.dotProduct(v2), (8.75 + -35 + 5)) == 0);
-        //נראה לי מיותר - תגיד לי מה אתה חושב
-        /*assertTrue(Double.compare(v2.dotProduct(v1), (8.75 + -35 + 5)) == 0);
-
-        // =============== Boundary Values Tests ==================
-
-        Vector v3 = new Vector(2.0,2.0,0.0);
-        assertTrue(v3.dotProduct(new Vector(-2.0,2.0,0.0)) == 0);*/
+        assertTrue("dotProduct result of vectors is not proper", isZero(v1.dotProduct(v2)-(8.75 + -35 + 5)));
     }
 
+    /**
+     * Test method for {@link primitives.Vector#crossProduct(Vector)}.
+     */
     @Test
-    public void crossProduct() {
+    public void testCrossProduct() {
 
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
@@ -117,20 +132,40 @@ public class VectorTest {
         } catch (Exception e) {}
     }
 
+    /**
+     * Test method for {@link Vector#length()}.
+     */
     @Test
-    public void length() {
+    public void testLength() {
         // ============ Equivalence Partitions Tests ==============
-
+        // Test that the calculation result of length of vector is proper
         Vector v = new Vector(3.5,-5,10);
-        assertEquals("",v.length(),Math.sqrt(12.25 + 25 + 100),1e-10);
+        assertEquals("the calculation result of length of vector is not proper",
+                v.length(),Math.sqrt(12.25 + 25 + 100),1e-10);
     }
 
+    /**
+     * Test method for {@link Vector#normalize()}.
+     */
     @Test
-    public void normalize() {
+    public void testNormalize() {
+        Vector v = new Vector(3.5,-5,10);
+        Vector vCopy = v;
+
         // ============ Equivalence Partitions Tests ==============
 
-        Vector v = new Vector(3.5,-5,10);
+        // Test that the length of vector after normalize() is 1
         v.normalize();
-        assertEquals("", 1, v.length(),1e-10);
+        assertEquals("the length of vector after normalize() is not 1", 1, v.length(),1e-10);
+
+        // Test that The direction of vector after normalize() is the original direction:
+        // 1. Test that v and vCopy are parallel vectors
+        try {
+            v.crossProduct(vCopy);
+            fail("The direction of vector after normalize() is not the original direction");
+        } catch (Exception e) {}
+        // 2. Test that v and vCopy are not in opposite directions
+        assertTrue("The direction of vector after normalize() is reverse from the original direction",
+                v.dotProduct(vCopy)>0);
     }
 }

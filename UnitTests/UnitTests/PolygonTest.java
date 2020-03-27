@@ -13,10 +13,8 @@ import primitives.*;
 public class PolygonTest {
 
     /**
-     * Test method for
-     *
+     * Test method for {@link geometries.Polygon#Polygon(Point3D... vertices)}.
      */
-    //{@link geometries.Polygon#Polygon(primitives.Point3D, primitives.Point3D, primitives.Point3D, primitives.Point3D)}.
     @Test
     public void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
