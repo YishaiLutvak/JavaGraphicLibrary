@@ -122,7 +122,7 @@ public class Vector {
         //Checks that both vectors are not on the same straight line
         if (this.normalized().equals(edge2.normalized()) || this.normalized().equals(edge2.normalized().scale(-1)))
         {
-            throw new IllegalArgumentException("two vectors on the same straight line are not valid for cross product");
+            throw new IllegalArgumentException("two parallel vectors are not valid for cross product");
         }
         return new Vector(new Point3D(
                 _head.get_y().get()*edge2._head.get_z().get() - _head.get_z().get()*edge2._head.get_y().get(),

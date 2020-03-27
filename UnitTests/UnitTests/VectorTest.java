@@ -1,6 +1,7 @@
 package UnitTests;
 import org.junit.Test;
 import primitives.Vector;
+import static primitives.Util.isZero;
 
 import static org.junit.Assert.*;
 
@@ -93,27 +94,27 @@ public class VectorTest {
 
     @Test
     public void crossProduct() {
+
+        Vector v1 = new Vector(1, 2, 3);
+        Vector v2 = new Vector(-2, -4, -6);
+
         // ============ Equivalence Partitions Tests ==============
+        Vector v3 = new Vector(0, 3, -2);
+        Vector vr = v1.crossProduct(v3);
 
-        Vector v1 = new Vector(3.5, -5.0, 10.0);
-        Vector v2 = new Vector(2.5,7,0.5);
-        Vector v3 = v1.crossProduct(v2);
+        // Test that length of cross-product is proper (orthogonal vectors taken for simplicity)
+        assertEquals("crossProduct() wrong result length", v1.length() * v3.length(), vr.length(), 0.00001);
 
-        assertEquals("", 0, v3.dotProduct(v2), 1e-10);
-        assertEquals("", 0, v3.dotProduct(v1), 1e-10);
+        // Test cross-product result orthogonality to its operands
+        assertTrue("crossProduct() result is not orthogonal to 1st operand", isZero(vr.dotProduct(v1)));
+        assertTrue("crossProduct() result is not orthogonal to 2nd operand", isZero(vr.dotProduct(v3)));
 
         // =============== Boundary Values Tests ==================
-
-        Vector v4 = v2.crossProduct(v1);
+        // test zero vector from cross-product of co-lined vectors
         try {
-            v3.crossProduct(v4);
-            fail("two vectors on the same straight line are not valid for cross product");
-        } catch (IllegalArgumentException ex) { }
-
-        try {
-            v3.crossProduct(v3);
-            fail("two vectors on the same straight line are not valid for cross product");
-        } catch (IllegalArgumentException ex) { }
+            v1.crossProduct(v2);
+            fail("crossProduct() for parallel vectors does not throw an exception");
+        } catch (Exception e) {}
     }
 
     @Test
