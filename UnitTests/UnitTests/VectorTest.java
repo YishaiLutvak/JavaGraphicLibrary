@@ -88,7 +88,7 @@ public class VectorTest {
         // test zero vector from Multiply by Scalar 0
         try {
             v1.scale(0);
-            fail("Vector cannot be multiplied by a zero scale because the result will be zero (0,0,0)");
+            fail("Vector  multiplied by a zero scale donwt give zero (0,0,0)");
         } catch (IllegalArgumentException ex) { }
     }
 
@@ -102,6 +102,12 @@ public class VectorTest {
         Vector v1 = new Vector(3.5,-5,10);
         Vector v2 = new Vector(2.5,7,0.5);
         assertTrue("dotProduct result of vectors is not proper", isZero(v1.dotProduct(v2)-(8.75 + -35 + 5)));
+
+        // =============== Boundary Values Tests ==================
+        // Test dot product of orthogonal vectors
+        v1 = new Vector(1,2,3);
+        v2 = new Vector(0,-3,2);
+        assertTrue("dotProduct result of vectors is not proper", isZero(v2.dotProduct(v1)));
     }
 
     /**
