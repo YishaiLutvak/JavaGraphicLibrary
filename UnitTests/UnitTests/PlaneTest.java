@@ -17,6 +17,7 @@ public class PlaneTest {
     public void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         Plane pl = new Plane(new Point3D(1,1,0),new Point3D(1,-1,0),new Point3D(-1,-1,0));
-        assertTrue(pl.getNormal(null).equals(new Vector(0,0,1)));
+        Vector expected = new Vector(0, 0, 1).normalize();
+        assertTrue(expected.equals(pl.getNormal(null)) || expected.equals(pl.getNormal(null).scale(-1)));
     }
 }
