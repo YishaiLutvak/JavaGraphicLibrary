@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Vector;
 
 /**
  * Triangle class represents a triangle in 3D Cartesian coordinate system
@@ -41,6 +42,12 @@ public class Triangle extends Polygon {
     public Point3D getVertexC() {
         return super._vertices.get(2);
     }
+
+
+    /*public Vector getNormal(){
+        return super.getNormal(super._vertices.get(0));
+    }*/
+
 
     /****************admin**************/
     @Override

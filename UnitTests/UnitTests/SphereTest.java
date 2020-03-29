@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 /**
  * Testing Spheres
- *  @author Michael Bergshtein and Yishay Lutvak
+ *  @author Michael Bergshtein and Yishai Lutvak
  */
 public class SphereTest {
 
@@ -25,6 +25,5 @@ public class SphereTest {
         assertTrue(s1.getNormal(new Point3D(0,-5,0)).equals(new Vector(new Point3D(0,-1,0))));
         assertTrue(s1.getNormal(new Point3D(5,0,0)).equals(new Vector(new Point3D(1,0,0))));
         assertTrue(s1.getNormal(new Point3D(-5,0,0)).equals(new Vector(new Point3D(-1,0,0))));
-
     }
 }

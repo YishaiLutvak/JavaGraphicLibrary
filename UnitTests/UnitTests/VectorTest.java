@@ -1,6 +1,8 @@
 package UnitTests;
 import org.junit.Test;
 import primitives.Vector;
+
+import static java.lang.System.out;
 import static primitives.Util.isZero;
 
 import static org.junit.Assert.*;
@@ -156,9 +158,13 @@ public class VectorTest {
     @Test
     public void testNormalize() {
         Vector v = new Vector(3.5,-5,10);
-        Vector vCopy = v;
+        Vector vCopy = new Vector(v);
+        Vector vCopyNormalize = vCopy.normalize();
 
         // ============ Equivalence Partitions Tests ==============
+
+        // Test that normalise() don't create a new vector
+        assertEquals("ERROR: normalize() function creates a new vector",vCopy ,vCopyNormalize);
 
         // Test that the length of vector after normalize() is 1
         v.normalize();
@@ -173,5 +179,19 @@ public class VectorTest {
         // 2. Test that v and vCopy are not in opposite directions
         assertTrue("The direction of vector after normalize() is reverse from the original direction",
                 v.dotProduct(vCopy)>0);
+    }
+
+    /**
+     * Test method for {@link Vector#normalized()}.
+     */
+    @Test
+    public void testNormalized() {
+        Vector v = new Vector(3.5,-5,10);
+        Vector vCopy = new Vector(v);
+        v.normalized();
+
+        // ============ Equivalence Partitions Tests ==============
+        // Test that normalised() create a new vector
+        assertEquals("ERROR: normalize() function creates a new vector",vCopy ,v);
     }
 }
