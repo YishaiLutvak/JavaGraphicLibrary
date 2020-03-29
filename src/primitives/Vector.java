@@ -21,11 +21,7 @@ public class Vector {
      * @param z for z coordinate
      */
     public Vector(Coordinate x,Coordinate y,Coordinate z) {
-        Point3D p =  new Point3D(x, y, z);
-        if (p.equals(Point3D.ZERO)) {
-            throw new IllegalArgumentException("Point 3D (0.0, 0.0, 0.0) not valid for vector head");
-        }
-        this._head = p;
+        this(new Point3D(x,y,z));
     }
 
     /**
@@ -35,10 +31,7 @@ public class Vector {
      * @param z for z coordinate
      */
     public Vector(double x,double y,double z)  {
-        Point3D p =  new Point3D(x, y, z);
-        if (p.equals(Point3D.ZERO))
-            throw new IllegalArgumentException("Point 3D (0.0, 0.0, 0.0) not valid for vector head");
-        this._head = p;
+        this(new Point3D(x,y,z));
     }
 
     /**
@@ -48,7 +41,7 @@ public class Vector {
     public Vector(Point3D head) {
         if (head.equals(Point3D.ZERO))
             throw new IllegalArgumentException("Point 3D (0.0, 0.0, 0.0) not valid for vector head");
-        this._head = head;
+        this._head = new Point3D(head);
     }
 
     /**
@@ -56,11 +49,11 @@ public class Vector {
      * @param vector to copy
      */
     public Vector(Vector vector) {
-        this._head = vector._head;
+        this._head = new Point3D(vector._head);
     }
 
     public Point3D get_head() {
-        return new Point3D(_head._x, _head._y, _head._z);
+        return new Point3D(_head.get_x(), _head.get_y(), _head.get_z());
     }
 
 
@@ -71,10 +64,7 @@ public class Vector {
      * @return a new vector after subtraction
      */
     public Vector subtract (Vector v) {
-        return new Vector(
-                _head.get_x().get() - v._head.get_x().get(),
-                _head.get_y().get() - v._head.get_y().get(),
-                _head.get_z().get() - v._head.get_z().get());
+        return new Vector(_head.subtract(v._head));
     }
 
     /**
@@ -83,10 +73,7 @@ public class Vector {
      * @return a new vector after adding
      */
     public Vector add (Vector v) {
-        return new Vector(
-                _head.get_x().get() + v._head.get_x().get(),
-                _head.get_y().get() + v._head.get_y().get(),
-                _head.get_z().get() + v._head.get_z().get());
+        return new Vector(_head.add(v));
     }
 
     /**
@@ -145,7 +132,7 @@ public class Vector {
     }
 
     /**
-     * Acting a normlize of the vector
+     * Acting a normalize of the vector
      * @return this vector after normalization
      */
     public Vector normalize() {

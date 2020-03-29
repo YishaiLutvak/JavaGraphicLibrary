@@ -9,9 +9,9 @@ public class Point3D {
     /**
      * Three coordinates of x,y,z
      */
-    protected Coordinate _x;
-    protected Coordinate _y;
-    protected Coordinate _z;
+    protected final Coordinate _x;
+    protected final Coordinate _y;
+    protected final Coordinate _z;
 /***************constractors***********************/
     /**
      * constractor by 3 coordinates
@@ -20,9 +20,9 @@ public class Point3D {
      * @param z for z coordinate
      */
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-        this._x = x;
-        this._y = y;
-        this._z = z;
+        this._x = new Coordinate(x);
+        this._y = new Coordinate(y);
+        this._z = new Coordinate(z);
     }
 
     /**
@@ -31,18 +31,19 @@ public class Point3D {
      * @param y for value of coordinate y
      * @param z for value of coordinate z
      */
-    public Point3D (double x, double y, double z) {
+    public Point3D (double x, double y, double z)
+    {
         this (new Coordinate( x),new Coordinate( y),new Coordinate( z));
     }
 
     /**
-     * copy constractor
+     * copy constructor
      * @param point to copy
      */
     public Point3D(Point3D point) {
-        this._x = point.get_x();
-        this._y = point.get_y();
-        this._z = point.get_z();
+        this._x = new Coordinate(point.get_x());
+        this._y = new Coordinate(point.get_y());
+        this._z = new Coordinate(point.get_z());
     }
 
     /**
@@ -137,5 +138,4 @@ public class Point3D {
                 ", " + _y +
                 ", " + _z + ")";
     }
-
 }

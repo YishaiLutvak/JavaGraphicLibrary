@@ -9,21 +9,24 @@ import static primitives.Util.*;
  */
 public class Ray {
     /**
-     * point and vector for the ray
+     * The point from which the ray starts.
      */
-    protected Point3D _start;
-    protected Vector _direction;
+    protected final Point3D _start;
+    /**
+     * The direction of the ray.
+     */
+    protected final Vector _direction;
 
     /**
-     * constractor by point and vector
-     * @param point for the ray's starting point
-     * @param vector for the direction of the ray
+     * Constructor for creating a new instance of this class
+     * @param point the start of the ray.
+     * @param vector the direction of the ray.
      */
     public Ray(Point3D point, Vector vector) {
-        this._start = point;
+        this._start = new Point3D(point);
         //Ensures that the ray's vector is normalized
         if (isZero(vector.length() - 1)) {
-            this._direction = vector;
+            this._direction = new Vector(vector);
         }
         else {
             this._direction = vector.normalized();
@@ -31,12 +34,12 @@ public class Ray {
     }
 
     /**
-     * copy constractor
-     * @param ray to copy
+     * Copy constructor for a deep copy of an Ray object.copy constructor
+     * @param ray the object that being copied
      */
     public Ray(Ray ray) {
-        this._start = ray._start;
-        this._direction = ray._direction;
+        this._start = new Point3D(ray._start);
+        this._direction = ray._direction.normalized();
     }
 
     /******************gettters****************/
@@ -72,3 +75,27 @@ public class Ray {
                 ", direction= " + _direction;
     }
 }
+
+//public class SphereTests {
+//
+//    @Test
+//    public void getNormalTest() {
+//        Sphere s1 = new Sphere(4, new Point3D(0,0,0));
+//        Sphere s2 = new Sphere(1, new Point3D(1,1,1));
+//
+//
+//        assertTrue(s1.getNormal(new Point3D(0,0,4)).equals(new Vector(new Point3D(0,0,1))));
+//        assertTrue(s1.getNormal(new Point3D(0,0,-4)).equals(new Vector(new Point3D(0,0,-1))));
+//        assertTrue(s1.getNormal(new Point3D(0,4,0)).equals(new Vector(new Point3D(0,1,0))));
+//        assertTrue(s1.getNormal(new Point3D(0,-4,0)).equals(new Vector(new Point3D(0,-1,0))));
+//        assertTrue(s1.getNormal(new Point3D(4,0,0)).equals(new Vector(new Point3D(1,0,0))));
+//        assertTrue(s1.getNormal(new Point3D(-4,0,0)).equals(new Vector(new Point3D(-1,0,0))));
+//
+//        assertTrue(s2.getNormal(new Point3D(1,1,0)).equals(new Vector(new Point3D(0,0,-1))));
+//        assertTrue(s2.getNormal(new Point3D(0,1,1)).equals(new Vector(new Point3D(-1,0,0))));
+//        assertTrue(s2.getNormal(new Point3D(1,0,1)).equals(new Vector(new Point3D(0,-1,0))));
+//
+//        assertEquals(s1.getNormal(new Point3D(7,7,7)),null);
+//
+//    }
+//}
