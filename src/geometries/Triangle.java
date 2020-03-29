@@ -43,12 +43,6 @@ public class Triangle extends Polygon {
         return super._vertices.get(2);
     }
 
-
-    /*public Vector getNormal(){
-        return super.getNormal(super._vertices.get(0));
-    }*/
-
-
     /****************admin**************/
     @Override
     public String toString() {

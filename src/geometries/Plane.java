@@ -37,30 +37,28 @@ public class Plane implements Geometry{
      * @param vector for the vector that vertical to plane
      */
     public Plane(Point3D point, Vector vector) {
-        this._p = point;
-        this._normal = vector;
+        this._p = new Point3D(point);
+        this._normal = new Vector(vector);
     }
 
     /*************getters***********/
     /**
      * @return point
      */
-    public Point3D get_point() {
-        return _p;
+    public Point3D getPoint() {
+        return new Point3D(_p);
     }
 
     /**
      * @return normal
      */
-    public Vector get_normal() {
-        return _normal;
+    public Vector getNormal() {
+        return new Vector(_normal);
     }
 
     /*************methods*************/
     @Override
-    public Vector getNormal(Point3D p) { return _normal; }
-
-    public Vector getNormal() { return getNormal(_p); }
+    public Vector getNormal(Point3D p) {return this.getNormal(); }
 
     @Override
     public String toString() {
