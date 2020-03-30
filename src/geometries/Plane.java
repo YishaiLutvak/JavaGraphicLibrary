@@ -23,12 +23,12 @@ public class Plane implements Geometry{
         _p = point_A;
 
         //Calculate the normal by creating two vectors between the points
-        Vector U = new Vector(point_B.subtract(point_A));
-        Vector V = new Vector(point_C.subtract(point_A));
-        Vector N = U.crossProduct(V);
-        N.normalize();
+        Vector u = new Vector(point_B.subtract(point_A));
+        Vector v = new Vector(point_C.subtract(point_A));
+        Vector n = u.crossProduct(v);
+        n.normalize();
 
-        _normal = N.scale(-1);
+        _normal = n.scale(-1);
     }
 
     /**

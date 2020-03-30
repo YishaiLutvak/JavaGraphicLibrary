@@ -45,13 +45,18 @@ public class Tube extends RadialGeometry {
      */
     @Override
     public Vector getNormal(Point3D p){
-        //Calc
+        //Calculate the normal of the tube from point p
+        //O is projection of P on cylinder's ray
         Point3D O;
+        //According to the formula: t = v ∙ (P − P0)
         double t = _axisRay.get_direction().dotProduct(p.subtract(_axisRay.get_start()));
+        //Make sure you don't multiply in Scalar Zero
         if (!isZero(t))
+            //According to the formula: O = P0 + t ∙ v
             O = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
         else
             O = _axisRay.get_start();
+        //Calculates and returns the normal vector
         return p.subtract(O).normalized();
     }
 

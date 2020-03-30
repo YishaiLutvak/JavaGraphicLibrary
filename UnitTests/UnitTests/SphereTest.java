@@ -12,18 +12,27 @@ import static org.junit.Assert.*;
  *  @author Michael Bergshtein and Yishai Lutvak
  */
 public class SphereTest {
-
+    /**
+     * Test method for {@link geometries.Sphere#getNormal(primitives.Point3D)}.
+     */
     @Test
     public void getNormal() {
-        Sphere s1 = new Sphere(5, new Point3D(0,0,0));
-
         // ============ Equivalence Partitions Tests ==============
 
-        assertTrue(s1.getNormal(new Point3D(0,0,5)).equals(new Vector(new Point3D(0,0,1))));
-        assertTrue(s1.getNormal(new Point3D(0,0,-5)).equals(new Vector(new Point3D(0,0,-1))));
-        assertTrue(s1.getNormal(new Point3D(0,5,0)).equals(new Vector(new Point3D(0,1,0))));
-        assertTrue(s1.getNormal(new Point3D(0,-5,0)).equals(new Vector(new Point3D(0,-1,0))));
-        assertTrue(s1.getNormal(new Point3D(5,0,0)).equals(new Vector(new Point3D(1,0,0))));
-        assertTrue(s1.getNormal(new Point3D(-5,0,0)).equals(new Vector(new Point3D(-1,0,0))));
+        Sphere s1 = new Sphere(5, new Point3D(0,0,0));
+
+        // Test that the getNormal function of sphere is proper
+        assertTrue("getNormal function is not proper",
+                s1.getNormal(new Point3D(0,0,5)).equals(new Vector(new Point3D(0,0,1))));
+        assertTrue("getNormal function is not proper",
+                s1.getNormal(new Point3D(0,0,-5)).equals(new Vector(new Point3D(0,0,-1))));
+        assertTrue("getNormal function is not proper",
+                s1.getNormal(new Point3D(0,5,0)).equals(new Vector(new Point3D(0,1,0))));
+        assertTrue("getNormal function is not proper",
+                s1.getNormal(new Point3D(0,-5,0)).equals(new Vector(new Point3D(0,-1,0))));
+        assertTrue("getNormal function is not proper",
+                s1.getNormal(new Point3D(5,0,0)).equals(new Vector(new Point3D(1,0,0))));
+        assertTrue("getNormal function is not proper",
+                s1.getNormal(new Point3D(-5,0,0)).equals(new Vector(new Point3D(-1,0,0))));
     }
 }

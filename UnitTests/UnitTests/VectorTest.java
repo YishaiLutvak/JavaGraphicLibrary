@@ -1,8 +1,9 @@
 package UnitTests;
 
 import org.junit.Test;
+import primitives.Coordinate;
+import primitives.Point3D;
 import primitives.Vector;
-import static java.lang.System.out;
 import static primitives.Util.isZero;
 import static org.junit.Assert.*;
 
@@ -11,6 +12,72 @@ import static org.junit.Assert.*;
  *  @author Michael Bergshtein and Yishai Lutvak
  */
 public class VectorTest {
+
+    /**
+     * Test method for {@link primitives.Vector#Vector(Coordinate x,Coordinate y,Coordinate z)}.
+     */
+    @Test
+    public void testConstructor1() {
+        // ============ Equivalence Partitions Tests ==============
+        Vector v1 = new Vector(new Coordinate(2.5),new Coordinate(3),new Coordinate(-4));
+        assertEquals("Constructor by three coordinates is not proper"
+                ,v1.get_head(), new Point3D(2.5,3,-4));
+
+        // =============== Boundary Values Tests ==================
+        //test that zero vector throws an error
+        try {
+            Vector v0 = new Vector(new Coordinate(0),new Coordinate(0),new Coordinate(0));
+            fail("Vector zero (0,0,0) does not throw an exception");
+        } catch (IllegalArgumentException ex) { }
+    }
+
+    /**
+     * Test method for {@link primitives.Vector#Vector(double x,double y,double z)}.
+     */
+    @Test
+    public void testConstructor2() {
+        // ============ Equivalence Partitions Tests ==============
+        Vector v2 = new Vector(2.5,3,-4);
+        assertEquals("Constructor by three doubles is not proper"
+                ,v2.get_head(), new Point3D(2.5,3,-4));
+
+        // =============== Boundary Values Tests ==================
+        //test that zero vector throws an error
+        try {
+            Vector v0 = new Vector(0,0,0);
+            fail("Vector zero (0,0,0) does not throw an exception");
+        } catch (IllegalArgumentException ex) { }
+    }
+
+    /**
+     * Test method for {@link primitives.Vector#Vector(Point3D) }.
+     */
+    @Test
+    public void testConstructor3() {
+        // ============ Equivalence Partitions Tests ==============
+        Vector v3 = new Vector(new Point3D(2.5,3,-4));
+        assertEquals("Constructor by Point3D is not proper"
+                ,v3.get_head(), new Point3D(2.5,3,-4));
+
+        // =============== Boundary Values Tests ==================
+        //test that zero vector throws an error
+        try {
+            Vector v0 = new Vector(new Point3D(0,0,0));
+            fail("Vector zero (0,0,0) does not throw an exception");
+        } catch (IllegalArgumentException ex) { }
+    }
+
+    /**
+     * Test method for {@link primitives.Vector# Vector(Vector)}.
+     */
+    @Test
+    public void testConstructor4() {
+        // ============ Equivalence Partitions Tests ==============
+        Vector temp1 = new Vector(new Point3D(2.5,3,-4));
+        Vector v4 = new Vector(temp1);
+        assertEquals("Copy constructor is not proper",
+                v4.get_head(),new Point3D(2.5,3,-4));
+    }
 
     /**
      * Test method for {@link primitives.Vector#subtract(Vector)}.
