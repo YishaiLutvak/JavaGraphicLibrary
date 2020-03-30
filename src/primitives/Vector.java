@@ -136,10 +136,11 @@ public class Vector {
      * @return this vector after normalization
      */
     public Vector normalize() {
+        double length =length();
         _head =new Point3D(
-                _head.get_x().get()/length(),
-                _head.get_y().get()/length(),
-                _head.get_z().get()/length());
+                _head.get_x().get()/length,
+                _head.get_y().get()/length,
+                _head.get_z().get()/length);
         return this;
     }
 

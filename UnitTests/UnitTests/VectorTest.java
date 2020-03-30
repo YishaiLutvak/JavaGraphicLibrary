@@ -1,10 +1,9 @@
 package UnitTests;
+
 import org.junit.Test;
 import primitives.Vector;
-
 import static java.lang.System.out;
 import static primitives.Util.isZero;
-
 import static org.junit.Assert.*;
 
 /**
@@ -141,6 +140,18 @@ public class VectorTest {
     }
 
     /**
+     * Test method for {@link Vector#lengthSquared()}.
+     */
+    @Test
+    public void testLengthSquared() {
+        // ============ Equivalence Partitions Tests ==============
+        // Test that the calculation result of length of vector is proper
+        Vector v = new Vector(3.5,-5,10);
+        assertEquals("the calculation result of length of vector is not proper",
+                v.lengthSquared(),(12.25 + 25 + 100),1e-10);
+    }
+
+    /**
      * Test method for {@link Vector#length()}.
      */
     @Test
@@ -164,11 +175,10 @@ public class VectorTest {
         // ============ Equivalence Partitions Tests ==============
 
         // Test that normalise() don't create a new vector
-        assertEquals("ERROR: normalize() function creates a new vector",vCopy ,vCopyNormalize);
+        assertEquals("ERROR: normalize() function does not changes the original vector",vCopy ,vCopyNormalize);
 
         // Test that the length of vector after normalize() is 1
-        v.normalize();
-        assertEquals("the length of vector after normalize() is not 1", 1, v.length(),1e-10);
+        assertEquals("the length of vector after normalize() is not 1", 1, vCopy.length(),1e-10);
 
         // Test that The direction of vector after normalize() is the original direction:
         // 1. Test that v and vCopy are parallel vectors
@@ -188,10 +198,24 @@ public class VectorTest {
     public void testNormalized() {
         Vector v = new Vector(3.5,-5,10);
         Vector vCopy = new Vector(v);
-        v.normalized();
+        Vector vCopyNormalize = vCopy.normalized();
 
         // ============ Equivalence Partitions Tests ==============
+
         // Test that normalised() create a new vector
-        assertEquals("ERROR: normalize() function creates a new vector",vCopy ,v);
+        assertEquals("ERROR: normalized() function changes the original vector",vCopy ,v);
+
+        // Test that the length of vector after normalize() is 1
+        assertEquals("the length of vector after normalize() is not 1", 1, vCopyNormalize.length(),1e-10);
+
+        // Test that The direction of vector after normalize() is the original direction:
+        // 1. Test that v and vCopy are parallel vectors
+        try {
+            v.crossProduct(vCopyNormalize);
+            fail("The direction of vector after normalize() is not the original direction");
+        } catch (Exception e) {}
+        // 2. Test that v and vCopy are not in opposite directions
+        assertTrue("The direction of vector after normalize() is reverse from the original direction",
+                v.dotProduct(vCopyNormalize)>0);
     }
 }

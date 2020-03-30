@@ -80,10 +80,15 @@ public class PolygonTest {
     public void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: There is a simple single test here
-        Polygon pl = new Polygon(new Point3D(0, 0, 1), new Point3D(1, 0, 0), new Point3D(0, 1, 0),
+        Polygon pl = new Polygon(
+                new Point3D(0, 0, 1),
+                new Point3D(1, 0, 0),
+                new Point3D(0, 1, 0),
                 new Point3D(-1, 1, 1));
         double sqrt3 = Math.sqrt(1d / 3);
-        assertEquals("Bad normal to trinagle", new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)));
+        Vector expected = new Vector(sqrt3, sqrt3, sqrt3);
+        assertTrue("Bad normal to trinagle",expected.equals(pl.getNormal(null)) || expected.equals(pl.getNormal(null).scale(-1)));
+        //assertEquals("Bad normal to trinagle", new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)));
     }
 
 }
