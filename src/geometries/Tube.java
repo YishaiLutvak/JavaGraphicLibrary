@@ -4,6 +4,8 @@ import primitives.*;
 
 import java.util.Objects;
 
+import static primitives.Util.isZero;
+
 /**
  * Class that represent infinite cylinder in 3D Cartesian coordinate system
  * by radius ang ray
@@ -43,10 +45,14 @@ public class Tube extends RadialGeometry {
      */
     @Override
     public Vector getNormal(Point3D p){
-        //Calculate the
+        //Calc
+        Point3D O;
         double t = _axisRay.get_direction().dotProduct(p.subtract(_axisRay.get_start()));
-        Point3D O = new Point3D (_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
-        return new Vector(p.subtract(O));
+        if (!isZero(t))
+            O = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
+        else
+            O = _axisRay.get_start();
+        return p.subtract(O).normalized();
     }
 
     @Override

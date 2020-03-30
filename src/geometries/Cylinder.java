@@ -1,5 +1,5 @@
 package geometries;
-
+import static primitives.Util.isZero;
 import primitives.*;
 
 /**
@@ -42,22 +42,34 @@ public class Cylinder extends Tube {
      */
     @Override
     public Vector getNormal(Point3D p) {
-        //Calculate the point on the _axisRay the vector from that point and p is orthogonal to the ray
-        double t = _axisRay.get_direction().dotProduct(p.subtract(_axisRay.get_start()));
-        Point3D O = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
 
-        //The point is not on the Cylinder bases
-        if (p.distance(O) == _radius) {
-            return new Vector(p.subtract(O)).normalized();
-        }
-        //The point is on the base that contains the start point
-        else if (p.distance(O) < _radius && O.equals(_axisRay.get_start())) {
-            return new Vector(_axisRay.get_direction().scale(-1));
-        }
+        if (p.equals(_axisRay.get_start()) ||
+                isZero(p.subtract(_axisRay.get_start()).dotProduct(_axisRay.get_direction())))
+            return _axisRay.get_direction().scale(-1);
 
-        //The point is on the base that not contains the start point
-        return  new Vector(_axisRay.get_direction());
+        Point3D centerRoof = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(_height)));
+        if (p.equals(centerRoof) ||
+                isZero(p.subtract(centerRoof).dotProduct(_axisRay.get_direction())))
+            return _axisRay.get_direction();
+
+        else
+            return super.getNormal(p);
     }
+//        Point3D O;
+//        double t = _axisRay.get_direction().dotProduct(p.subtract(_axisRay.get_start()));
+//        if (!isZero(t))
+//            O = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
+//        else
+//            O = _axisRay.get_start();
+//
+//        //The point is not on the Cylinder bases
+//        if (p.distance(O) == _radius) {
+//            return new Vector(p.subtract(O)).normalized();
+//        }
+//        //The point is on the base that contains the start point
+//        else if (p.distance(O) < _radius && O.equals(_axisRay.get_start())) {
+//            return new Vector(_axisRay.get_direction().scale(-1));
+//        }
 
     @Override
     public String toString() {

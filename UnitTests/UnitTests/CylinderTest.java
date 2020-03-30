@@ -40,9 +40,9 @@ public class CylinderTest {
         // =============== Boundary Values Tests ==================
 
         //
-        assertTrue(cy.getNormal(new Point3D(0,5,0)).equals(new Vector(new Point3D(0,1,0))));
+        assertTrue(cy.getNormal(new Point3D(0,5,0)).equals(new Vector(new Point3D(-1,0,0))));
 
         //
-        assertTrue(cy.getNormal(new Point3D(10,0,5)).equals(new Vector(new Point3D(0,1,0))));
+        assertTrue(cy.getNormal(new Point3D(10,0,5)).equals(new Vector(new Point3D(1,0,0))));
     }
 }
