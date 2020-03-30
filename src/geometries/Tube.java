@@ -36,10 +36,17 @@ public class Tube extends RadialGeometry {
     }
 
     /******************methods******************/
-
+    /**
+     * getNormal function
+     * @param p point on the sphere. The normal is from p
+     * @return normal vector
+     */
     @Override
-    public Vector getNormal(Point3D p) {
-        return null;
+    public Vector getNormal(Point3D p){
+        //Calculate the
+        double t = _axisRay.get_direction().dotProduct(p.subtract(_axisRay.get_start()));
+        Point3D O = new Point3D (_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
+        return new Vector(p.subtract(O));
     }
 
     @Override

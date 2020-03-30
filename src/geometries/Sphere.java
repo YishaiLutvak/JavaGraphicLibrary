@@ -39,9 +39,14 @@ public class Sphere extends RadialGeometry {
 
     /**************methods****************/
 
+    /**
+     * getNormal function
+     * @param p point on the sphere. The normal is from p
+     * @return normal vector
+     */
     @Override
     public Vector getNormal(Point3D p) {
-        return null;
+        return p.subtract(_center).normalized();
     }
 
     @Override

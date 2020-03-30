@@ -24,13 +24,7 @@ public class Ray {
      */
     public Ray(Point3D point, Vector vector) {
         this._start = new Point3D(point);
-        //Ensures that the ray's vector is normalized
-        if (isZero(vector.length() - 1)) {
-            this._direction = new Vector(vector);
-        }
-        else {
-            this._direction = vector.normalized();
-        }
+        this._direction = vector.normalized();
     }
 
     /**
