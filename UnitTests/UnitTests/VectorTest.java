@@ -68,7 +68,7 @@ public class VectorTest {
     }
 
     /**
-     * Test method for {@link primitives.Vector# Vector(Vector)}.
+     * Test method for {@link primitives.Vector#Vector(Vector)}.
      */
     @Test
     public void testConstructor4() {
