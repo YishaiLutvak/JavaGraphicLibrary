@@ -44,13 +44,13 @@ public class Cylinder extends Tube {
     public Vector getNormal(Point3D p) {
 
         //The point is on the base that contains the start point
-        //Checks whether the point is on the center of the lower base or the rest of the lower base
+        //Checks whether the point is on the center of the base or not
         if (p.equals(_axisRay.get_start()) ||
                 isZero(p.subtract(_axisRay.get_start()).dotProduct(_axisRay.get_direction())))
             return _axisRay.get_direction().scale(-1);
 
         //The point is on the base that not contains the start point
-        //Checks whether the point is on the center of the upper base or the rest of the upper base
+        //Checks whether the point is on the center of the base or not
         Point3D centerTop = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(_height)));
         if (p.equals(centerTop) ||
                 isZero(p.subtract(centerTop).dotProduct(_axisRay.get_direction())))

@@ -56,7 +56,7 @@ public class Tube extends RadialGeometry {
             O = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(t)));
         else
             O = _axisRay.get_start();
-        //Calculates and returns the normal vector
+        //Calculate and return the normal vector
         return p.subtract(O).normalized();
     }
 
