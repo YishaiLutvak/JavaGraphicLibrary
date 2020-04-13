@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 /**
  * Plane class represents a plan in 3D Cartesian coordinate system
  * by point and normal
@@ -64,5 +66,10 @@ public class Plane implements Geometry{
     public String toString() {
         return "point= " + _p +
                 ", normal= " + _normal;
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

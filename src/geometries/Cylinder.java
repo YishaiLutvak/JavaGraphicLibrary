@@ -2,6 +2,8 @@ package geometries;
 import static primitives.Util.isZero;
 import primitives.*;
 
+import java.util.List;
+
 /**
  * Cilinder class represents a cylinder in 3D Cartesian coordinate system
  * by radius, ray that start in the base, and height from the base
@@ -65,5 +67,10 @@ public class Cylinder extends Tube {
     public String toString() {
         return super.toString() +
                 ", height= " + _height;
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

@@ -68,4 +68,13 @@ public class Ray {
         return "start= " + _start +
                 ", direction= " + _direction;
     }
+
+    /**
+     * Get point on ray at a distance from ray's head
+     * @param t distance from ray head
+     * @return the point
+     */
+    public Point3D getPoint(double t){
+        return isZero(t) ? get_start() : new Point3D(_start.add(_direction.scale(t)));
+    }
 }
