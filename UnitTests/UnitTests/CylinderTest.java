@@ -68,4 +68,8 @@ public class CylinderTest {
         assertTrue("getNormal function is not proper for The lower boundary of the cylinder",
                 cy.getNormal(new Point3D(10,0,-5)).equals(new Vector(new Point3D(1,0,0))));
     }
+
+    @Test
+    public void findIntersections() {
+    }
 }

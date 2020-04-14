@@ -285,4 +285,8 @@ public class VectorTest {
         assertTrue("The direction of vector after normalize() is reverse from the original direction",
                 v.dotProduct(vCopyNormalize)>0);
     }
+
+    @Test
+    public void findIntersections() {
+    }
 }

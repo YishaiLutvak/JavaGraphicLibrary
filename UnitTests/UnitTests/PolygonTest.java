@@ -112,4 +112,8 @@ public class PolygonTest {
         assertTrue("Bad normal to triangle",expected.equals(pl.getNormal(null)) ||
                 expected.equals(pl.getNormal(null).scale(-1)));
     }
+
+    @Test
+    public void findIntersections() {
+    }
 }

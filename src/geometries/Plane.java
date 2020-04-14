@@ -4,6 +4,8 @@ import primitives.*;
 
 import java.util.List;
 
+import static primitives.Util.*;
+
 /**
  * Plane class represents a plan in 3D Cartesian coordinate system
  * by point and normal
@@ -68,8 +70,27 @@ public class Plane implements Geometry{
                 ", normal= " + _normal;
     }
 
+    /**
+     *
+     * @param ray
+     * @return
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        return null;
+        Vector p0Q;
+        try {
+            p0Q = _p.subtract(ray.get_start());
+        }catch (IllegalArgumentException ex) {
+            return null; // ray start from point Q - no intersections
+        }
+
+        double nv = _normal.dotProduct(ray.get_direction());
+        if (isZero(nv))
+            return null; // ray is parallel to the plane - no intersections
+
+        double t = alignZero(_normal.dotProduct(p0Q) / nv);
+        return t <= 0 ? null : List.of(ray.getPoint(t));
+        // if ray start from plane there is no intersections
+        // else return point intersections
     }
 }

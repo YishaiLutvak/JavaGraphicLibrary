@@ -27,4 +27,8 @@ public class TriangleTest {
                 expected.equals(tri.getNormal(null)) ||
                         expected.equals(tri.getNormal(null).scale(-1)));
     }
+
+    @Test
+    public void findIntersections() {
+    }
 }

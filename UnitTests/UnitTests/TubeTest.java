@@ -30,4 +30,8 @@ public class TubeTest {
         assertTrue("getNormal function is not proper",
                 tu.getNormal(new Point3D(0,0,-5)).equals(new Vector(new Point3D(0,0,-1))));
     }
+
+    @Test
+    public void findIntersections() {
+    }
 }

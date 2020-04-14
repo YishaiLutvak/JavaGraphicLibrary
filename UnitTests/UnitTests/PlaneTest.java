@@ -26,4 +26,8 @@ public class PlaneTest {
                 expected.equals(pl.getNormal(null)) ||
                         expected.equals(pl.getNormal(null).scale(-1)));
     }
+
+    @Test
+    public void findIntersections() {
+    }
 }
