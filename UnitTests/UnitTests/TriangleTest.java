@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * Testing Triangles
- *  @author Michael Bergshtein and Yishai Lutvak
+ * @author Michael Bergshtein and Yishai Lutvak
  */
 public class TriangleTest {
     /**
