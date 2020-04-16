@@ -114,6 +114,6 @@ public class PolygonTest {
     }
 
     @Test
-    public void findIntersections() {
+    public void testFindIntersections() {
     }
 }

@@ -69,6 +69,18 @@ public class Tube extends RadialGeometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
+        Vector N = ray.get_direction().crossProduct(_axisRay.get_direction());
+        double A = N.get_head().get_x().get();
+        double B = N.get_head().get_y().get();
+        double C = N.get_head().get_z().get();
+        double D =      -A*_axisRay.get_start().get_x().get()+
+                        -B*_axisRay.get_start().get_y().get()+
+                        -C*_axisRay.get_start().get_z().get();
+        double d = (Math.abs(A*ray.get_start().get_x().get()+
+                B*ray.get_start().get_y().get()+
+                C*ray.get_start().get_z().get()))/
+                Math.sqrt(A*A + B*B + C*C);
+        if (d >= _radius) return null;
         return null;
     }
 }

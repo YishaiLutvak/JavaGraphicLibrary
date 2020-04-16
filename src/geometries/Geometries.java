@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class Geometries implements Intersectable {
 
-    private List<Intersectable> _geometries = new ArrayList<Intersectable>();
+    private List<Intersectable> _geometries;
 
-    /*public Geometries() {
+    public Geometries() {
         _geometries = new ArrayList<Intersectable>();
-    }*/
+    }
 
     /**
      * Geometries constructor allowing to add zero or more geometries
@@ -24,6 +24,7 @@ public class Geometries implements Intersectable {
      * @param geometries to add to the collection
      */
     public Geometries(Intersectable... geometries) {
+        _geometries = new ArrayList<Intersectable>();
         add(geometries);
     }
 
@@ -37,11 +38,6 @@ public class Geometries implements Intersectable {
             _geometries.add(geo);
         }
     }
-
-    /*public void add(Intersectable... geometries) {
-         for (int i = 1; i < geometries.length; ++i)
-             this._geometries.add(geometries[i]);
-     }*/
 
     /**
      *
