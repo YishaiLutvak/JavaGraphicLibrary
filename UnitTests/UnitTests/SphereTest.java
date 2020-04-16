@@ -63,16 +63,27 @@ public class SphereTest {
         assertEquals("Ray crosses sphere", List.of(p1, p2), result);
 
         // TC03: Ray starts inside the sphere (1 point)
-        //...
+        p1 = new Point3D(1,1 , 0);
+         result = sphere.findIntersections(new Ray(new Point3D(1, 0.5, 0),
+                new Vector(0, 1, 0)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray inside sphere", List.of(p1), result);
         // TC04: Ray starts after the sphere (0 points)
-        //...
+        assertEquals("Ray starts after the sphere", null,
+                sphere.findIntersections(new Ray(new Point3D(1, 2, 0), new Vector(0, 1, 0))));
 
         // =============== Boundary Values Tests ==================
 
         // **** Group: Ray's line crosses the sphere (but not the center)
         // TC11: Ray starts at sphere and goes inside (1 points)
+        p1 = new Point3D(2,0 , 0);
+        result = sphere.findIntersections(new Ray(new Point3D(1, 1, 0),
+                new Vector(1, -1, 0)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray starts on sphere and cross it in one point", List.of(p1), result);
         // TC12: Ray starts at sphere and goes outside (0 points)
-
+        assertEquals("Ray starts after the sphere", null,
+                sphere.findIntersections(new Ray(new Point3D(1, 1, 0), new Vector(0, 1, 0))));
         // **** Group: Ray's line goes through the center
         // TC13: Ray starts before the sphere (2 points)
         // TC14: Ray starts at sphere and goes inside (1 points)

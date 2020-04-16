@@ -29,5 +29,7 @@ public class PlaneTest {
 
     @Test
     public void findIntersections() {
+        // ============ Equivalence Partitions Tests ==============
+
     }
 }
