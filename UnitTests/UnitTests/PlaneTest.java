@@ -22,7 +22,10 @@ public class PlaneTest {
     public void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         // Test that the getNormal function of plane is proper
-        Plane pl = new Plane(new Point3D(1,1,0),new Point3D(1,-1,0),new Point3D(-1,-1,0));
+        Plane pl = new Plane(
+                new Point3D(1,1,0),
+                new Point3D(1,-1,0),
+                new Point3D(-1,-1,0));
         Vector expected = new Vector(0, 0, 1).normalize();
         // Each plane has two normals in opposite directions
         assertTrue("getNormal function is not proper",
