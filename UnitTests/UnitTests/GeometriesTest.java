@@ -15,42 +15,31 @@ import static org.junit.Assert.*;
  */
 public class GeometriesTest {
 
-    Triangle tri = new Triangle(
-            new Point3D(0, 0, 2),
-            new Point3D(2, 0, 0),
-            new Point3D(0, 2, 0));
-    Plane pl = new Plane(
-            new Point3D(0,4,1),
-            new Point3D(1,4,0),
-            new Point3D(-1,4,0));
-    Sphere sph = new Sphere(
-            5,
-            new Point3D(0,10,0));
-    /**
-     * Test method for {@link geometries.Geometries#add(Intersectable...)}.
-     */
-    @Test
-    public void testAdd() {
-        Geometries myGeometries = new Geometries();
-        myGeometries.add(tri);
-        myGeometries.add(pl,sph);
-    }
-
     /**
      * Test method for {@link geometries.Geometries#findIntersections(primitives.Ray)}.
      */
     @Test
     public void testFindIntersections() {
+        Triangle tri = new Triangle(
+                new Point3D(0, 0, 2),
+                new Point3D(2, 0, 0),
+                new Point3D(0, 2, 0));
+        Plane pl = new Plane(
+                new Point3D(0,4,1),
+                new Point3D(1,4,0),
+                new Point3D(-1,4,0));
+        Sphere sph = new Sphere(
+                5,
+                new Point3D(0,10,0));
 
-        Geometries threeGeometries = new Geometries();
-        threeGeometries.add(tri,pl,sph);
+        Geometries threeGeometries = new Geometries(tri,pl,sph);
 
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Some geometries are intersection but not all
+        // TC01: Some geometries are intersected but not all
         List<Point3D> result = threeGeometries.findIntersections(new Ray(
                         new Point3D(0, 0, -1),
                         new Vector(0, 1, 0)));
-        assertEquals("Wrong number of points", 3, result.size());
+        assertEquals("Some geometries are intersected but not all - Wrong number of points", 3, result.size());
 
         // =============== Boundary Values Tests ==================
 
@@ -59,24 +48,24 @@ public class GeometriesTest {
         result = emptyGeometries.findIntersections(new Ray(
                         new Point3D(-1, 0, 0),
                         new Vector(3, 1, 0)));
-        assertEquals("Wrong number of points", 0, result.size());
+        assertEquals("Empty geometry collection - Wrong number of points", 0, result.size());
 
-        // TC12: There is no intersection points
+        // TC12: There are no intersection points
         result = threeGeometries.findIntersections(new Ray(
                         new Point3D(0, -1, 0),
                         new Vector(0, 0, 1)));
-        assertEquals("Wrong number of points", 0, result.size());
+        assertEquals("There are no intersection points - Wrong number of points", 0, result.size());
 
-        // TC13: Only one geometry is intersection
+        // TC13: Only one geometry is intersected
         result = threeGeometries.findIntersections(new Ray(
                         new Point3D(0, 0, -6),
                         new Vector(0, 1, 0)));
-        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Only one geometry is intersected - Wrong number of points", 1, result.size());
 
-        // TC13: All geometries are intersection
+        // TC14: All geometries are intersected
         result = threeGeometries.findIntersections(new Ray(
                         new Point3D(1, 1 ,1),
                         new Vector(0, 1, 0)));
-        assertEquals("Wrong number of points", 4, result.size());
+        assertEquals("All geometries are intersected - Wrong number of points", 4, result.size());
     }
 }

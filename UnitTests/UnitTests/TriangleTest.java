@@ -44,33 +44,54 @@ public class TriangleTest {
 
         // ============ Equivalence Partitions Tests ==============
 
-        //T01: Ray's line don't cross the triangle(0 points)
-        assertEquals("Ray's line out of plane", null,
+        //T01: Ray starts before the triangle and cross the triangle(1 points)
+        Point3D crossPoint = new Point3D(0,0.5,1);
 
-                triangle.findIntersections(new Ray(new Point3D(0, 2, 0), new Vector(1, 1, 1))));
+        List<Point3D> result = triangle.findIntersections(new Ray(
+                new Point3D(0, 1, 0),
+                new Vector(0, -0.5, 1)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray crosses triangle", List.of(crossPoint), result);
 
-        //T02: Ray starts before the triangle(1 points)
-                Point3D crossPoint = new Point3D(0,0,1);
-
-                List<Point3D> result = triangle.findIntersections(new Ray(new Point3D(0, 1, 0),
-                        new Vector(0, -1, 1)));
-                assertEquals("Wrong number of points", 1, result.size());
-                assertEquals("Ray crosses triangle", List.of(crossPoint), result);
-
+        //T02: Ray cross outside against vertex(0 points)
+        assertEquals("Ray cross outside against vertex", null,
                 triangle.findIntersections(new Ray(
                         new Point3D(0, 2, 0),
-                        new Vector(1, 1, 1)));
+                        new Vector(0, 1, 1))));
 
-        //T02: Ray starts before the triangle(1 points)
+        //T03: Ray cross outside against edge(0 points)
+        assertEquals("Ray cross outside against edge", null,
+                triangle.findIntersections(new Ray(
+                        new Point3D(0, -1, 0),
+                        new Vector(0, -1, 1))));
 
-
-        //T03: Ray starts after the triangle(0 points)
+        //T04: Ray starts after the triangle(0 points)
         assertEquals("Ray starts after the triangle", null,
                 triangle.findIntersections(new Ray(
-                        new Point3D(0, 1, 1.1),
+                        new Point3D(0, 1, 2),
                         new Vector(0, 1, 1))));
 
         // =============== Boundary Values Tests ==================
+
+        //**********group: ray cross triangle's edge and vertex**************
+
+//        //T11: Ray cross triangle's vertex(0 points)
+//        assertEquals("Ray cross triangle's vertex", null,
+//                triangle.findIntersections(new Ray(
+//                        new Point3D(0, 1, 1),
+//                        new Vector(0, 1, 1))));
+//
+//        //T11: Ray starts on the triangle and not orthogonal(0 points)
+//        assertEquals("Ray starts on the triangle and not orthogonal", null,
+//                triangle.findIntersections(new Ray(
+//                        new Point3D(0, 1, 1),
+//                        new Vector(0, 1, 1))));
+//
+//        //T11: Ray starts on the triangle and not orthogonal(0 points)
+//        assertEquals("Ray starts on the triangle and not orthogonal", null,
+//                triangle.findIntersections(new Ray(
+//                        new Point3D(0, 1, 1),
+//                        new Vector(0, 1, 1))));
 
         //**********group: ray starts on the plane**************
 
@@ -87,27 +108,16 @@ public class TriangleTest {
                         new Point3D(0, 4, 1),
                         new Vector(0, 1, 1))));
 
-
         //*******group: ray is orthogonal to the triangle********
-        //T13:ray starts before the triangle(1 points)
-         crossPoint = new Point3D(0,1,1);
 
-         result = triangle.findIntersections(new Ray(new Point3D(0, 1, 0),
+        //T13:ray starts before the triangle(1 points)
+        crossPoint = new Point3D(0,1,1);
+
+        result = triangle.findIntersections(new Ray(
+                new Point3D(0, 1, 0),
                 new Vector(0, 0, 1)));
         assertEquals("Wrong number of points", 1, result.size());
         assertEquals("Ray crosses triangle", List.of(crossPoint), result);
-
-        //T14: Ray starts on the triangle(0 points)
-        assertEquals("Ray starts on the triangle and orthogonal", null,
-                triangle.findIntersections(new Ray(new Point3D(0, 1, 1), new Vector(0, 0, 1))));
-
-        //T15: Ray starts after the triangle(0 points)
-        assertEquals("Ray starts after the triangle and orthogonal", null,
-                triangle.findIntersections(new Ray(new Point3D(0, 1, 2), new Vector(0, 0, 1))));
-
-        //*******group: ray is orthgonal to the triangle********
-
-        //T13:ray starts before the triangle(1 points)
 
         //T14: Ray starts on the triangle(0 points)
         assertEquals("Ray starts on the triangle and orthogonal", null,
@@ -138,34 +148,35 @@ public class TriangleTest {
 
         //T18: Ray starts after the plane(0 points)
         assertEquals("Ray starts after the plane and orthogonal", null,
+                triangle.findIntersections(new Ray(
+                        new Point3D(0, 3, 2),
+                        new Vector(0, 0, 1))));
 
-                triangle.findIntersections(new Ray(new Point3D(0, 3, 2), new Vector(0, 0, 1))));
 
         //******group: ray is contained in the plane*******
 
         //T19:The ray starts before the triangle(0 points)
         assertEquals("Ray contained in the plane and starts before the triangle", null,
-                triangle.findIntersections(new Ray(new Point3D(0, -1, 0), new Vector(0, 1, 0))));
+                triangle.findIntersections(new Ray(
+                        new Point3D(0, -1, 1),
+                        new Vector(0, 1, 0))));
+
         //T20:The ray starts in the triangle(0 points)
         assertEquals("Ray contained in the plane and starts in the triangle", null,
-                triangle.findIntersections(new Ray(new Point3D(0, 1, 0), new Vector(0, 1, 0))));
-        //T19:The ray starts after the triangle(0 points)
+                triangle.findIntersections(new Ray(
+                        new Point3D(0, 1, 1),
+                        new Vector(0, 1, 0))));
+
+        //T21:The ray starts after the triangle(0 points)
         assertEquals("Ray contained in the plane and starts after the triangle", null,
-                triangle.findIntersections(new Ray(new Point3D(0, 3, 0), new Vector(0, 1, 0))));
+                triangle.findIntersections(new Ray(
+                        new Point3D(0, 3, 1),
+                        new Vector(0, 1, 0))));
 
         //T22:the ray line is out of the triangle(0 points)
         assertEquals("Ray contained in the plane and not cross the triangle", null,
-                triangle.findIntersections(new Ray(new Point3D(0, -1, 0), new Vector(1, 0, 0))));
-
                 triangle.findIntersections(new Ray(
-                        new Point3D(0, 3, 2),
-                        new Vector(0, 0, 1)));
-
-        //******group: ray is contained in the plane*******
-
-        //T19:the triangle contain the ray
-
-        //T20:the triangle don't contain the ray
-
+                        new Point3D(0, -1, 1),
+                        new Vector(1, 0, 0))));
     }
 }
