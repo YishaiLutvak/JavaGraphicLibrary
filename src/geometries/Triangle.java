@@ -21,7 +21,7 @@ public class Triangle extends Polygon {
      * @param vertex_B for B vertex
      * @param vertex_C for C vertex
      */
-    public Triangle(Point3D vertex_A ,Point3D vertex_B,Point3D vertex_C) {
+    public Triangle(Point3D vertex_A ,Point3D vertex_B, Point3D vertex_C) {
         super(vertex_A,vertex_B,vertex_C);
     }
 
@@ -71,9 +71,9 @@ public class Triangle extends Polygon {
         Point3D p0 = ray.get_start();
         Vector v =  ray.get_direction();
 
-        Vector v1 = _vertices.get(0).subtract(p0);
-        Vector v2 = _vertices.get(1).subtract(p0);
-        Vector v3 = _vertices.get(2).subtract(p0);
+        Vector v1 = getVertexA().subtract(p0);
+        Vector v2 = getVertexB().subtract(p0);
+        Vector v3 = getVertexC().subtract(p0);
 
         double s1 = v.dotProduct(v1.crossProduct(v2));
         if(isZero(s1)) return null;
