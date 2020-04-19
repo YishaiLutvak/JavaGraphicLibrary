@@ -97,8 +97,8 @@ public class Polygon implements Geometry {
         Point3D p0 = ray.get_start();
         Vector v =  ray.get_direction();
 
-        Vector v1 = _vertices.get(1).subtract(p0);
-        Vector v2 = _vertices.get(2).subtract(p0);
+        Vector v1 = _vertices.get(0).subtract(p0);
+        Vector v2 = _vertices.get(1).subtract(p0);
         double sign = v.dotProduct(v1.crossProduct(v2));
         if(isZero(sign)) return null;
         boolean positive = sign > 0;

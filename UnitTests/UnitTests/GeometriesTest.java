@@ -21,9 +21,9 @@ public class GeometriesTest {
     @Test
     public void testFindIntersections() {
         Triangle tri = new Triangle(
-                new Point3D(0, 0, 2),
-                new Point3D(2, 0, 0),
-                new Point3D(0, 2, 0));
+                new Point3D(4, 0, 0),
+                new Point3D(0, 4, 0),
+                new Point3D(0, 0, 4));
         Plane pl = new Plane(
                 new Point3D(0,4,1),
                 new Point3D(1,4,0),
@@ -45,16 +45,16 @@ public class GeometriesTest {
 
         // TC11: Empty geometry collection
         Geometries emptyGeometries = new Geometries();
-        result = emptyGeometries.findIntersections(new Ray(
-                        new Point3D(-1, 0, 0),
-                        new Vector(3, 1, 0)));
-        assertEquals("Empty geometry collection - Wrong number of points", 0, result.size());
+        assertEquals("Empty geometry collection - Wrong number of points", null,
+                emptyGeometries.findIntersections(new Ray(
+                new Point3D(-1, 0, 0),
+                new Vector(3, 1, 0))));
 
         // TC12: There are no intersection points
         result = threeGeometries.findIntersections(new Ray(
                         new Point3D(0, -1, 0),
                         new Vector(0, 0, 1)));
-        assertEquals("There are no intersection points - Wrong number of points", 0, result.size());
+        assertEquals("There are no intersection points - Wrong number of points", null, result);
 
         // TC13: Only one geometry is intersected
         result = threeGeometries.findIntersections(new Ray(
@@ -64,7 +64,7 @@ public class GeometriesTest {
 
         // TC14: All geometries are intersected
         result = threeGeometries.findIntersections(new Ray(
-                        new Point3D(1, 1 ,1),
+                        new Point3D(1, -1 ,1),
                         new Vector(0, 1, 0)));
         assertEquals("All geometries are intersected - Wrong number of points", 4, result.size());
     }
