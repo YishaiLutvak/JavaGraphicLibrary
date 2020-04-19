@@ -67,6 +67,11 @@ public class Tube extends RadialGeometry {
                 ", ray= " + _axisRay;
     }
 
+    /**
+     *
+     * @param ray the ray that intersect the tube
+     * @return a list of intersect points
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
         Vector N = ray.get_direction().crossProduct(_axisRay.get_direction());

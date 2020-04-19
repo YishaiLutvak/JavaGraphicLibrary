@@ -40,9 +40,9 @@ public class Geometries implements Intersectable {
     }
 
     /**
-     *
-     * @param ray
-     * @return
+     *find intersections of all the geometries parts
+     * @param ray that intersects the geometries
+     * @return a list of intersect points
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {

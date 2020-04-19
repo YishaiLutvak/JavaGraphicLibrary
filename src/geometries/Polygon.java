@@ -86,8 +86,8 @@ public class Polygon implements Geometry {
 
     /**
      *
-     * @param ray
-     * @return
+     * @param ray that intersect the polygon
+     * @return a list of the intersect points
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {

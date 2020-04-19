@@ -59,8 +59,8 @@ public class Triangle extends Polygon {
 
     /**
      *
-     * @param ray
-     * @return
+     * @param ray that intersect the triangle
+     * @return alist of intersect points
      */
     @Override
     public List<Point3D> findIntersections(Ray ray)

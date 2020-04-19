@@ -72,8 +72,8 @@ public class Plane implements Geometry{
 
     /**
      *
-     * @param ray
-     * @return
+     * @param ray that intersect the plane
+     * @return a list of intersect points
      */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
