@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class TriangleTest {
     /**
-     * Test method for {@link geometries.Polygon#getNormal(Point3D)}.
+     * Test method for {@link geometries.Triangle#getNormal(Point3D)}.
      */
     @Test
     public void testGetNormal() {
@@ -29,15 +29,24 @@ public class TriangleTest {
                         expected.equals(tri.getNormal(null).scale(-1)));
     }
 
+    /**
+     * Test method for {@link geometries.Triangle#findIntersections(Ray)}.
+     */
     @Test
-    public void findIntersections() {
-        Triangle triangle = new Triangle(new Point3D(2,0,1),new Point3D(-2,0,1),new Point3D(0,2,1));
+    public void testFindIntersections() {
+        Triangle triangle = new Triangle(
+                new Point3D(2,0,1),
+                new Point3D(-2,0,1),
+                new Point3D(0,2,1));
 
         // ============ Equivalence Partitions Tests ==============
 
         //T01: Ray's line don't cross the triangle(0 points)
         assertEquals("Ray's line out of plane", null,
-                triangle.findIntersections(new Ray(new Point3D(0, 2, 0), new Vector(1, 1, 1))));
+                triangle.findIntersections(new Ray(
+                        new Point3D(0, 2, 0),
+                        new Vector(1, 1, 1))));
+        
         //T02: Ray starts before the triangle(1 points)
         //T03: Ray starts after the triangle(0 points)
 
