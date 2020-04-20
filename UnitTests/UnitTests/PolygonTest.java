@@ -120,8 +120,8 @@ public class PolygonTest {
         Polygon polygon = new Polygon(
                 new Point3D(2,2,1),
                 new Point3D(-2,2,1),
-                new Point3D(2,-2,1),
-                new Point3D(-2,-2,1));
+                new Point3D(-2,-2,1),
+                new Point3D(2,-2,1));
 
         // ============ Equivalence Partitions Tests ==============
 
