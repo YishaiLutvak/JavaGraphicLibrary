@@ -78,13 +78,11 @@ public class Sphere extends RadialGeometry {
         double dSquared = tm == 0 ? u.lengthSquared() : u.lengthSquared() - tm * tm;
         double thSquared = alignZero(_radius * _radius - dSquared);
         if (thSquared <= 0) return null;
-        double th =  alignZero(Math.sqrt(thSquared));
-        //if (th == 0) return null; //נראלי מיותר- כלול בבדיקות קודמות
+        double th =  Math.sqrt(thSquared);
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
         if (t1 <= 0 && t2 <= 0) return null;
         if (t1 > 0 && t2 > 0) return List.of(ray.getPoint(t1), ray.getPoint(t2));
-        //if (t1 > 0) return List.of(ray.getPoint(t1)); // נראלי מיותר- לא יקרה לעולם
         else return List.of(ray.getPoint(t2));
     }
 }
