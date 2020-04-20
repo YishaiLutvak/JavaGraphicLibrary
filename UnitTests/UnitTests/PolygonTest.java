@@ -168,96 +168,96 @@ public class PolygonTest {
                         new Point3D(0, 1, 0),
                         new Vector(0, 1, 1))));
 
-//        //T13: Ray cross polygon's edge line(0 points)
-//        assertEquals("Ray starts on the polygon and not orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(2, 0, 0),
-//                        new Vector(1, 0, 1))));
-//
-//        //**********group: ray starts on the plane**************
-//
-//        //T14: Ray starts on the polygon and not orthogonal(0 points)
-//        assertEquals("Ray starts on the polygon and not orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 1, 1),
-//                        new Vector(0, 1, 1))));
-//
-//        //T15:ray starts on the plane of the polygon outside the polygon
-//        ///ray is not orthogonal to the plane and not contained in the plane(0 points)
-//        assertEquals("Ray starts on the plane and not orthogonal or contained", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 4, 1),
-//                        new Vector(0, 1, 1))));
-//
-//        //*******group: ray is orthogonal to the polygon********
-//
-//        //T16:ray starts before the polygon(1 points)
-//        crossPoint = new Point3D(0,1,1);
-//
-//        result = polygon.findIntersections(new Ray(
-//                new Point3D(0, 1, 0),
-//                new Vector(0, 0, 1)));
-//        assertEquals("Wrong number of points", 1, result.size());
-//        assertEquals("Ray crosses polygon", List.of(crossPoint), result);
-//
-//        //T17: Ray starts on the polygon(0 points)
-//        assertEquals("Ray starts on the polygon and orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 1, 1),
-//                        new Vector(0, 0, 1))));
-//
-//        //T18: Ray starts after the polygon(0 points)
-//        assertEquals("Ray starts after the polygon and orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 1, 2),
-//                        new Vector(0, 0, 1))));
-//
-//
-//        //********group: ray is orthogonal to the plane of the polygon***********
-//
-//        //T19:ray starts before the plane(0 points)
-//        assertEquals("Ray starts before the plane and orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 3, 0),
-//                        new Vector(0, 0, 1))));
-//
-//        //T20: Ray starts on the plane(0 points)
-//        assertEquals("Ray starts on the plane and orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 3, 1),
-//                        new Vector(0, 0, 1))));
-//
-//        //T21: Ray starts after the plane(0 points)
-//        assertEquals("Ray starts after the plane and orthogonal", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 3, 2),
-//                        new Vector(0, 0, 1))));
-//
-//
-//        //******group: ray is contained in the plane*******
-//
-//        //T22:The ray starts before the polygon(0 points)
-//        assertEquals("Ray contained in the plane and starts before the polygon", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, -1, 1),
-//                        new Vector(0, 1, 0))));
-//
-//        //T23:The ray starts in the polygon(0 points)
-//        assertEquals("Ray contained in the plane and starts in the polygon", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 1, 1),
-//                        new Vector(0, 1, 0))));
-//
-//        //T24:The ray starts after the polygon(0 points)
-//        assertEquals("Ray contained in the plane and starts after the polygon", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, 3, 1),
-//                        new Vector(0, 1, 0))));
-//
-//        //T25:the ray line is out of the polygon(0 points)
-//        assertEquals("Ray contained in the plane and not cross the polygon", null,
-//                polygon.findIntersections(new Ray(
-//                        new Point3D(0, -1, 1),
-//                        new Vector(1, 0, 0))));
+        //T13: Ray cross polygon's edge line(0 points)
+        assertEquals("Ray starts on the polygon and not orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(2, 2, 0),
+                        new Vector(1, 0, 1))));
+
+        //**********group: ray starts on the plane**************
+
+        //T14: Ray starts on the polygon and not orthogonal(0 points)
+        assertEquals("Ray starts on the polygon and not orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 1, 1),
+                        new Vector(0, 1, 1))));
+
+        //T15:ray starts on the plane of the polygon outside the polygon
+        ///ray is not orthogonal to the plane and not contained in the plane(0 points)
+        assertEquals("Ray starts on the plane and not orthogonal or contained", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 4, 1),
+                        new Vector(0, 1, 1))));
+
+        //*******group: ray is orthogonal to the polygon********
+
+        //T16:ray starts before the polygon(1 points)
+        crossPoint = new Point3D(0,1,1);
+
+        result = polygon.findIntersections(new Ray(
+                new Point3D(0, 1, 0),
+                new Vector(0, 0, 1)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray crosses polygon", List.of(crossPoint), result);
+
+        //T17: Ray starts on the polygon(0 points)
+        assertEquals("Ray starts on the polygon and orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 1, 1),
+                        new Vector(0, 0, 1))));
+
+        //T18: Ray starts after the polygon(0 points)
+        assertEquals("Ray starts after the polygon and orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 1, 2),
+                        new Vector(0, 0, 1))));
+
+
+        //********group: ray is orthogonal to the plane of the polygon***********
+
+        //T19:ray starts before the plane(0 points)
+        assertEquals("Ray starts before the plane and orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 3, 0),
+                        new Vector(0, 0, 1))));
+
+        //T20: Ray starts on the plane(0 points)
+        assertEquals("Ray starts on the plane and orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 3, 1),
+                        new Vector(0, 0, 1))));
+
+        //T21: Ray starts after the plane(0 points)
+        assertEquals("Ray starts after the plane and orthogonal", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 3, 2),
+                        new Vector(0, 0, 1))));
+
+
+        //******group: ray is contained in the plane*******
+
+        //T22:The ray starts before the polygon(0 points)
+        assertEquals("Ray contained in the plane and starts before the polygon", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, -3, 1),
+                        new Vector(0, 1, 0))));
+
+        //T23:The ray starts in the polygon(0 points)
+        assertEquals("Ray contained in the plane and starts in the polygon", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 1, 1),
+                        new Vector(0, 1, 0))));
+
+        //T24:The ray starts after the polygon(0 points)
+        assertEquals("Ray contained in the plane and starts after the polygon", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, 3, 1),
+                        new Vector(0, 1, 0))));
+
+        //T25:the ray line is out of the polygon(0 points)
+        assertEquals("Ray contained in the plane and not cross the polygon", null,
+                polygon.findIntersections(new Ray(
+                        new Point3D(0, -3, 1),
+                        new Vector(1, 0, 0))));
     }
 }
