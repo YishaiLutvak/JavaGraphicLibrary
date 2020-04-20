@@ -107,14 +107,14 @@ public class Vector {
      */
     public Vector crossProduct(Vector edge2) {
         //Checks that both vectors are not on the same straight line
-        if (this.normalized().equals(edge2.normalized()) || this.normalized().equals(edge2.normalized().scale(-1)))
-        {
+        try {
+            return new Vector(new Point3D(
+                    _head.get_y().get()*edge2._head.get_z().get() - _head.get_z().get()*edge2._head.get_y().get(),
+                    _head.get_z().get()*edge2._head.get_x().get() - _head.get_x().get()*edge2._head.get_z().get(),
+                    _head.get_x().get()*edge2._head.get_y().get() - _head.get_y().get()*edge2._head.get_x().get()));
+        }catch (IllegalArgumentException ex){
             throw new IllegalArgumentException("two parallel vectors are not valid for cross product");
         }
-        return new Vector(new Point3D(
-                _head.get_y().get()*edge2._head.get_z().get() - _head.get_z().get()*edge2._head.get_y().get(),
-                _head.get_z().get()*edge2._head.get_x().get() - _head.get_x().get()*edge2._head.get_z().get(),
-                _head.get_x().get()*edge2._head.get_y().get() - _head.get_y().get()*edge2._head.get_x().get()));
     }
 
     /**

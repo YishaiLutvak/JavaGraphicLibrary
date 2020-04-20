@@ -126,7 +126,7 @@ public class PolygonTest {
         // ============ Equivalence Partitions Tests ==============
 
         //T01: Ray starts before the polygon and cross the polygon(1 points)
-        Point3D crossPoint = new Point3D(0,0,1);
+        Point3D crossPoint = new Point3D(1,-1,1);
 
         List<Point3D> result = polygon.findIntersections(new Ray(
                 new Point3D(1, 0, 0),

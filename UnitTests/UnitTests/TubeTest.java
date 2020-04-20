@@ -1,6 +1,5 @@
 package UnitTests;
 
-import geometries.Sphere;
 import geometries.Tube;
 import org.junit.Test;
 import primitives.Point3D;
@@ -41,7 +40,6 @@ public class TubeTest {
      */
     @Test
     public void testFindIntersections() {
-        //Sphere sphere = new Sphere(1d, new Point3D(1, 0, 0));
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Ray's line is outside the tube (0 points)
@@ -51,10 +49,10 @@ public class TubeTest {
                         new Vector(1, 1, 0))));
 
         // TC02: Ray starts before and crosses the tube (2 points)
-        Point3D p1 = new Point3D(5, -5, 0);
-        Point3D p2 = new Point3D(10, 0, -5);
+        Point3D p1 = new Point3D(10, -5, 0);
+        Point3D p2 = new Point3D(15, 0, -5);
         List<Point3D> result = tube.findIntersections(new Ray(
-                new Point3D(0, -10, 5),
+                new Point3D(5, -10, 5),
                 new Vector(1, 1, -1)));
         assertEquals("Wrong number of points", 2, result.size());
         if (result.get(0).get_x().get() > result.get(1).get_x().get())
@@ -96,78 +94,78 @@ public class TubeTest {
         // **** Group: Ray's line goes through the axisRay
 
         // TC13: Ray starts before the tube (2 points)
-        p1 = new Point3D(0, -5, 0);
-        p2 = new Point3D(0, 5, 0);
+        p1 = new Point3D(5, -5, 0);
+        p2 = new Point3D(15, 5, 0);
         result = tube.findIntersections(new Ray(
-                new Point3D(0, -6, 0),
-                new Vector(0, 1, 0)));
+                new Point3D(4, -6, 0),
+                new Vector(1, 1, 0)));
         assertEquals("Wrong number of points", 2, result.size());
         if (result.get(0).get_x().get() > result.get(1).get_x().get())
             result = List.of(result.get(1), result.get(0));
         assertEquals("Ray crosses tube and the axisRay", List.of(p1, p2), result);
 
         // TC14: Ray starts at tube and goes inside (1 points)
-        p1 = new Point3D(0, 5, 0);
+        p1 = new Point3D(15, 5, 0);
         result = tube.findIntersections(new Ray(
-                new Point3D(0, -5, 0),
-                new Vector(0, 1, 0)));
+                new Point3D(5, -5, 0),
+                new Vector(1, 1, 0)));
         assertEquals("Wrong number of points", 1, result.size());
         assertEquals("Ray starts on the tube and cross the axisRay", List.of(p1), result);
 
         // TC15: Ray starts inside (1 points)
-        p1 = new Point3D(0, 5, 0);
+        p1 = new Point3D(5, 5, 0);
         result = tube.findIntersections(new Ray(
-                new Point3D(0, -2, 0),
-                new Vector(0, 1, 0)));
+                new Point3D(4, 4, 0),
+                new Vector(1, 1, 0)));
         assertEquals("Wrong number of points", 1, result.size());
         assertEquals("Ray starts in the tube and cross the axisRay", List.of(p1), result);
 
         // TC16: Ray starts at the axisRay (1 points)
-        p1 = new Point3D(0, 5, 0);
+        /*p1 = new Point3D(10, 5, 0);
         result = tube.findIntersections(new Ray(
-                new Point3D(0, 0, 0),
-                new Vector(0, 1, 0)));
+                new Point3D(5, 0, 0),
+                new Vector(1, 1, 0)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray starts in the axisRay and cross the tube", List.of(p1), result);
+        assertEquals("Ray starts in the axisRay and cross the tube", List.of(p1), result);*/
 
         // TC17: Ray starts at tube and goes outside (0 points)
         assertEquals("Ray starts on the tube", null,
                 tube.findIntersections(new Ray(
-                        new Point3D(0, 5, 0),
-                        new Vector(0, 1, 0))));
+                        new Point3D(5, 5, 0),
+                        new Vector(1, 1, 0))));
 
         // TC18: Ray starts after tube (0 points)
         assertEquals("Ray starts after the tube", null,
                 tube.findIntersections(new Ray(
-                        new Point3D(0, 6, 0),
-                        new Vector(0, 1, 0))));
+                        new Point3D(5, 6, 0),
+                        new Vector(1, 1, 0))));
 
         // **** Group: Ray's line is tangent to the sphere (all tests 0 points)
 
         // TC19: Ray starts before the tangent point
         assertEquals("Ray starts before the tangent point to the tube", null,
                 tube.findIntersections(new Ray(
-                        new Point3D(0, 5, 5),
-                        new Vector(0, 0, -1))));
+                        new Point3D(-1, 5, 1),
+                        new Vector(1, 0, -1))));
 
         // TC20: Ray starts at the tangent point
         assertEquals("Ray starts at the tangent point", null,
                 tube.findIntersections(new Ray(
-                        new Point3D(0, 5, 0),
-                        new Vector(0, 0, -1))));
+                        new Point3D(5, 5, 0),
+                        new Vector(1, 0, -1))));
 
         // TC21: Ray starts after the tangent point
         assertEquals("Ray starts after the tangent point", null,
                 tube.findIntersections(new Ray(
-                        new Point3D(0, 5, -5),
-                        new Vector(0, 0, -1))));
+                        new Point3D(1, 5, -1),
+                        new Vector(1, 0, -1))));
 
         // **** Group: Special cases
 
-        // TC19: Ray is contained at tube
+        // TC22: Ray is contained at tube
         assertEquals("Ray is contained at tube", null,
                 tube.findIntersections(new Ray(
-                        new Point3D(0, 5, 0),
+                        new Point3D(1, 5, 0),
                         new Vector(1, 0, 0))));
     }
 }

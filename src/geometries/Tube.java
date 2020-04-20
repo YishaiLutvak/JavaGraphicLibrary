@@ -84,16 +84,22 @@ public class Tube extends RadialGeometry {
         Point3D p0Tube =_axisRay.get_start();
         Vector vTube = _axisRay.get_direction();
 
+        try { v.crossProduct(vTube); }
+        catch (IllegalArgumentException ex) { return null;} //two parallel vectors - no intersection
+
         Vector p0TubeP0 = new Vector(p0.subtract(p0Tube));
 
         double v_dot_vTube = v.dotProduct(vTube);
-        double p0Tube_p0_dot_vTube = p0TubeP0.dotProduct(vTube);
+        double p0TubeP0_dot_vTube = p0TubeP0.dotProduct(vTube);
 
-        Vector temp1 = v.subtract(vTube.scale(v_dot_vTube));
-        Vector temp2 = p0TubeP0.subtract(vTube.scale(p0Tube_p0_dot_vTube));
+        Vector temp1, temp2;
+        if (isZero(v_dot_vTube)) temp1 = v;
+        else temp1 = v.subtract(vTube.scale(v_dot_vTube));
+        if (isZero(p0TubeP0_dot_vTube)) temp2 = p0TubeP0;
+        else temp2 = p0TubeP0.subtract(vTube.scale(p0TubeP0_dot_vTube));
 
         double A = temp1.dotProduct(temp1);
-        double B = 2*v.subtract(vTube.scale(v_dot_vTube)).dotProduct(p0TubeP0.subtract(vTube.scale(p0Tube_p0_dot_vTube)));
+        double B = 2*v.subtract(vTube.scale(v_dot_vTube)).dotProduct(p0TubeP0.subtract(vTube.scale(p0TubeP0_dot_vTube)));
         double C = temp2.dotProduct(temp2) - _radius * _radius;
 
         double desc = B*B - 4*A*C;
@@ -102,17 +108,15 @@ public class Tube extends RadialGeometry {
         if (desc < 0) return null;
 
         //One solution
-        if (desc == 0) {
-            if (-B/(2*A) < 0) return null;
-            return List.of(ray.getPoint(-B/(2*A)));
-        }
+        if (isZero(desc)) return null;
 
         //Two solution
         double t1 = (-B+Math.sqrt(desc))/(2*A);
         double t2 = (-B-Math.sqrt(desc))/(2*A);
 
-        if (t1 < 0 && t2 < 0) return null;
-        if (t1 > 0 && t2 > 0) return List.of(ray.getPoint(t1), ray.getPoint(t2));
+        if (t1 <= 0 && t2 <= 0) return null;
+        if (t1 > 0 && t2 > 0)
+            return List.of(ray.getPoint(t1), ray.getPoint(t2));
         else return List.of(ray.getPoint(t1));
     }
 }
