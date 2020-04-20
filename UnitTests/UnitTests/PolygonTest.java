@@ -130,7 +130,7 @@ public class PolygonTest {
 
         List<Point3D> result = polygon.findIntersections(new Ray(
                 new Point3D(1, 0, 0),
-                new Vector(0, -1, 1)));
+                new Vector(-1, 0, 1)));
         assertEquals("Wrong number of points", 1, result.size());
         assertEquals("Ray crosses polygon", List.of(crossPoint), result);
 
