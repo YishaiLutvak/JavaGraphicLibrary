@@ -84,23 +84,43 @@ public class Tube extends RadialGeometry {
         Point3D p0Tube =_axisRay.get_start();
         Vector vTube = _axisRay.get_direction();
 
+        //if v and vTube are parallel vectors there is no intersection
         try { v.crossProduct(vTube); }
-        catch (IllegalArgumentException ex) { return null;} //two parallel vectors - no intersection
+        catch (IllegalArgumentException ex) { return null;}
 
+        if (p0.equals(p0Tube))
+            p0Tube = _axisRay.getPoint(-1);
         Vector p0TubeP0 = new Vector(p0.subtract(p0Tube));
 
         double v_dot_vTube = v.dotProduct(vTube);
         double p0TubeP0_dot_vTube = p0TubeP0.dotProduct(vTube);
 
-        Vector temp1, temp2;
-        if (isZero(v_dot_vTube)) temp1 = v;
-        else temp1 = v.subtract(vTube.scale(v_dot_vTube));
-        if (isZero(p0TubeP0_dot_vTube)) temp2 = p0TubeP0;
-        else temp2 = p0TubeP0.subtract(vTube.scale(p0TubeP0_dot_vTube));
+        double A;
+        double B;
+        double C;
 
-        double A = temp1.dotProduct(temp1);
-        double B = 2*v.subtract(vTube.scale(v_dot_vTube)).dotProduct(p0TubeP0.subtract(vTube.scale(p0TubeP0_dot_vTube)));
-        double C = temp2.dotProduct(temp2) - _radius * _radius;
+        Vector v_subtract_vTube_scale_v_dot_vTube;
+        Vector p0TubeP0_subtract_vTube_scale_p0TubeP0_dot_vTube = null;
+
+        if (isZero(v_dot_vTube))
+            v_subtract_vTube_scale_v_dot_vTube = v;
+        else
+            v_subtract_vTube_scale_v_dot_vTube = v.subtract(vTube.scale(v_dot_vTube));
+        if (isZero(p0TubeP0_dot_vTube))
+            p0TubeP0_subtract_vTube_scale_p0TubeP0_dot_vTube = p0TubeP0;
+        else if (!p0TubeP0.equals(vTube.scale(p0TubeP0_dot_vTube)))
+            p0TubeP0_subtract_vTube_scale_p0TubeP0_dot_vTube = p0TubeP0.subtract(vTube.scale(p0TubeP0_dot_vTube));
+
+        if (isZero(p0TubeP0_dot_vTube) || !p0TubeP0.equals(vTube.scale(p0TubeP0_dot_vTube))) {
+            B = 2 * v_subtract_vTube_scale_v_dot_vTube.dotProduct(p0TubeP0_subtract_vTube_scale_p0TubeP0_dot_vTube);
+            C = p0TubeP0_subtract_vTube_scale_p0TubeP0_dot_vTube.dotProduct(p0TubeP0_subtract_vTube_scale_p0TubeP0_dot_vTube)
+                     -_radius * _radius;
+        }
+        else {
+            B = 0;
+            C = -_radius * _radius;
+        }
+        A = v_subtract_vTube_scale_v_dot_vTube.dotProduct(v_subtract_vTube_scale_v_dot_vTube);
 
         double desc = B*B - 4*A*C;
 

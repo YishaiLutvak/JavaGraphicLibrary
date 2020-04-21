@@ -121,12 +121,12 @@ public class TubeTest {
         assertEquals("Ray starts in the tube and cross the axisRay", List.of(p1), result);
 
         // TC16: Ray starts at the axisRay (1 points)
-        /*p1 = new Point3D(10, 5, 0);
+        p1 = new Point3D(10, 5, 0);
         result = tube.findIntersections(new Ray(
                 new Point3D(5, 0, 0),
                 new Vector(1, 1, 0)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray starts in the axisRay and cross the tube", List.of(p1), result);*/
+        assertEquals("Ray starts in the axisRay and cross the tube", List.of(p1), result);
 
         // TC17: Ray starts at tube and goes outside (0 points)
         assertEquals("Ray starts on the tube", null,
@@ -167,5 +167,35 @@ public class TubeTest {
                 tube.findIntersections(new Ray(
                         new Point3D(1, 5, 0),
                         new Vector(1, 0, 0))));
+
+        // TC23: p0TubeP0 orthogonal to vTube
+        p1 = new Point3D(1, -5, 0);
+        p2 = new Point3D(11, 5, 0);
+        result = tube.findIntersections(new Ray(
+                new Point3D(0, -6, 0),
+                new Vector(1, 1, 0)));
+        assertEquals("Wrong number of points", 2, result.size());
+        if (result.get(0).get_y().get() > result.get(1).get_y().get())
+            result = List.of(result.get(1), result.get(0));
+        assertEquals("Ray crosses tube", List.of(p1, p2), result);
+
+        // TC24: v orthogonal to vTube
+        p1 = new Point3D(5, -5, 0);
+        p2 = new Point3D(5, 5, 0);
+        result = tube.findIntersections(new Ray(
+                new Point3D(5, -10, 0),
+                new Vector(0, 1, 0)));
+        assertEquals("Wrong number of points", 2, result.size());
+        if (result.get(0).get_y().get() > result.get(1).get_y().get())
+            result = List.of(result.get(1), result.get(0));
+        assertEquals("Ray crosses tube", List.of(p1, p2), result);
+
+        // TC25: p0 equal to p0tube
+        p1 = new Point3D(5, 5, 0);
+        result = tube.findIntersections(new Ray(
+                new Point3D(0, 0, 0),
+                new Vector(1, 1, 0)));
+        assertEquals("Wrong number of points", 1, result.size());
+        assertEquals("Ray crosses tube", List.of(p1), result);
     }
 }
