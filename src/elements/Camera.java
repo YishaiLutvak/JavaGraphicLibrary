@@ -1,6 +1,7 @@
 package elements;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
 
@@ -15,7 +16,10 @@ public class Camera {
         this.vup = vup.normalize();
 
         this.vto = vto.normalize();
+
         this.vright = vup.crossProduct(vto);
+
+
     }
 
     public Point3D getLocation() {
@@ -32,6 +36,12 @@ public class Camera {
 
     public Vector getVto() {
         return vto;
+    }
+    public Ray constructRayThroughPixel (int nX, int nY,
+                                         int j, int i, double screenDistance,
+                                         double screenWidth, double screenHeight){
+
+        return null;
     }
 
 
