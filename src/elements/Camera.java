@@ -15,24 +15,24 @@ import static primitives.Util.isZero;
 public class Camera {
 
     protected Point3D location;
-    protected Vector vup;
-    protected Vector vright;
-    protected Vector vto;
+    protected Vector vUp;
+    protected Vector vRight;
+    protected Vector vTo;
 
     /**
      * Constract a camera by two vectors and location. Calculate the thirs vector
      * @param location the  location of the camera
      *
-     * @param vto vector from the camera to the geometry
-     * @param vup vector from the camera up. orhogonal to vto
+     * @param vTo vector from the camera to the geometry
+     * @param vUp vector from the camera up. orhogonal to vto
      */
-    public Camera(Point3D location, Vector vup, Vector vto) {
-        this.location = location;
-        this.vup = vup.normalized();
-        this.vto = vto.normalized();
-        if (!isZero(vup.dotProduct(vto)))
+    public Camera(Point3D location, Vector vUp, Vector vTo) {
+        this.location = new Point3D(location);
+        this.vUp = vUp.normalized();
+        this.vTo = vTo.normalized();
+        if (!isZero(vUp.dotProduct(vTo)))
             throw new IllegalArgumentException("vup not orthogonal to vto!");
-        this.vright = vup.crossProduct(vto);
+        this.vRight = vUp.crossProduct(vTo);
     }
 /**********getters**********/
     public Point3D getLocation() {
@@ -40,41 +40,44 @@ public class Camera {
     }
 
     public Vector getVup() {
-        return vup;
+        return vUp;
     }
 
     public Vector getVright() {
-        return vright;
+        return vRight;
     }
 
     public Vector getVto() {
-        return vto;
+        return vTo;
     }
 
     /**
      *
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @param screenDistance
-     * @param screenWidth
-     * @param screenHeight
-     * @return
+     * @param nX number of pixels in x axis of view plane
+     * @param nY number of pixels in y axis of view plane
+     * @param j index of column on the view plane
+     * @param i index of row on the view plane
+     * @param screenDistance the distance from the camera to the view plane
+     * @param screenWidth the total width of the view plane
+     * @param screenHeight the total height of the view plane
+     * @return ray from the camera to the pixel
      */
     public Ray constructRayThroughPixel (int nX, int nY,
                                          int j, int i, double screenDistance,
                                      double screenWidth, double screenHeight){
 
-        Point3D pc = location.add(vto.scale(screenDistance));
+        Point3D pCenter = location.add(vTo.scale(screenDistance));
         double rX = screenWidth/nX;
         double rY = screenHeight/nY;
-        Point3D pij = new Point3D(pc.add(vright.scale((j-(nX-1)/2)*rX).subtract(vup.scale((i-(nY-1)/2)*rY))));
-        Vector vij = new Vector(pij.subtract(location));
-        return new Ray(new Point3D(location),vij);
+
+        Point3D pIJ = pCenter;
+        double yI = (i-nY/2)*rY + rY/2;
+        double xJ = (j-nX/2)*rX + rX/2;
+
+        if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
+        if (yI != 0) pIJ = pIJ.add(vUp.scale(-yI));
+
+        Vector vIJ = new Vector(pIJ.subtract(location));
+        return new Ray(new Point3D(location),vIJ);
     }
-
-
-
-
 }
