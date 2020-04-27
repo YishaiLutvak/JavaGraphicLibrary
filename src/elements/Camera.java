@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.isZero;
+
 
 /**
  * represent a camera that photo 3D geometries
@@ -26,13 +28,11 @@ public class Camera {
      */
     public Camera(Point3D location, Vector vup, Vector vto) {
         this.location = location;
-        this.vup = vup.normalize();
-
-        this.vto = vto.normalize();
-
+        this.vup = vup.normalized();
+        this.vto = vto.normalized();
+        if (!isZero(vup.dotProduct(vto)))
+            throw new IllegalArgumentException("vup not orthogonal to vto!");
         this.vright = vup.crossProduct(vto);
-
-
     }
 /**********getters**********/
     public Point3D getLocation() {
@@ -64,9 +64,14 @@ public class Camera {
      */
     public Ray constructRayThroughPixel (int nX, int nY,
                                          int j, int i, double screenDistance,
-                                         double screenWidth, double screenHeight){
+                                     double screenWidth, double screenHeight){
 
-        return null;
+        Point3D pc = location.add(vto.scale(screenDistance));
+        double rX = screenWidth/nX;
+        double rY = screenHeight/nY;
+        Point3D pij = new Point3D(pc.add(vright.scale((j-(nX-1)/2)*rX).subtract(vup.scale((i-(nY-1)/2)*rY))));
+        Vector vij = new Vector(pij.subtract(location));
+        return new Ray(new Point3D(location),vij);
     }
 
 
