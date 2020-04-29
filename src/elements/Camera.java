@@ -15,9 +15,9 @@ import static primitives.Util.isZero;
 public class Camera {
 
     protected Point3D location;
+    protected Vector vTo;
     protected Vector vUp;
     protected Vector vRight;
-    protected Vector vTo;
 
     /**
      * Constract a camera by two vectors and location. Calculate the thirs vector
@@ -26,29 +26,29 @@ public class Camera {
      * @param vTo vector from the camera to the geometry
      * @param vUp vector from the camera up. orhogonal to vto
      */
-    public Camera(Point3D location, Vector vUp, Vector vTo) {
+    public Camera(Point3D location,Vector vTo ,Vector vUp ) {
         this.location = new Point3D(location);
-        this.vUp = vUp.normalized();
         this.vTo = vTo.normalized();
-        if (!isZero(vUp.dotProduct(vTo)))
-            throw new IllegalArgumentException("vup not orthogonal to vto!");
-        this.vRight = vUp.crossProduct(vTo);
+        this.vUp = vUp.normalized();
+        if (!isZero(vTo.dotProduct(vUp)))
+            throw new IllegalArgumentException("vTo not orthogonal to vUp!");
+        this.vRight = vTo.crossProduct(vUp);
     }
 /**********getters**********/
     public Point3D getLocation() {
-        return location;
+        return new Point3D(location);
     }
 
     public Vector getVup() {
-        return vUp;
+        return new Vector(vUp);
     }
 
     public Vector getVright() {
-        return vRight;
+        return new Vector(vRight);
     }
 
     public Vector getVto() {
-        return vTo;
+        return new Vector(vTo);
     }
 
     /**
@@ -66,18 +66,21 @@ public class Camera {
                                          int j, int i, double screenDistance,
                                      double screenWidth, double screenHeight){
 
+        if (screenDistance <= 0)
+            throw new IllegalArgumentException("distance must to be greater from zero");
         Point3D pCenter = location.add(vTo.scale(screenDistance));
+
         double rX = screenWidth/nX;
         double rY = screenHeight/nY;
 
-        Point3D pIJ = pCenter;
-        double yI = (i-nY/2)*rY + rY/2;
-        double xJ = (j-nX/2)*rX + rX/2;
+        double yI = (i-(double)nY/2)*rY + rY/2;
+        double xJ = (j-(double)nX/2)*rX + rX/2;
 
+        Point3D pIJ = pCenter;
         if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
         if (yI != 0) pIJ = pIJ.add(vUp.scale(-yI));
 
-        Vector vIJ = new Vector(pIJ.subtract(location));
-        return new Ray(new Point3D(location),vIJ);
+        Vector vIJ = pIJ.subtract(location);
+        return new Ray(getLocation(),vIJ);
     }
 }
