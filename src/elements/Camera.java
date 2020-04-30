@@ -20,11 +20,11 @@ public class Camera {
     protected Vector vRight;
 
     /**
-     * Constract a camera by two vectors and location. Calculate the thirs vector
+     * Constract a camera by two vectors and location. Calculate the third vector
      * @param location the  location of the camera
      *
      * @param vTo vector from the camera to the geometry
-     * @param vUp vector from the camera up. orhogonal to vto
+     * @param vUp vector from the camera up. orthogonal to vTo
      */
     public Camera(Point3D location,Vector vTo ,Vector vUp ) {
         this.location = new Point3D(location);

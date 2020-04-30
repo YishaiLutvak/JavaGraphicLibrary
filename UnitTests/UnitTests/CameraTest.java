@@ -60,25 +60,39 @@ public class CameraTest {
     }
 
     @Test
-    public void testIntegrationForSphere() {
-        // TC01: 3X3 Corner (0,0)
+    public void CameraSphereIntersections() {
         Camera camera1 = new Camera(
                 Point3D.ZERO,
                 new Vector(0, 0,1),
                 new Vector(0,-1,0));
 
+        Camera camera2 = new Camera(
+                new Point3D(0,0,-0.5),
+                new Vector(0, 0,1),
+                new Vector(0,-1,0));
+
+        List<Ray> rays1 = new ArrayList<Ray>();
+        for (int i = 0; i < 3;i++)
+            for (int j = 0; j < 3;j++)
+                rays1.add(camera1.constructRayThroughPixel(
+                        3,3, j, i, 1,3,3));
+
+        List<Ray> rays2 = new ArrayList<Ray>();
+        for (int i = 0; i < 3;i++)
+            for (int j = 0; j < 3;j++)
+                rays2.add(camera2.constructRayThroughPixel(
+                        3,3, j, i, 1,3,3));
+
+        int sumIntersections = 0;
+
+        // TC01: 3X3 Corner (0,0)
+
+
         Sphere sphere1 = new Sphere(
                 1,
                 new Point3D(0,0,3));
 
-        List<Ray> rays = new ArrayList<Ray>();
-        for (int i = 0; i < 3;i++)
-            for (int j = 0; j < 3;j++)
-                rays.add(camera1.constructRayThroughPixel(
-                        3,3, j, i, 1,3,3));
-
-        int sumIntersections = 0;
-        for (Ray ray : rays) {
+        for (Ray ray : rays1) {
             List<Point3D> tempIntersections = sphere1.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections+= tempIntersections.size();
@@ -86,68 +100,60 @@ public class CameraTest {
         assertEquals("Wrong number of points",2,sumIntersections);
 
 
-        /*assertEquals("Wrong number of points",2,result.size());
-
         // TC02: 3X3 Corner (0,0)
-        Camera camera2 = new Camera(
-                new Point3D(0,0,-0.5),
-                new Vector(0, 0,1),
-                new Vector(0,-1,0));
 
         Sphere sphere2 = new Sphere(
                 2.5,
                 new Point3D(0,0,2.5));
 
-        result.clear();
-        for (int i = 0; i < 3;i++)
-            for (int j = 0; j < 3;j++)
-                result.addAll(
-                        sphere2.findIntersections(
-                                camera2.constructRayThroughPixel(
-                                        3,3, j, i, 1,3,3)));
-        assertEquals("Wrong number of points",18,result.size());
+        sumIntersections = 0;
+        for (Ray ray : rays2) {
+            List<Point3D> tempIntersections = sphere2.findIntersections(ray);
+            if (tempIntersections != null)
+                sumIntersections+= tempIntersections.size();
+        }
+        assertEquals("Wrong number of points",18,sumIntersections);
+
 
         // TC03: 3X3 Corner (0,0)
         Sphere sphere3 = new Sphere(
                 2,
                 new Point3D(0,0,2));
 
-        result.clear();
-        for (int i = 0; i < 3;i++)
-            for (int j = 0; j < 3;j++)
-                result.addAll(
-                        sphere3.findIntersections(
-                                camera2.constructRayThroughPixel(
-                                        3,3, j, i, 1,3,3)));
-        assertEquals("Wrong number of points",10,result.size());
+        sumIntersections = 0;
+        for (Ray ray : rays2) {
+            List<Point3D> tempIntersections = sphere3.findIntersections(ray);
+            if (tempIntersections != null)
+                sumIntersections+= tempIntersections.size();
+        }
+        assertEquals("Wrong number of points",10,sumIntersections);
 
         // TC04: 3X3 Corner (0,0)
         Sphere sphere4 = new Sphere(
                 4,
                 new Point3D(0,0,1));
 
-        result.clear();
-        for (int i = 0; i < 3;i++)
-            for (int j = 0; j < 3;j++)
-                result.addAll(
-                        sphere4.findIntersections(
-                                camera1.constructRayThroughPixel(
-                                        3,3, j, i, 1,3,3)));
-        assertEquals("Wrong number of points",9,result.size());
+        sumIntersections = 0;
+        for (Ray ray : rays1) {
+            List<Point3D> tempIntersections = sphere4.findIntersections(ray);
+            if (tempIntersections != null)
+                sumIntersections+= tempIntersections.size();
+        }
+        assertEquals("Wrong number of points",9,sumIntersections);
+
 
         // TC05: 3X3 Corner (0,0)
         Sphere sphere5 = new Sphere(
                 0.5,
                 new Point3D(0,0,-1));
 
-        result.clear();
-        for (int i = 0; i < 3;i++)
-            for (int j = 0; j < 3;j++)
-                result.addAll(
-                        sphere5.findIntersections(
-                                camera1.constructRayThroughPixel(
-                                        3,3, j, i, 1,3,3)));
-        assertEquals("Wrong number of points",0,result.size());*/
+        sumIntersections = 0;
+        for (Ray ray : rays1) {
+            List<Point3D> tempIntersections = sphere5.findIntersections(ray);
+            if (tempIntersections != null)
+                sumIntersections+= tempIntersections.size();
+        }
+        assertEquals("Wrong number of points",0,sumIntersections);
     }
 
 }
