@@ -3,6 +3,7 @@ package UnitTests;
 import elements.Camera;
 import geometries.Plane;
 import geometries.Sphere;
+import geometries.Triangle;
 import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
@@ -185,7 +186,34 @@ public class IntegrationTest {
 
     @Test
     public void CameraTriangleIntersections() {
+        // TC21: 3X3
+        // the triangle is parallel to the view plane - one intersection point
+        Triangle triangle1 = new Triangle(
+                new Point3D(0, -1, 2),
+                new Point3D(1, 1, 2),
+                new Point3D(-1, 1, 2));
 
+        sumIntersections = 0;
+        for (Ray ray : rays1) {
+            List<Point3D> tempIntersections = triangle1.findIntersections(ray);
+            if (tempIntersections != null)
+                sumIntersections+= tempIntersections.size();
+        }
+        assertEquals("Wrong number of points",1,sumIntersections);
+
+        // TC22: 3X3
+        // the triangle is parallel to the view plane - two intersection point
+        Triangle triangle2 = new Triangle(
+                new Point3D(0, -20, 2),
+                new Point3D(1, 1, 2),
+                new Point3D(-1, 1, 2));
+
+        sumIntersections = 0;
+        for (Ray ray : rays1) {
+            List<Point3D> tempIntersections = triangle2.findIntersections(ray);
+            if (tempIntersections != null)
+                sumIntersections+= tempIntersections.size();
+        }
+        assertEquals("Wrong number of points",2,sumIntersections);
     }
-
 }
