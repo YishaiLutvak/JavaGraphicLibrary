@@ -18,9 +18,10 @@ import static org.junit.Assert.*;
 /**
  * Testing integration of camera and intersection
  * in sphere, plane and triangle
- *  @author Michael Bergshtein and Yishai Lutvak
+ * @author Michael Bergshtein and Yishai Lutvak
  */
 public class IntegrationTest {
+
     //camera for testing
     private Camera camera1 = new Camera(
             Point3D.ZERO,
@@ -38,7 +39,7 @@ public class IntegrationTest {
     int sumIntersections = 0;
 
     /**
-     * construct the intersections for rays1 and rays2
+     * construct the rays for camera1 (rays1) and the rays for camera2 (rays2)
      */
     public IntegrationTest() {
         for (int i = 0; i < 3;i++)
@@ -53,7 +54,11 @@ public class IntegrationTest {
                         3,3, j, i, 1,3,3));
     }
 
-
+    /**
+     * A test for the integration between the camera and the intersecting of the sphere by rays
+     * {@link elements.Camera#constructRayThroughPixel(int, int, int, int, double, double, double)}.
+     * {@link geometries.Sphere#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void CameraSphereIntersections() {
 
@@ -133,6 +138,11 @@ public class IntegrationTest {
         assertEquals("Wrong number of points",0,sumIntersections);
     }
 
+    /**
+     * A test for the integration between the camera and the intersecting of the plane by rays
+     * {@link elements.Camera#constructRayThroughPixel(int, int, int, int, double, double, double)}.
+     * {@link geometries.Plane#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void CameraPlaneIntersections() {
         // TC11: 3X3
@@ -184,6 +194,11 @@ public class IntegrationTest {
         assertEquals("Wrong number of points",0,sumIntersections);
     }
 
+    /**
+     * A test for the integration between the camera and the intersecting of the triangle by rays
+     * {@link elements.Camera#constructRayThroughPixel(int, int, int, int, double, double, double)}.
+     * {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void CameraTriangleIntersections() {
         // TC21: 3X3
