@@ -1,7 +1,7 @@
 package renderer;
 
 /**
- * Test rendering abasic image
+ * Test rendering a basic image
  *
  * @author Dan
  */
