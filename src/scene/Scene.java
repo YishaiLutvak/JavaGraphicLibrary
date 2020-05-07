@@ -17,8 +17,8 @@ public class Scene {
 
 
     /**
-     *
-     * @param name
+     *constructor
+     * @param name name of the scene
      *
      */
     public Scene(String name) {
@@ -79,23 +79,23 @@ public class Scene {
     }
 
     /**
-     *
-     * @param _background
+     * setter of background
+     * @param _background background color
      */
     public void setBackground(Color _background) {
         this._background = _background;
     }
 
     /**
-     *
-     * @param _ambientLight
+     * setter of ambient light
+     * @param _ambientLight the ambient light color and intensity
      */
     public void setAmbientLight(AmbientLight _ambientLight) {
         this._ambientLight = _ambientLight;
     }
 
     /**
-     *
+     *setter of the scene camera
      * @param _camera
      */
     public void setCamera(Camera _camera) {
@@ -103,16 +103,16 @@ public class Scene {
     }
 
     /**
-     *
-     * @param _distance
+     * setter of distance
+     * @param _distance the distance bdtween the camera and the view plane
      */
     public void setDistance(double _distance) {
         this._distance = _distance;
     }
 
     /**
-     *
-     * @param geometries
+     * Adding a new geometry to the geometry list
+     * @param geometries one or more new geometries
      */
     public void addGeometries(Intersectable... geometries){
         _geometries.add(geometries);

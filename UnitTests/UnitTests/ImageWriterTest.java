@@ -7,9 +7,12 @@ import java.awt.*;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test a simple image with no any geometries
+ */
 public class ImageWriterTest {
     @Test
-    void testWriteToImage() {
+    public void testWriteToImage() {
         ImageWriter imageWriter = new ImageWriter("firstImage",1600,1000, 800, 500);
         int Nx=imageWriter.getNx();
         int Ny = imageWriter.getNy();
