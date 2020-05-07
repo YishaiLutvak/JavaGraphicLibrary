@@ -3,59 +3,122 @@ package scene;
 import elements.AmbientLight;
 import elements.Camera;
 import geometries.Geometries;
+import geometries.Intersectable;
 import primitives.Color;
 
 public class Scene {
     private final  String _name;
-    private final Color _background;
-    private final AmbientLight _ambientLight;
-    private final Camera _camera;
-    private final double _distance;
+    private  Color _background;
+    private  AmbientLight _ambientLight;
+    private  Camera _camera;
+    private  double _distance;
     private Geometries _geometries;
+
+
 
     /**
      *
      * @param name
-     * @param background
-     * @param ambientLight
-     * @param camera
-     * @param distance
+     *
      */
-    public Scene(String name, Color background, AmbientLight ambientLight, Camera camera, double distance) {
+    public Scene(String name) {
         this._name = name;
-        this._background = background;
-        this._ambientLight = ambientLight;
-        this._camera = camera;
-        this._distance = distance;
+
         this._geometries = new Geometries();
     }
 
-    public void addGeometries(Geometries... geometries){
-        _geometries = new Geometries();
 
+
+    // ***************** Getters/Setters ********************** //
+
+    /**
+     *
+     * @return the name of the scene
+     */
+    public String get_name() {
+        return _name;
     }
 
+    /**
+     * getter of background
+     * @return the background color
+     */
     public Color getBackground() {
         return _background;
     }
-
+    /**
+     * getter of AmbientLight
+     * @return the AmbientLight color
+     */
     public AmbientLight getAmbientLight() {
         return _ambientLight;
     }
 
+    /**
+     * getter of camera
+     * @return the camera
+     */
     public Camera getCamera() {
         return _camera;
     }
 
+    /**
+     * getter of the distance
+     * @return _distande
+     */
     public double getDistance() {
         return _distance;
     }
 
+    /**
+     * getter of geometries
+     * @return _geometries
+     */
     public Geometries getGeometries() {
         return _geometries;
     }
 
-    public static class SceneBuilder{
+    /**
+     *
+     * @param _background
+     */
+    public void setBackground(Color _background) {
+        this._background = _background;
+    }
+
+    /**
+     *
+     * @param _ambientLight
+     */
+    public void setAmbientLight(AmbientLight _ambientLight) {
+        this._ambientLight = _ambientLight;
+    }
+
+    /**
+     *
+     * @param _camera
+     */
+    public void setCamera(Camera _camera) {
+        this._camera = _camera;
+    }
+
+    /**
+     *
+     * @param _distance
+     */
+    public void setDistance(double _distance) {
+        this._distance = _distance;
+    }
+
+    /**
+     *
+     * @param geometries
+     */
+    public void addGeometries(Intersectable... geometries){
+        _geometries.add(geometries);
+
+    }
+    /*public static class SceneBuilder{
         private String _name;
         private Color _background;
         private AmbientLight _ambientLight;
@@ -100,6 +163,6 @@ public class Scene {
         private void validateSceneObject(Scene scene){
             //Do some basic validations to check
             //if scene object does not break any assumption of system
-        }
-    }
+        }*
+    }*/
 }
