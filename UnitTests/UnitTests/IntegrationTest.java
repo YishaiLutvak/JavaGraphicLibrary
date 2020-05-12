@@ -8,10 +8,8 @@ import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
-
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 
@@ -35,8 +33,8 @@ public class IntegrationTest {
             new Vector(0, -1, 0));
 
     //list of results for camera1 and camera2
-    List<Ray> rays1 = new ArrayList<Ray>();
-    List<Ray> rays2 = new ArrayList<Ray>();
+    List<Ray> rays1 = new LinkedList<Ray>();
+    List<Ray> rays2 = new LinkedList<Ray>();
     int sumIntersections = 0;
 
     /**

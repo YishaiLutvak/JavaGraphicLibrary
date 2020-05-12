@@ -9,6 +9,11 @@ import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Test rendering abasic image
  *
@@ -43,4 +48,24 @@ public class RenderTest {
         render.printGrid(50, java.awt.Color.YELLOW);
         render.writeToImage();
     }
+
+   /* *//**
+     * Test method for {@link Render#getClosestPoint(List)}.
+     *//*
+    @Test
+    public void TestGetClosestPoint() {
+        Scene scene = new Scene("Test getClosestPoint method");
+        scene.setCamera(new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)));
+        scene.setDistance(1);
+        scene.setBackground(new Color(75, 127, 90));
+        scene.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1));
+
+        scene.addGeometries(new Sphere(1, new Point3D(0, 0, 4)));
+
+        ImageWriter imageWriter = new ImageWriter("render for getClosestPoint test", 500, 500, 500, 500);
+        Render render = new Render(imageWriter, scene);
+
+        Point3D closest = render.getClosestPoint(List.of(new Point3D(0, 0, 3) ,new Point3D(0, 0, 5)));
+        assertEquals("The point is not the closest point to camera",closest,new Point3D(0,0,3));
+    }*/
 }

@@ -1,16 +1,10 @@
 package UnitTests;
 
 import static org.junit.Assert.*;
-
-import geometries.Intersectable;
-import geometries.Sphere;
 import org.junit.Test;
-
 import elements.Camera;
 import primitives.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Testing Camera Class

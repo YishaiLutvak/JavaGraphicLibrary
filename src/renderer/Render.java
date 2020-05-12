@@ -18,7 +18,7 @@ public class Render {
     Scene _scene;
 
     /**
-     * constractor
+     * constructor
      * @param imageWriter save in file the image
      * @param scene contain all the elements of the scene
      */
@@ -28,11 +28,14 @@ public class Render {
     }
 
     /**
-     * The function photos the closest geometry's point through each
-     * pixel in the view plane. Then color it in the point color.
-     * If their is no geometry color in the background color
+     * renderImage function
+     * The function colors the view plane
+     * If their are intersection points with geometries,
+     * the function Takes the closest intersection points to the camera,
+     * and paints the pixels of the closest points in the color of the points.
+     * In addition, the function colors the rest of the pixels in the background color
      */
-    public 	void renderImage(){
+    public void renderImage(){
         Camera camera = _scene.getCamera();
         Intersectable geometries = _scene.getGeometries();
         java.awt.Color background = _scene.getBackground().getColor();
@@ -54,7 +57,6 @@ public class Render {
                     _imageWriter.writePixel(j, i, calcColor(closestPoint).getColor());
                 }
             }
-
         }
     }
 
@@ -66,21 +68,22 @@ public class Render {
     }
 
     /**
-     *
-     * @param p A 3D point
+     * calcColor function
+     * Calculate the point's color
+     * @param point a point3D
      * @return color representing the point's appearance
      */
-    private Color calcColor(Point3D p){
+    private Color calcColor(Point3D point){
         return _scene.getAmbientLight().getIntensity();
     }
 
     /**
-     *
-     * @param intersectionPoints A list of point3D intersection points with the ray
-     *                           from the camera
+     * getClosestPoint private function
+     * @param intersectionPoints a list of intersection points
+     * between the geometries and the ray from the camera
      * @return the closest point
      */
-    private Point3D	getClosestPoint(List<Point3D> intersectionPoints){
+    private Point3D getClosestPoint(List<Point3D> intersectionPoints){
         Point3D cameraLocation = _scene.getCamera().getLocation();
         Point3D min = intersectionPoints.get(0);
         for (Point3D point: intersectionPoints) {
@@ -92,12 +95,12 @@ public class Render {
     }
 
     /**
-     *
+     * printGrid function
      * @param interval the size of the grid's squares
      * @param color the color of the grid
      */
-    public	void printGrid(int interval, java.awt.Color color){
-        int Nx=_imageWriter.getNx();
+    public void printGrid(int interval, java.awt.Color color){
+        int Nx = _imageWriter.getNx();
         int Ny = _imageWriter.getNy();
 
         for (int i= 0; i < Ny;i++)
