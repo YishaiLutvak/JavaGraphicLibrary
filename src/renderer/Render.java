@@ -10,8 +10,7 @@ import scene.Scene;
 import java.util.List;
 
 /**
- * rendering a  image
- *
+ * Render class for rendering a image
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public class Render {
@@ -30,8 +29,8 @@ public class Render {
 
     /**
      * The function photos the closest geometry's point through each
-     * pixel in the view plane. Then color it in the point
-     * color. If their is no geometry color in the background color
+     * pixel in the view plane. Then color it in the point color.
+     * If their is no geometry color in the background color
      */
     public 	void renderImage(){
         Camera camera = _scene.getCamera();

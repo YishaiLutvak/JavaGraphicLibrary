@@ -17,22 +17,19 @@ public class Scene {
 
 
     /**
-     *constructor
+     * constructor
      * @param name name of the scene
-     *
      */
     public Scene(String name) {
         this._name = name;
-
         this._geometries = new Geometries();
     }
 
 
-
-    // ***************** Getters/Setters ********************** //
+    // ***************** Getters ********************** //
 
     /**
-     *
+     * getter of name
      * @return the name of the scene
      */
     public String get_name() {
@@ -64,7 +61,7 @@ public class Scene {
 
     /**
      * getter of the distance
-     * @return _distande
+     * @return _distance
      */
     public double getDistance() {
         return _distance;
@@ -77,6 +74,9 @@ public class Scene {
     public Geometries getGeometries() {
         return _geometries;
     }
+
+
+    // ***************** Setters ********************** //
 
     /**
      * setter of background
@@ -110,59 +110,12 @@ public class Scene {
         this._distance = _distance;
     }
 
+
     /**
      * Adding a new geometry to the geometry list
      * @param geometries one or more new geometries
      */
     public void addGeometries(Intersectable... geometries){
         _geometries.add(geometries);
-
     }
-    /*public static class SceneBuilder{
-        private String _name;
-        private Color _background;
-        private AmbientLight _ambientLight;
-        private Camera _camera;
-        private double _distance;
-        private Geometries _geometries;
-
-        public SceneBuilder (String name){
-            this._name = name;
-        }
-
-        public SceneBuilder setBackground(Color background) {
-            this._background = background;
-            return this;
-        }
-
-        public SceneBuilder setAmbientLight(AmbientLight ambientLight) {
-            this._ambientLight = ambientLight;
-            return this;
-        }
-
-        public SceneBuilder setCamera(Camera camera) {
-            this._camera = camera;
-            return this;
-        }
-
-        public SceneBuilder setDistance(double distance) {
-            this._distance = distance;
-            return this;
-        }
-
-        public SceneBuilder setGeometries(Geometries geometries) {
-            this._geometries = geometries;
-            return this;
-        }
-
-        public Scene build(){
-            Scene scene = new Scene(_name,_background,_ambientLight,_camera,_distance);
-            validateSceneObject(scene);
-            return scene;
-        }
-        private void validateSceneObject(Scene scene){
-            //Do some basic validations to check
-            //if scene object does not break any assumption of system
-        }*
-    }*/
 }

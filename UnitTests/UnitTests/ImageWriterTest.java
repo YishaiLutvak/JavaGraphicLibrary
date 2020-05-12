@@ -8,9 +8,19 @@ import java.awt.*;
 import static org.junit.Assert.*;
 
 /**
- * Test a simple image with no any geometries
+ * Testing ImageWriter class
+ * by creating simple image with no any geometries
+ * @author Michael Bergshtein and Yishai Lutvak
  */
 public class ImageWriterTest {
+    /**
+     * Test for
+     * {@link renderer.ImageWriter#ImageWriter(String, double, double, int, int)}.
+     * {@link ImageWriter#getNx()}
+     * {@link ImageWriter#getNy()}
+     * {@link renderer.ImageWriter#writePixel(int, int, Color)}
+     * {@link ImageWriter#writeToImage()}
+     */
     @Test
     public void testWriteToImage() {
         ImageWriter imageWriter = new ImageWriter("firstImage",1600,1000, 800, 500);
@@ -23,7 +33,5 @@ public class ImageWriterTest {
                 else
                     imageWriter.writePixel(j,i, Color.BLUE);
         imageWriter.writeToImage();
-
     }
-
 }
