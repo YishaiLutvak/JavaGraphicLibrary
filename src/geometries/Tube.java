@@ -72,7 +72,7 @@ public class Tube extends RadialGeometry {
      * @return A list of intersection points, if any.
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
 
         Point3D p0 = ray.get_start();
         Vector v = ray.get_direction();
@@ -132,7 +132,7 @@ public class Tube extends RadialGeometry {
 
         if (t1 <= 0 && t2 <= 0) return null;
         if (t1 > 0 && t2 > 0)
-            return List.of(ray.getPoint(t1), ray.getPoint(t2));
-        else return List.of(ray.getPoint(t1));
+            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
+        else return List.of(new GeoPoint(this,ray.getPoint(t1)));
     }
 }
