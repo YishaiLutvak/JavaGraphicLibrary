@@ -9,7 +9,7 @@ import static primitives.Util.*;
  *
  * @author Dan Zilberstein
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -90,8 +90,8 @@ public class Polygon implements Geometry {
      * @return a list of the intersect points
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> intersections = _plane.findIntersections(ray);
+    public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> intersections = _plane.findIntersections(ray);
         if (intersections == null) return null;
 
         Point3D p0 = ray.get_start();
@@ -111,6 +111,7 @@ public class Polygon implements Geometry {
             if(positive != (sign > 0)) return null;
         }
 
+        intersections.get(0)._geometry = this;
         return intersections;
     }
 }

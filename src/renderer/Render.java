@@ -109,10 +109,3 @@ public class Render {
                     _imageWriter.writePixel(j, i, color);
     }
 }
-
-
-
-
-
-
-

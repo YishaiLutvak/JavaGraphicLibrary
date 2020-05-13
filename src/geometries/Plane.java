@@ -11,7 +11,7 @@ import static primitives.Util.*;
  * by point and normal
  * @author Michael Bergshtein and Yishai Lutvak
  */
-public class Plane implements Geometry{
+public class Plane extends Geometry{
     protected Point3D _p;
     protected Vector _normal;
 
@@ -76,7 +76,7 @@ public class Plane implements Geometry{
      * @return a list of intersect points
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         Vector p0Q;
         try {
             p0Q = _p.subtract(ray.get_start());
@@ -89,7 +89,7 @@ public class Plane implements Geometry{
             return null; // ray is parallel to the plane - no intersections
 
         double t = alignZero(_normal.dotProduct(p0Q) / nv);
-        return t <= 0 ? null : List.of(ray.getPoint(t));
+        return t <= 0 ? null : List.of(new GeoPoint (this,ray.getPoint(t)));
         // if ray start from plane there is no intersections
         // else return point intersections
     }
