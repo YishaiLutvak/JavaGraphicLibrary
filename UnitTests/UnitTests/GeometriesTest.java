@@ -1,6 +1,7 @@
 package UnitTests;
 
 import geometries.*;
+import geometries.Intersectable.GeoPoint;
 import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
@@ -36,7 +37,7 @@ public class GeometriesTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Some geometries are intersected but not all
-        List<Point3D> result = threeGeometries.findIntersections(new Ray(
+        List<GeoPoint> result = threeGeometries.findIntersections(new Ray(
                         new Point3D(0, 0, -1),
                         new Vector(0, 1, 0)));
         assertEquals("Some geometries are intersected but not all - Wrong number of points", 3, result.size());

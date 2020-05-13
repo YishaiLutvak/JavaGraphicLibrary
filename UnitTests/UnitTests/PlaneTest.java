@@ -1,5 +1,7 @@
 package UnitTests;
 
+import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
 import org.junit.Test;
 import primitives.Point3D;
@@ -51,11 +53,11 @@ public class PlaneTest {
 
         //T02: Ray starts before the plane(1 points)
         Point3D crossPoint = new Point3D(0,2,1);
-        List<Point3D> result = plane.findIntersections(new Ray(
+        List<GeoPoint> result = plane.findIntersections(new Ray(
                 new Point3D(0, 1, 0),
                 new Vector(0, 1, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses plane", List.of(crossPoint), result);
+        assertEquals("Ray crosses plane", List.of(new GeoPoint(plane,crossPoint)), result);
 
         //T03: Ray starts after the plane(0 points)
         assertEquals("Ray's starts after plane", null,
@@ -97,6 +99,6 @@ public class PlaneTest {
                 new Point3D(0, 1, 0),
                 new Vector(0, 0, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses plane", List.of(crossPoint), result);
+        assertEquals("Ray crosses plane", List.of(new GeoPoint(plane,crossPoint)), result);
     }
 }

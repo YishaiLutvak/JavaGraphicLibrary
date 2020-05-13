@@ -1,6 +1,8 @@
 package UnitTests;
 
 import static org.junit.Assert.*;
+
+import geometries.Intersectable.GeoPoint;
 import org.junit.Test;
 import geometries.*;
 import primitives.*;
@@ -128,11 +130,11 @@ public class PolygonTest {
         //T01: Ray starts before the polygon and cross the polygon(1 points)
         Point3D crossPoint = new Point3D(1,1,1);
 
-        List<Point3D> result = polygon.findIntersections(new Ray(
+        List<GeoPoint> result = polygon.findIntersections(new Ray(
                 new Point3D(1, 0, 0),
                 new Vector(0, 1, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses polygon", List.of(crossPoint), result);
+        assertEquals("Ray crosses polygon", List.of(new GeoPoint(polygon,crossPoint)), result);
 
         //T02: Ray cross outside against vertex(0 points)
         assertEquals("Ray cross outside against vertex", null,

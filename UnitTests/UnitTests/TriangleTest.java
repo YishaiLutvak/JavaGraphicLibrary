@@ -1,5 +1,6 @@
 package UnitTests;
 
+import geometries.Intersectable;
 import geometries.Triangle;
 import org.junit.Test;
 import primitives.Point3D;
@@ -8,6 +9,7 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static geometries.Intersectable.*;
 import static org.junit.Assert.*;
 
 /**
@@ -47,11 +49,11 @@ public class TriangleTest {
         //T01: Ray starts before the triangle and cross the triangle(1 points)
         Point3D crossPoint = new Point3D(0,0.5,1);
 
-        List<Point3D> result = triangle.findIntersections(new Ray(
+        List<GeoPoint> result = triangle.findIntersections(new Ray(
                 new Point3D(0, 1, 0),
                 new Vector(0, -0.5, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses triangle", List.of(crossPoint), result);
+        assertEquals("Ray crosses triangle", List.of(new GeoPoint(triangle,crossPoint)), result);
 
         //T02: Ray cross outside against vertex(0 points)
         assertEquals("Ray cross outside against vertex", null,
@@ -117,7 +119,7 @@ public class TriangleTest {
                 new Point3D(0, 1, 0),
                 new Vector(0, 0, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses triangle", List.of(crossPoint), result);
+        assertEquals("Ray crosses triangle", List.of(new GeoPoint(triangle,crossPoint)), result);
 
         //T17: Ray starts on the triangle(0 points)
         assertEquals("Ray starts on the triangle and orthogonal", null,

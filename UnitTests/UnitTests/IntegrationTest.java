@@ -1,6 +1,8 @@
 package UnitTests;
 
 import elements.Camera;
+import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
@@ -70,7 +72,7 @@ public class IntegrationTest {
                 new Point3D(0, 0, 3));
 
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = sphere1.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere1.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -86,7 +88,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays2) {
-            List<Point3D> tempIntersections = sphere2.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere2.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -101,7 +103,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays2) {
-            List<Point3D> tempIntersections = sphere3.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere3.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -115,7 +117,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = sphere4.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere4.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -130,7 +132,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = sphere5.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere5.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -150,7 +152,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = plane1.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane1.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -162,7 +164,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = plane2.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane2.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -174,7 +176,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = plane3.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane3.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -186,7 +188,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = plane4.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane4.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -209,7 +211,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = triangle1.findIntersections(ray);
+            List<GeoPoint> tempIntersections = triangle1.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -224,7 +226,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<Point3D> tempIntersections = triangle2.findIntersections(ray);
+            List<GeoPoint> tempIntersections = triangle2.findIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
