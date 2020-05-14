@@ -1,6 +1,8 @@
 package geometries;
 
 import java.util.List;
+
+import elements.Material;
 import primitives.*;
 import static primitives.Util.*;
 
@@ -40,7 +42,8 @@ public class Polygon extends Geometry {
      *                                  <li>The polygon is concave (not convex)</li>
      *                                  </ul>
      */
-    public Polygon(Point3D... vertices) {
+    public Polygon(Color emissionLight, Material material, Point3D... vertices) {
+        super(emissionLight, material);
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -77,6 +80,23 @@ public class Polygon extends Geometry {
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
+    }
+
+    /**
+     *
+     * @param emissionLight
+     * @param vertices
+     */
+    public Polygon(Color emissionLight, Point3D... vertices) {
+        this(emissionLight, new Material(0, 0, 0), vertices);
+    }
+
+    /**
+     *
+     * @param vertices
+     */
+    public Polygon(Point3D... vertices) {
+        this(Color.BLACK, new Material(0, 0, 0), vertices);
     }
 
     @Override

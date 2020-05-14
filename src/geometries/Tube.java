@@ -1,5 +1,6 @@
 package geometries;
 
+import elements.Material;
 import primitives.*;
 import java.util.List;
 import static primitives.Util.isZero;
@@ -15,7 +16,31 @@ public class Tube extends RadialGeometry {
      */
     protected Ray _axisRay;
 
+
     /*********************constractors*********************/
+    /**
+     *
+     * @param emissionLight
+     * @param material
+     * @param radius
+     * @param ray
+     */
+    public Tube(Color emissionLight, Material material, double radius, Ray ray) {
+        super(emissionLight, material, radius);
+        this._axisRay = ray;
+    }
+
+    /**
+     *
+     * @param emissionLight
+     * @param radius
+     * @param ray
+     */
+    public Tube(Color emissionLight, double radius, Ray ray) {
+        super(emissionLight, radius);
+        this._axisRay = ray;
+    }
+
     /**
      * constractor by double and Ray values
      * @param radius for the length of the radius
