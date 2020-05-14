@@ -14,37 +14,53 @@ public abstract class Geometry implements Intersectable  {
      * @param p in the surface
      * @return unit orthogonal vector
      */
-    protected  Color _emmission;
+    protected Color _emissionLight;
     protected Material _material;
 
-    abstract public Vector getNormal(Point3D p);
-    //*********************cons************************//
+    //*********************Constructors************************//
 
-    public Geometry(Color _emmission, Material _material) {
-        this._emmission = _emmission;
-        this._material = _material;
+    public Geometry(Color emmissionLight, Material material) {
+        this._emissionLight = emmissionLight;
+        this._material = material;
     }
 
     /**
      *
-     * @param _emmisionLight
+     * @param emmissionLight
      */
-    public Geometry(Color _emmisionLight) {
-        this._emmission = _emmisionLight;
-        _material = new Material(0d,0d,0);
+    public Geometry(Color emmissionLight) {
+        this(emmissionLight,new Material(0d,0d,0));
+       /* this._emissionLight = emmissionLight;
+        this._material = new Material(0d,0d,0);*/
     }
     /**
      *
      */
     public Geometry() {
-        _emmission = Color.BLACK;
+        this(Color.BLACK);
+        /*_emissionLight = Color.BLACK;*/
+    }
+
+    //*********************Getter************************//
+
+    /**
+     *
+     * @return
+     */
+    public Color getEmissionLight() {
+        return _emissionLight;
     }
 
     /**
      *
      * @return
      */
-    public Color getEmmission() {
-        return _emmission;
+    public Material getMaterial() {
+        return _material;
     }
+
+    //**********************abstract methods*********************//
+
+    public abstract Vector getNormal(Point3D p);
+
 }

@@ -1,7 +1,7 @@
 package geometries;
 
+import elements.Material;
 import primitives.*;
-
 import java.util.List;
 
 import static primitives.Util.*;
@@ -17,22 +17,77 @@ public class Plane extends Geometry{
 
     /**********constractors**********/
 
-    /**
-     *constractor by 3 Point3D
-     * @param point_A for first point in plane
-     * @param point_B for second point in plane
-     * @param point_C for third point in plane
-     */
-    public Plane(Point3D point_A, Point3D point_B, Point3D point_C) {
-        _p = point_A;
+    private void initNormal(Point3D p1, Point3D p2, Point3D p3) {
+        _p = new Point3D(p1);
 
         //Calculate the normal by creating two vectors between the points
-        Vector u = new Vector(point_B.subtract(point_A));
-        Vector v = new Vector(point_C.subtract(point_A));
+        Vector u = new Vector(p2.subtract(p1));
+        Vector v = new Vector(p3.subtract(p1));
         Vector n = u.crossProduct(v);
         n.normalize();
 
         _normal = n.scale(-1);
+    }
+
+    /**
+     *
+     * @param emissionLight
+     * @param material
+     * @param p1
+     * @param p2
+     * @param p3
+     */
+    public Plane(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
+        super(emissionLight, material);
+        initNormal(p1, p2, p3);
+    }
+
+    /**
+     *
+     * @param emissionLight
+     * @param p1
+     * @param p2
+     * @param p3
+     */
+    public Plane(Color emissionLight, Point3D p1, Point3D p2, Point3D p3) {
+        super(emissionLight);
+        initNormal(p1, p2, p3);
+    }
+
+    /**
+     *constractor by 3 Point3D
+     * @param p1 for first point in plane
+     * @param p2 for second point in plane
+     * @param p3 for third point in plane
+     */
+    public Plane(Point3D p1, Point3D p2, Point3D p3) {
+        super();
+        initNormal(p1, p2, p3);
+    }
+
+    /**
+     *
+     * @param emissionLight
+     * @param material
+     * @param point
+     * @param vector
+     */
+    public Plane(Color emissionLight, Material material,Point3D point, Vector vector) {
+        super(emissionLight,material);
+        this._p = new Point3D(point);
+        this._normal = new Vector(vector);
+    }
+
+    /**
+     *
+     * @param emissionLight
+     * @param point
+     * @param vector
+     */
+    public Plane(Color emissionLight,Point3D point, Vector vector) {
+        super(emissionLight);
+        this._p = new Point3D(point);
+        this._normal = new Vector(vector);
     }
 
     /**
@@ -41,6 +96,7 @@ public class Plane extends Geometry{
      * @param vector for the vector that vertical to plane
      */
     public Plane(Point3D point, Vector vector) {
+        super();
         this._p = new Point3D(point);
         this._normal = new Vector(vector);
     }

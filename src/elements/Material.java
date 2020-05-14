@@ -4,12 +4,25 @@ package elements;
  *
  */
 public class Material {
-    /**
-     *
-     * @param v
-     * @param v1
-     * @param i
-     */
-    public Material(double v, double v1, int i) {
+    private final double _kD;
+    private final double _kS;
+    private final int _nShinines;
+
+    public Material(double kD, double kS, int nShinines) {
+        _kD = kD;
+        _kS = kS;
+        _nShinines = nShinines;
+    }
+
+    public double getKD() {
+        return _kD;
+    }
+
+    public double getKS() {
+        return _kS;
+    }
+
+    public int getNShinines() {
+        return _nShinines;
     }
 }
