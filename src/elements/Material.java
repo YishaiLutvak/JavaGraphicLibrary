@@ -1,5 +1,7 @@
 package elements;
 
+import primitives.Color;
+
 /**
  *
  */
@@ -7,6 +9,8 @@ public class Material {
     private final double _kD;
     private final double _kS;
     private final int _nShinines;
+
+    public final static Material DEFAULT = new Material(0d,0d,0);
 
     public Material(double kD, double kS, int nShinines) {
         _kD = kD;

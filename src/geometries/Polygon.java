@@ -88,7 +88,7 @@ public class Polygon extends Geometry {
      * @param vertices
      */
     public Polygon(Color emissionLight, Point3D... vertices) {
-        this(emissionLight, new Material(0, 0, 0), vertices);
+        this(emissionLight, Material.DEFAULT, vertices);
     }
 
     /**
@@ -96,7 +96,7 @@ public class Polygon extends Geometry {
      * @param vertices
      */
     public Polygon(Point3D... vertices) {
-        this(Color.BLACK, new Material(0, 0, 0), vertices);
+        this(Color.BLACK, Material.DEFAULT, vertices);
     }
 
     @Override

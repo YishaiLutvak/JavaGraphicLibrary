@@ -1,9 +1,8 @@
 package geometries;
-import static primitives.Util.isZero;
 
+import static primitives.Util.isZero;
 import elements.Material;
 import primitives.*;
-
 import java.util.List;
 
 /**
@@ -37,8 +36,7 @@ public class Cylinder extends Tube {
      * @param height
      */
     public Cylinder(Color emissionLight, double radius, Ray ray, double height) {
-        super(emissionLight, radius, ray);
-        this._height = height;
+       this(emissionLight, Material.DEFAULT, radius, ray, height);
     }
 
     /**
@@ -49,8 +47,7 @@ public class Cylinder extends Tube {
      * @param height for height of tube
      */
     public Cylinder(double radius, Ray ray, double height) {
-        super(radius, ray);
-        this._height = height;
+       this(Color.BLACK,Material.DEFAULT,radius, ray, height);
     }
 
     /************getters************/

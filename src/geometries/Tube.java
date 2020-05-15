@@ -37,8 +37,7 @@ public class Tube extends RadialGeometry {
      * @param ray
      */
     public Tube(Color emissionLight, double radius, Ray ray) {
-        super(emissionLight, radius);
-        this._axisRay = ray;
+        this(emissionLight, Material.DEFAULT, radius, ray);
     }
 
     /**
@@ -47,8 +46,7 @@ public class Tube extends RadialGeometry {
      * @param ray for the center of the tube
      */
     public Tube(double radius, Ray ray) {
-        super(radius);
-        this._axisRay = ray;
+        this(Color.BLACK, Material.DEFAULT, radius, ray);
     }
 
     /******************getters*******************/

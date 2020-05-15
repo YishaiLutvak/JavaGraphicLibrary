@@ -19,14 +19,9 @@ public abstract class RadialGeometry extends Geometry {
 
     /**************constractors*****************/
 
-    private void initRadius(double radius) {
-        if (isZero(radius) || (radius < 0.0))
-            throw new IllegalArgumentException("radius " + radius + " is not valid");
-        this._radius = radius;
-    }
 
     /**
-     * constructor for a new extended RadialGeometry object.
+     * constructor for a new extended RadialGeometry objזect.
      *
      * @param radius the radius of the RadialGeometry
      * @param material the material of the RadialGeometry
@@ -34,7 +29,9 @@ public abstract class RadialGeometry extends Geometry {
      */
     public RadialGeometry(Color emissionLight, Material material, double radius ) {
         super(emissionLight, material);
-        initRadius(radius);
+        if (isZero(radius) || (radius < 0.0))
+            throw new IllegalArgumentException("radius " + radius + " is not valid");
+        this._radius = radius;
     }
 
     /**
@@ -43,8 +40,7 @@ public abstract class RadialGeometry extends Geometry {
      * @param radius
      */
     public RadialGeometry(Color emissionLight, double radius) {
-        super(emissionLight);
-        initRadius(radius);
+        this(emissionLight, Material.DEFAULT ,radius);
     }
 
     /**
@@ -52,8 +48,7 @@ public abstract class RadialGeometry extends Geometry {
      * @param radius for the length of the radius
      */
     public RadialGeometry(double radius) {
-        super();
-        initRadius(radius);
+       this(Color.BLACK, Material.DEFAULT, radius);
     }
 
     /**
@@ -61,8 +56,7 @@ public abstract class RadialGeometry extends Geometry {
      * @param other for the length of the radius
      */
     public RadialGeometry(RadialGeometry other) {
-        super(other._emissionLight, other._material);
-        initRadius(other._radius);
+        this(other._emissionLight, other._material, other._radius);
     }
 
 

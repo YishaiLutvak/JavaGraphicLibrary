@@ -23,24 +23,7 @@ public abstract class Geometry implements Intersectable  {
         this._emissionLight = emmissionLight;
         this._material = material;
     }
-
-    /**
-     *
-     * @param emmissionLight
-     */
-    public Geometry(Color emmissionLight) {
-        this(emmissionLight,new Material(0d,0d,0));
-       /* this._emissionLight = emmissionLight;
-        this._material = new Material(0d,0d,0);*/
-    }
-    /**
-     *
-     */
-    public Geometry() {
-        this(Color.BLACK);
-        /*_emissionLight = Color.BLACK;*/
-    }
-
+    
     //*********************Getter************************//
 
     /**

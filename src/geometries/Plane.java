@@ -39,7 +39,16 @@ public class Plane extends Geometry{
      */
     public Plane(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
         super(emissionLight, material);
-        initNormal(p1, p2, p3);
+
+        _p = new Point3D(p1);
+
+        //Calculate the normal by creating two vectors between the points
+        Vector u = new Vector(p2.subtract(p1));
+        Vector v = new Vector(p3.subtract(p1));
+        Vector n = u.crossProduct(v);
+        n.normalize();
+
+        _normal = n.scale(-1);
     }
 
     /**
@@ -50,8 +59,7 @@ public class Plane extends Geometry{
      * @param p3
      */
     public Plane(Color emissionLight, Point3D p1, Point3D p2, Point3D p3) {
-        super(emissionLight);
-        initNormal(p1, p2, p3);
+        this(emissionLight,Material.DEFAULT,p1, p2, p3);
     }
 
     /**
@@ -61,8 +69,7 @@ public class Plane extends Geometry{
      * @param p3 for third point in plane
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
-        super();
-        initNormal(p1, p2, p3);
+        this(Color.BLACK,Material.DEFAULT,p1, p2, p3);
     }
 
     /**
@@ -85,9 +92,7 @@ public class Plane extends Geometry{
      * @param vector
      */
     public Plane(Color emissionLight,Point3D point, Vector vector) {
-        super(emissionLight);
-        this._p = new Point3D(point);
-        this._normal = new Vector(vector);
+        this(emissionLight, Material.DEFAULT, point, vector);
     }
 
     /**
@@ -96,9 +101,7 @@ public class Plane extends Geometry{
      * @param vector for the vector that vertical to plane
      */
     public Plane(Point3D point, Vector vector) {
-        super();
-        this._p = new Point3D(point);
-        this._normal = new Vector(vector);
+        this(Color.BLACK, Material.DEFAULT, point, vector);
     }
 
     /*************getters***********/
