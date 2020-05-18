@@ -76,7 +76,7 @@ public class Render {
      */
     private Color calcColor(GeoPoint intersection){
         Color color = _scene.getAmbientLight().getIntensity();
-        color = color.add(intersection._geometry.getEmmission());
+        color = color.add(intersection._geometry.getEmissionLight());
         return color;
     }
 
