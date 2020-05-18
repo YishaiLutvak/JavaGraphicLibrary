@@ -10,10 +10,10 @@ public abstract class Light {
 
     /**
      *
-     * @param _intensity
+     * @param intensity
      */
-    public Light(Color _intensity) {
-        this._intensity = _intensity;
+    public Light(Color intensity) {
+        this._intensity = intensity;
     }
 
     /**
