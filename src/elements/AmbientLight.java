@@ -5,32 +5,24 @@ import primitives.Color;
 /**
  * represent the Ambient light in the scene
  */
-public class AmbientLight {
-    Color _intensity;
-    double _kA;
+public class AmbientLight extends Light {
+    //double _kA;
 
     /**
-     *constructor
+     * constructor
      * @param _iA the color of the image
-     * @param _kA intencity factor
+     * @param _kA intensity factor
      */
     public AmbientLight(Color _iA, double _kA) {
-        this._intensity = _iA.scale(_kA);
+        super(_iA.scale(_kA)) ;
     }
 
     /**
-     *constructor
+     * constructor
      * @param _iA the color of the image
      */
     public AmbientLight(Color _iA) {
         this(_iA,1);
     }
 
-    /**
-     * getter
-     * @return intensity
-     */
-    public Color getIntensity(){
-        return _intensity;
-    }
 }
