@@ -19,11 +19,11 @@ public abstract class Geometry implements Intersectable  {
 
     //*********************Constructors************************//
 
-    public Geometry(Color emmissionLight, Material material) {
-        this._emissionLight = emmissionLight;
+    public Geometry(Color emissionLight, Material material) {
+        this._emissionLight = emissionLight;
         this._material = material;
     }
-    
+
     //*********************Getter************************//
 
     /**
