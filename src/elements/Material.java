@@ -8,25 +8,43 @@ import primitives.Color;
 public class Material {
     private final double _kD;
     private final double _kS;
-    private final int _nShinines;
+    private final int _nShininess;
 
     public final static Material DEFAULT = new Material(0d,0d,0);
 
-    public Material(double kD, double kS, int nShinines) {
+    /**
+     *
+     * @param kD
+     * @param kS
+     * @param nShininess
+     */
+    public Material(double kD, double kS, int nShininess) {
         _kD = kD;
         _kS = kS;
-        _nShinines = nShinines;
+        _nShininess = nShininess;
     }
 
-    public double getKD() {
+    /**
+     *
+     * @return
+     */
+    public double getKd() {
         return _kD;
     }
 
-    public double getKS() {
+    /**
+     *
+     * @return
+     */
+    public double getKs() {
         return _kS;
     }
 
-    public int getNShinines() {
-        return _nShinines;
+    /**
+     *
+     * @return
+     */
+    public int getShininess() {
+        return _nShininess;
     }
 }

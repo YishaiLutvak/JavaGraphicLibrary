@@ -1,11 +1,14 @@
 package renderer;
 
 import elements.Camera;
+import elements.LightSource;
+import elements.Material;
 import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Vector;
 import scene.Scene;
 
 import java.util.List;
@@ -77,7 +80,26 @@ public class Render {
     private Color calcColor(GeoPoint intersection){
         Color color = _scene.getAmbientLight().getIntensity();
         color = color.add(intersection._geometry.getEmissionLight());
+        Vector v = intersection._point.subtract(_scene.getCamera().getLocation()).normalize();
+        Vector n = intersection._geometry.getNormal(intersection._point);
+        Material material =intersection._geometry.getMaterial();
+        int nShininess = material.getShininess();
+        double kd = material.getKd();
+        double ks = material.getKs();
+        for (LightSource lightSource : _scene.getLights()) {
+            Vector l = lightSource.getL(intersection._point);
+            if ((n.dotProduct(l)) * (n.dotProduct(v)) > 0) {
+                Color lightIntensity = lightSource.getIntensity(intersection._point);
+                color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity)); } }
         return color;
+    }
+
+    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
+        return Color.BLACK;
+    }
+
+    private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
+        return Color.BLACK;
     }
 
     /**
