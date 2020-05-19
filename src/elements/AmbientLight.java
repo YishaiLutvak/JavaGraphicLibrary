@@ -6,7 +6,6 @@ import primitives.Color;
  * represent the Ambient light in the scene
  */
 public class AmbientLight extends Light {
-    //double _kA;
 
     /**
      * constructor

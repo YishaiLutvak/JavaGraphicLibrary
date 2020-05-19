@@ -16,22 +16,21 @@ public class SpotLight extends PointLight {
      * @param kQ
      * @param direction
      */
-    public SpotLight(Color intensity, Point3D position, double kC, double kL, double kQ, Vector direction)
+    public SpotLight(Color intensity, Point3D position,Vector direction, double kC, double kL, double kQ)
     {
         super(intensity, position, kC, kL, kQ);
         this._dir = direction.normalized();
     }
 
-    // by default, the constant attenuation value is 1 and the other two values are 0
     /**
-     *
+     * by default, the constant attenuation value is 1 and the other two values are 0
      * @param intensity
      * @param position
      * @param direction
      */
     public SpotLight(Color intensity, Point3D position, Vector direction)
     {
-        this(intensity, position, 1d, 0d, 0d, direction);
+        this(intensity, position, direction, 1d, 0d, 0d );
     }
 
     /**

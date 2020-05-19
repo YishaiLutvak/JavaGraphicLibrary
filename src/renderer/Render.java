@@ -80,12 +80,15 @@ public class Render {
     private Color calcColor(GeoPoint intersection){
         Color color = _scene.getAmbientLight().getIntensity();
         color = color.add(intersection._geometry.getEmissionLight());
+
         Vector v = intersection._point.subtract(_scene.getCamera().getLocation()).normalize();
         Vector n = intersection._geometry.getNormal(intersection._point);
-        Material material =intersection._geometry.getMaterial();
+        Material material = intersection._geometry.getMaterial();
+
         int nShininess = material.getShininess();
         double kd = material.getKd();
         double ks = material.getKs();
+
         for (LightSource lightSource : _scene.getLights()) {
             Vector l = lightSource.getL(intersection._point);
             if ((n.dotProduct(l)) * (n.dotProduct(v)) > 0) {
@@ -94,13 +97,15 @@ public class Render {
         return color;
     }
 
-    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-        return Color.BLACK;
+    private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
+        return new Color(lightIntensity.scale(Math.abs(kd * l.dotProduct(n))));
     }
 
-    private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-        return Color.BLACK;
+    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
+        Vector r = l.add(n.scale(-2*l.dotProduct(n)));
+        return new Color(lightIntensity.scale(ks * Math.pow(v.scale(-1).dotProduct(r), nShininess)));
     }
+
 
     /**
      * getClosestPoint private function
