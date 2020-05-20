@@ -5,7 +5,7 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * DirectionalLight class represent directional light source (like sun)
+ * DirectionalLight class represents directional light source (like sun)
  * @author Michael Bergshtein and Yishay Lutvak
  */
 public class DirectionalLight extends Light implements LightSource {
@@ -13,7 +13,7 @@ public class DirectionalLight extends Light implements LightSource {
 
     /**
      * Constructor
-     * @param intensity the color of light source
+     * @param intensity the intensity of color of light source
      * @param direction the direction of the light rays
      */
     public DirectionalLight(Color intensity ,Vector direction) {
@@ -23,10 +23,10 @@ public class DirectionalLight extends Light implements LightSource {
 
     /**
      * getIntensity function in directional light
-     * returns color of _intensity of light source
+     * returns value of _intensity of light source
      * because there is no attenuation with the distance
      * @param p the point3D on the geometry
-     * @return color af point p
+     * @return intensity of color af point p
      */
     @Override
     public Color getIntensity(Point3D p) {
@@ -35,8 +35,8 @@ public class DirectionalLight extends Light implements LightSource {
 
     /**
      * getL function in directional light
-     * returns direction of _direction of directional light
-     * because light source is far away (at infinity - like Sun)
+     * returns value of _direction of directional light
+     * because in high distance there is no difference between the points
      * @param p the point3D on the geometry
      * @return The direction of the light rays that hit the point
      */

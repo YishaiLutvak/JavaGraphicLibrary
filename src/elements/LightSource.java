@@ -11,15 +11,15 @@ import primitives.Vector;
 public interface LightSource {
     /**
      * getIntensity function
-     * calculates the color of point on the geometry
+     * calculates the intensity of color of point on the geometry
      * @param p the point3D on the geometry
-     * @return color af point p
+     * @return intensity of color af point p
      */
     public Color getIntensity(Point3D p);
 
     /**
      * getL function calculates the direction
-     * of the light rays from the light source to the point
+     * of the light ray from the light source to the point
      * @param p the point3D on the geometry
      * @return The direction of the light rays that hit the point
      */

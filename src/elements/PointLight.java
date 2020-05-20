@@ -19,12 +19,13 @@ public class PointLight extends Light implements LightSource {
     protected double _kQ;
 
     /**
-     *
-     * @param intensity
-     * @param position
-     * @param kC
-     * @param kL
-     * @param kQ
+     * constructor
+     * @param intensity the intensity of color of the PointLight
+     * @param position the position of the point light
+     * Factors (kc, kl, kq) for attenuation with distance (d)
+     * @param kC constant
+     * @param kL linear
+     * @param kQ square
      */
     public PointLight(Color intensity,Point3D position,double kC, double kL,double kQ) {
         super(intensity);
@@ -35,15 +36,21 @@ public class PointLight extends Light implements LightSource {
     }
 
     /**
-     *
-     * @param intensity
-     * @param position
+     * constructor
+     * by default, the constant attenuation value is 1 and the other two values are 0
+     * @param intensity the intensity of color of the PointLight
+     * @param position the position of the point light
      */
-    // by default, the constant attenuation value is 1 and the other two values are 0
     public PointLight(Color intensity, Point3D position) {
         this(intensity, position, 1d, 0d, 0d);
     }
 
+    /**
+     * getIntensity function
+     * calculates the intensity of color of point on the geometry
+     * @param p the point3D on the geometry
+     * @return intensity of color af point p
+     */
     @Override
     public Color getIntensity(Point3D p) {
         double dSquared = p.distanceSquared(_position);
@@ -51,6 +58,12 @@ public class PointLight extends Light implements LightSource {
         return (_intensity.reduce(_kC + _kL * d + _kQ * dSquared));
     }
 
+    /**
+     * getL function calculates the direction
+     * of the light ray from the light source to the point
+     * @param p the point3D on the geometry
+     * @return The direction of the light rays that hit the point
+     */
     @Override
     public Vector getL(Point3D p) {
         if (p.equals(_position))

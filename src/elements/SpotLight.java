@@ -13,13 +13,14 @@ public class SpotLight extends PointLight {
     protected Vector _dir;
 
     /**
-     *
-     * @param intensity
-     * @param position
-     * @param kC
-     * @param kL
-     * @param kQ
-     * @param direction
+     * constructor
+     * @param intensity the intensity of color of the PointLight
+     * @param position the position of the point light
+     * @param direction the direction of light of spot
+     * Factors (kc, kl, kq) for attenuation with distance (d)
+     * @param kC constant
+     * @param kL linear
+     * @param kQ square
      */
     public SpotLight(Color intensity, Point3D position,Vector direction, double kC, double kL, double kQ)
     {
@@ -28,10 +29,11 @@ public class SpotLight extends PointLight {
     }
 
     /**
+     * constructor
      * by default, the constant attenuation value is 1 and the other two values are 0
-     * @param intensity
-     * @param position
-     * @param direction
+     * @param intensity the intensity of color of the PointLight
+     * @param position the position of the point light
+     * @param direction the direction of light of spot
      */
     public SpotLight(Color intensity, Point3D position, Vector direction)
     {
@@ -39,9 +41,10 @@ public class SpotLight extends PointLight {
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * getIntensity function
+     * calculates the intensity of color of point on the geometry
+     * @param p the point3D on the geometry
+     * @return intensity of color af point p
      */
     @Override
     public Color getIntensity(Point3D p) {
@@ -54,10 +57,5 @@ public class SpotLight extends PointLight {
             l = new Vector(_dir);
         }
         return (_intensity.scale(Math.max(0,_dir.dotProduct(l))).reduce(_kC + _kL * d + _kQ * dSquared));
-    }
-
-    @Override
-    public Vector getL(Point3D p) {
-        return new Vector(_dir);
     }
 }
