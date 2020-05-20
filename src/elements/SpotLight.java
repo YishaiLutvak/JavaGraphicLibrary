@@ -5,7 +5,7 @@ import primitives.Point3D;
 import primitives.Vector;
 
 public class SpotLight extends PointLight {
-    private Vector _dir;
+    protected Vector _dir;
 
     /**
      *
