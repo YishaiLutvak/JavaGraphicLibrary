@@ -8,7 +8,7 @@ import static primitives.Util.isZero;
 
 
 /**
- * represent a camera that photo 3D geometries
+ * Camera class represent a camera that photo 3D geometries
  * @author Yishai Lutvak and Michael Bergshtein
  */
 

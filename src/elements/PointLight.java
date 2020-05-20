@@ -5,11 +5,15 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- *
+ * PointLight class represents models omni-directional point source
+ * such as a bulb
+ * @author Michael Bergshtein and Yishay Lutvak
  */
 public class PointLight extends Light implements LightSource {
 
     protected Point3D _position;
+
+    // Factors (kc, kl, kq) for attenuation with distance (d)
     protected double _kC;
     protected double _kL;
     protected double _kQ;

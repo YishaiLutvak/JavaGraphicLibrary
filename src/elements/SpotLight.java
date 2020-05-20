@@ -4,6 +4,11 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
+/**
+ * PointLight class represents models point light source with direction
+ * such as a luxo lamp
+ * @author Michael Bergshtein and Yishay Lutvak
+ */
 public class SpotLight extends PointLight {
     protected Vector _dir;
 
