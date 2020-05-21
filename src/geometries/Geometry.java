@@ -8,17 +8,17 @@ import primitives.*;
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public abstract class Geometry implements Intersectable  {
-    /**
-     * Calculate a unit vector orthogonal to the surface or the geometry body
-     * at the given point. Basic assumption - the point lays in the surface
-     * @param p in the surface
-     * @return unit orthogonal vector
-     */
+
     protected Color _emissionLight;
     protected Material _material;
 
     //*********************Constructors************************//
 
+    /**
+     * constructor
+     * @param emissionLight for internal color of Geometry
+     * @param material for material attributes of Geometry
+     */
     public Geometry(Color emissionLight, Material material) {
         this._emissionLight = emissionLight;
         this._material = material;
@@ -27,8 +27,8 @@ public abstract class Geometry implements Intersectable  {
     //*********************Getters************************//
 
     /**
-     *getter
-     * @return emmisionLight parameter
+     * getter
+     * @return emissionLight parameter
      */
     public Color getEmissionLight() {
         return _emissionLight;
@@ -44,6 +44,12 @@ public abstract class Geometry implements Intersectable  {
 
     //**********************abstract methods*********************//
 
+    /**
+     * Calculate a unit vector orthogonal to the surface or the geometry body
+     * at the given point. Basic assumption - the point lays in the surface
+     * @param p in the surface
+     * @return unit orthogonal vector
+     */
     public abstract Vector getNormal(Point3D p);
 
 }

@@ -1,4 +1,6 @@
 elements
 geometries
 primitives
+renderer
+scene
 UnitTests

@@ -26,7 +26,7 @@ public abstract class RadialGeometry extends Geometry {
      * @param radius the radius of the RadialGeometry
      * @param emissionLight for color of RadialGeometry
      * @param material the material of the RadialGeometry
-     * @throws Exception in case of negative or zero radius
+     * throws Exception in case of negative or zero radius
      */
     public RadialGeometry(Color emissionLight, Material material, double radius ) {
         super(emissionLight, material);
