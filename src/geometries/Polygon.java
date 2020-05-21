@@ -114,7 +114,7 @@ public class Polygon extends Geometry {
      */
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
-        List<GeoPoint> intersections = _plane.findIntersections(ray);
+        List<GeoPoint> intersections = _plane.findIntersections(ray,max);
         if (intersections == null)
             return null;
 

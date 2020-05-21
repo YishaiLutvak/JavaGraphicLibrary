@@ -180,6 +180,6 @@ public class Render {
         Ray lightRay = new Ray(point, lightDirection);
 
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
-        return intersections == null;
+        return intersections == null /*|| intersections.isEmpty()*/;
     }
 }
