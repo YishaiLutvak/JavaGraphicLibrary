@@ -107,7 +107,7 @@ public class Scene {
     }
 
     /**
-     * setter of the scene camera
+     *  setter of the scene camera
      * @param _camera the camera of the scene
      */
     public void setCamera(Camera _camera) {
