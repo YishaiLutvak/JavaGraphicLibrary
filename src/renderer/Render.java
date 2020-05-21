@@ -18,6 +18,12 @@ import java.util.List;
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public class Render {
+    /**
+     * Constant for size of rays origin for shading, transparency and reflection
+     * in order to avoid the unwanted case of self-shadow
+     */
+    private static final double DELTA = 0.1;
+
     ImageWriter _imageWriter;
     Scene _scene;
 
@@ -92,8 +98,9 @@ public class Render {
         for (LightSource lightSource : _scene.getLights()) {
             Vector l = lightSource.getL(intersection._point);
             if ((n.dotProduct(l)) * (n.dotProduct(v)) > 0) {
-                Color lightIntensity = lightSource.getIntensity(intersection._point);
-                color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity)); } }
+                if (unshaded(lightSource,l, n, intersection)) {
+                    Color lightIntensity = lightSource.getIntensity(intersection._point);
+                    color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity)); } } }
         return color;
     }
 
@@ -155,5 +162,24 @@ public class Render {
             for (int j = 0; j <Nx; j++)
                 if(i % interval == 0 || j % interval == 0 )
                     _imageWriter.writePixel(j, i, color);
+    }
+
+    /**
+     * check if their is no shadow on the point
+     * @param l vector from the light source the point
+     * @param n the normal of the geometry
+     * @param gp GeoPoint of the point checked
+     * @param light the light Source causing shadow
+     * @return true if their is no shadow on the point
+     */
+    private boolean unshaded(LightSource light ,Vector l, Vector n, GeoPoint gp){
+        Vector lightDirection = l.scale(-1); // from point to light source
+
+        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
+        Point3D point = gp._point.add(delta);
+        Ray lightRay = new Ray(point, lightDirection);
+
+        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
+        return intersections == null;
     }
 }
