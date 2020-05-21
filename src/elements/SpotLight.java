@@ -53,11 +53,6 @@ public class SpotLight extends PointLight {
         if (p.equals(_position))
             return null;
         Vector l = p.subtract(_position).normalized();
-       /* try {
-            l = p.subtract(_position).normalized();
-        } catch (IllegalArgumentException ex) {
-            l = new Vector(_dir);
-        }*/
         return (_intensity.scale(Math.max(0,_dir.dotProduct(l))).reduce(_kC + _kL * d + _kQ * dSquared));
     }
 }
