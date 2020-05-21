@@ -20,30 +20,30 @@ public class Triangle extends Polygon {
     /************constractor**************/
 
     /**
-     *
-     * @param emissionLight
-     * @param material
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor by 3 Point3D
+     * @param emissionLight for color of Triangle
+     * @param material the material of the Triangle
+     * @param p1 for A vertex
+     * @param p2 for B vertex
+     * @param p3 for C vertex
      */
     public Triangle(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
         super(emissionLight,material,p1,p2,p3);
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor by 3 Point3D. material gets default value
+     * @param emissionLight for color of Triangle
+     * @param p1 for A vertex
+     * @param p2 for B vertex
+     * @param p3 for C vertex
      */
     public Triangle(Color emissionLight, Point3D p1, Point3D p2, Point3D p3) {
         super(emissionLight,p1, p2, p3);
     }
 
     /**
-     * constractor by 3 Point3D
+     * constractor by 3 Point3D. material and emission light gets default value
      * @param p1 for A vertex
      * @param p2 for B vertex
      * @param p3 for C vertex

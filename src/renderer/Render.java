@@ -74,7 +74,7 @@ public class Render {
     /**
      * calcColor function
      * Calculate the point's color
-     * @param intersection a point3D
+     * @param intersection a GeoPoint for point 3D and its Geometry
      * @return color representing the point's appearance
      */
     private Color calcColor(GeoPoint intersection){
@@ -97,10 +97,28 @@ public class Render {
         return color;
     }
 
+    /**
+     *
+     * @param kd kd value in the point's material
+     * @param l vector in the direction from the light source the point
+     * @param n the normal of the geometry
+     * @param lightIntensity the intensity of the light source
+     * @return the diffusive in the point
+     */
     private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
         return new Color(lightIntensity.scale(Math.abs(kd * l.dotProduct(n))));
     }
 
+    /**
+     *
+     * @param ks ks value in the point's material
+     * @param l vector from the light source the point
+     * @param n the normal of the geometry
+     * @param v vector from the camera to the point
+     * @param nShininess the shininess factor in the point
+     * @param lightIntensity the intensity of the light source
+     * @return the color with specular effect in the point
+     */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         Vector r = l.add(n.scale(-2*l.dotProduct(n)));
         return new Color(lightIntensity.scale(ks * Math.pow(v.scale(-1).dotProduct(r), nShininess)));
@@ -111,7 +129,7 @@ public class Render {
      * getClosestPoint private function
      * @param intersectionPoints a list of intersection points
      * between the geometries and the ray from the camera
-     * @return the closest point
+     * @return the closest point and its Geometry
      */
     private GeoPoint getClosestPoint(List<GeoPoint> intersectionPoints) {
         Point3D cameraLocation = _scene.getCamera().getLocation();

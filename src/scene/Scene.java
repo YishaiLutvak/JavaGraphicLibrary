@@ -82,7 +82,7 @@ public class Scene {
 
     /**
      *
-     * @return
+     * @return lights
      */
     public List<LightSource> getLights() {
         return _lights;
@@ -132,12 +132,12 @@ public class Scene {
     }
 
     /**
-     *
-     * @param lights
+     * Adding a new LightSource to the lights list
+     * @param lights a list of LightSource
      */
     public void addLights(LightSource... lights) {
         for ( LightSource lightSource : lights) {
             _lights.add(lightSource);
-        };
+        }
     }
 }

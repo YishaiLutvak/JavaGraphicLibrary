@@ -13,16 +13,16 @@ import java.util.Objects;
 public interface Intersectable {
 
     /**
-     *
+     * Represent a point and the geometry it belong to
      */
     public static class GeoPoint {
         public Geometry _geometry;
         public Point3D _point;
 
         /**
-         *
-         * @param geometry
-         * @param point
+         * constructor
+         * @param geometry a geometry the point is in it
+         * @param point 3D point on the geometry
          */
         public GeoPoint(Geometry geometry, Point3D point) {
             this._geometry = geometry;

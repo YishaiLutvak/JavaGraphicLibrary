@@ -17,13 +17,13 @@ public class Tube extends RadialGeometry {
     protected Ray _axisRay;
 
 
-    /*********************constractors*********************/
+    /*********************constructors*********************/
     /**
-     *
-     * @param emissionLight
-     * @param material
-     * @param radius
-     * @param ray
+     * constructor by double and Ray values
+     * @param emissionLight for color of Tube
+     * @param material the material of the Tube
+     * @param radius for the length of the radius
+     * @param ray for the center of the tube
      */
     public Tube(Color emissionLight, Material material, double radius, Ray ray) {
         super(emissionLight, material, radius);
@@ -31,17 +31,17 @@ public class Tube extends RadialGeometry {
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param radius
-     * @param ray
+     * constructor by double and Ray values. material gets default value
+     * @param emissionLight for color of Tube
+     * @param radius for the length of the radius
+     * @param ray for the center of the tube
      */
     public Tube(Color emissionLight, double radius, Ray ray) {
         this(emissionLight, Material.DEFAULT, radius, ray);
     }
 
     /**
-     * constractor by double and Ray values
+     * constructor by double and Ray values. emissionLight and material gets default value
      * @param radius for the length of the radius
      * @param ray for the center of the tube
      */

@@ -25,6 +25,8 @@ public class Polygon extends Geometry {
      * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
      *
+     * @param emissionLight for color of polygon
+     * @param material for material attributes of polygon
      * @param vertices list of vertices according to their order by edge path
      * @throws IllegalArgumentException in any case of illegal combination of
      *                                  vertices:
@@ -83,17 +85,17 @@ public class Polygon extends Geometry {
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param vertices
+     * constructor. material gets default value
+     * @param emissionLight for color of polygon
+     * @param vertices list of vertices according to their order by edge path
      */
     public Polygon(Color emissionLight, Point3D... vertices) {
         this(emissionLight, Material.DEFAULT, vertices);
     }
 
     /**
-     *
-     * @param vertices
+     * constructor. material and emissionLight gets default value
+     * @param vertices list of vertices according to their order by edge path
      */
     public Polygon(Point3D... vertices) {
         this(Color.BLACK, Material.DEFAULT, vertices);

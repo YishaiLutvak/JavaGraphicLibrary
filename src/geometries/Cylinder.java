@@ -16,12 +16,13 @@ public class Cylinder extends Tube {
 
     /****************Constructors***************/
     /**
+     * constructor with all parameters
      *
-     * @param emissionLight
-     * @param material
-     * @param radius
-     * @param ray
-     * @param height
+     * @param emissionLight for color of tube
+     * @param material for material attributes of tube
+     * @param radius for radius of Tube
+     * @param ray    for center of tube
+     * @param height for height of tube
      */
     public Cylinder(Color emissionLight, Material material, double radius, Ray ray, double height) {
         super(emissionLight, material, radius, ray);
@@ -29,11 +30,12 @@ public class Cylinder extends Tube {
     }
 
     /**
+     * constructor. material get default value
      *
-     * @param emissionLight
-     * @param radius
-     * @param ray
-     * @param height
+     * @param emissionLight for color of tube
+     * @param radius for radius of Tube
+     * @param ray    for center of tube
+     * @param height for height of tube
      */
     public Cylinder(Color emissionLight, double radius, Ray ray, double height) {
        this(emissionLight, Material.DEFAULT, radius, ray, height);

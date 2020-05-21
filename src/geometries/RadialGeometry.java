@@ -21,9 +21,10 @@ public abstract class RadialGeometry extends Geometry {
 
 
     /**
-     * constructor for a new extended RadialGeometry objזect.
+     * constructor for a new extended RadialGeometry object.
      *
      * @param radius the radius of the RadialGeometry
+     * @param emissionLight for color of RadialGeometry
      * @param material the material of the RadialGeometry
      * @throws Exception in case of negative or zero radius
      */
@@ -35,9 +36,9 @@ public abstract class RadialGeometry extends Geometry {
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param radius
+     * constructor. material gets default value
+     * @param emissionLight for color of RadialGeometry
+     ** @param radius the radius of the RadialGeometry
      */
     public RadialGeometry(Color emissionLight, double radius) {
         this(emissionLight, Material.DEFAULT ,radius);

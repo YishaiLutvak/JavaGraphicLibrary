@@ -30,12 +30,12 @@ public class Plane extends Geometry{
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param material
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor create plane by 3 points
+     * @param emissionLight for color of plane
+     * @param material for material attributes of plane
+     * @param p1 first point
+     * @param p2 second point
+     * @param p3 theard point
      */
     public Plane(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
         super(emissionLight, material);
@@ -52,18 +52,18 @@ public class Plane extends Geometry{
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor by 3 Point3D material gets default value
+     * @param emissionLight for color of plane
+     * @param p1 first point
+     * @param p2 second point
+     * @param p3 theard point
      */
     public Plane(Color emissionLight, Point3D p1, Point3D p2, Point3D p3) {
         this(emissionLight,Material.DEFAULT,p1, p2, p3);
     }
 
     /**
-     *constractor by 3 Point3D
+     *constructor by 3 Point3D  emissionLight and material gets default value
      * @param p1 for first point in plane
      * @param p2 for second point in plane
      * @param p3 for third point in plane
@@ -73,11 +73,11 @@ public class Plane extends Geometry{
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param material
-     * @param point
-     * @param vector
+     * constructor by point and normal
+     * @param emissionLight for color of plane
+     * @param material for material attributes of plane
+     * @param point for point in plane
+     * @param vector for the vector that vertical to plane
      */
     public Plane(Color emissionLight, Material material,Point3D point, Vector vector) {
         super(emissionLight,material);
@@ -86,17 +86,17 @@ public class Plane extends Geometry{
     }
 
     /**
-     *
-     * @param emissionLight
-     * @param point
-     * @param vector
+     * constructor by point and normal material gets default value
+     * @param emissionLight for color of plane
+     * @param point for point in plane
+     * @param vector for the vector that vertical to plane
      */
     public Plane(Color emissionLight,Point3D point, Vector vector) {
         this(emissionLight, Material.DEFAULT, point, vector);
     }
 
     /**
-     * constractor by point and normal
+     * constructor by point and normal emissionLight and material gets default value
      * @param point for point in plane
      * @param vector for the vector that vertical to plane
      */
