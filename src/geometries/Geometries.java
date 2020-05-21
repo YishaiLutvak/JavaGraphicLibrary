@@ -40,15 +40,16 @@ public class Geometries implements Intersectable {
     }
 
     /**
-     *find intersections of all the geometries parts
+     * find intersections of all the geometries parts
      * @param ray that intersects the geometries
+     * @param max
      * @return a list of intersect points
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> intersections = null;
         for (Intersectable geo : _geometries) {
-            List<GeoPoint> tempIntersections = geo.findIntersections(ray);
+            List<GeoPoint> tempIntersections = geo.findIntersections(ray,max);
             if (tempIntersections != null) {
                 if (intersections == null)
                     intersections = new LinkedList<GeoPoint>();

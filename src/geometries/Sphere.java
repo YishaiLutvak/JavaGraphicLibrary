@@ -81,6 +81,7 @@ public class Sphere extends RadialGeometry {
     /**
      *
      * @param ray that intersect the sphere
+     * @param max
      * @return a list of intersect points
      */
     @Override
@@ -104,7 +105,7 @@ public class Sphere extends RadialGeometry {
         double th =  Math.sqrt(thSquared);
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th); //Always t2 > t1 Because th is positive
-        if (t1 <= 0 && t2 <= 0) // t1 < t2 <= 0 < max
+        if (t2 <= 0) // t1 < t2 <= 0 < max
             return null;
         if (t1 > 0 && (alignZero(t2 - max) <= 0) ) // 0 < t1 < t2 < max
             return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
@@ -112,7 +113,6 @@ public class Sphere extends RadialGeometry {
             return List.of(new GeoPoint(this,ray.getPoint(t1)));
         if (t2 > 0 && (alignZero(t2 - max) <= 0)) // t1 <= 0 < t2 < max
             return List.of(new GeoPoint(this,ray.getPoint(t2)));
-        else // 0 < max < t1 < t2
-            return null;
+        return null; // 0 < max < t1 < t2
     }
 }

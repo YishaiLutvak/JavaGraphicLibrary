@@ -109,12 +109,14 @@ public class Polygon extends Geometry {
     /**
      *
      * @param ray that intersect the polygon
+     * @param max
      * @return a list of the intersect points
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> intersections = _plane.findIntersections(ray);
-        if (intersections == null) return null;
+        if (intersections == null)
+            return null;
 
         Point3D p0 = ray.get_start();
         Vector v =  ray.get_direction();
@@ -122,15 +124,18 @@ public class Polygon extends Geometry {
         Vector v1 = _vertices.get(0).subtract(p0);
         Vector v2 = _vertices.get(1).subtract(p0);
         double sign = v.dotProduct(v1.crossProduct(v2));
-        if(isZero(sign)) return null;
+        if(isZero(sign))
+            return null;
         boolean positive = sign > 0;
 
         for (int i = _vertices.size() -1; i > 0 ;i--) {
             v2 = v1;
             v1 = _vertices.get(i).subtract(p0);
             sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
-            if (isZero(sign)) return null;
-            if(positive != (sign > 0)) return null;
+            if (isZero(sign))
+                return null;
+            if(positive != (sign > 0))
+                return null;
         }
 
         intersections.get(0)._geometry = this;

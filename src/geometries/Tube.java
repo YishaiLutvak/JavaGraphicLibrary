@@ -3,6 +3,8 @@ package geometries;
 import elements.Material;
 import primitives.*;
 import java.util.List;
+
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -95,7 +97,7 @@ public class Tube extends RadialGeometry {
      * @return A list of intersection points, if any.
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
 
         Point3D p0 = ray.get_start();
         Vector v = ray.get_direction();
@@ -105,7 +107,8 @@ public class Tube extends RadialGeometry {
 
         //if v and vTube are parallel vectors there is no intersection
         try { v.crossProduct(vTube); }
-        catch (IllegalArgumentException ex) { return null;}
+        catch (IllegalArgumentException ex) {
+            return null;}
 
         if (p0.equals(p0Tube))
             p0Tube = _axisRay.getPoint(-1);
@@ -144,18 +147,25 @@ public class Tube extends RadialGeometry {
         double desc = B*B - 4*A*C;
 
         //No solution
-        if (desc < 0) return null;
+        if (desc < 0)
+            return null;
 
         //One solution
-        if (isZero(desc)) return null;
+        if (isZero(desc))
+            return null;
 
         //Two solution
-        double t1 = (-B+Math.sqrt(desc))/(2*A);
-        double t2 = (-B-Math.sqrt(desc))/(2*A);
+        double t1 = (-B-Math.sqrt(desc))/(2*A);
+        double t2 = (-B+Math.sqrt(desc))/(2*A);// Always t2 > t1 Because sqrt(desc))/(2*A) is positive number
 
-        if (t1 <= 0 && t2 <= 0) return null;
-        if (t1 > 0 && t2 > 0)
+        if (t2 <= 0) // t1 < t2 <= 0 < max
+            return null;
+        if (t1 > 0 && (alignZero(t2 - max) <= 0) ) // 0 < t1 < t2 < max
             return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
-        else return List.of(new GeoPoint(this,ray.getPoint(t1)));
+        if (t1 > 0 && (alignZero(t1 - max) <= 0)) // 0 < t1 < max < t2
+            return List.of(new GeoPoint(this,ray.getPoint(t1)));
+        if (t2 > 0 && (alignZero(t2 - max) <= 0)) // t1 <= 0 < t2 < max
+            return List.of(new GeoPoint(this,ray.getPoint(t2)));
+        return null; // 0 < max < t1 < t2
     }
 }

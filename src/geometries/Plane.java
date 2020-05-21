@@ -135,7 +135,7 @@ public class Plane extends Geometry{
      * @return a list of intersect points
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
         Vector p0Q;
         try {
             p0Q = _p.subtract(ray.get_start());
@@ -148,7 +148,9 @@ public class Plane extends Geometry{
             return null; // ray is parallel to the plane - no intersections
 
         double t = alignZero(_normal.dotProduct(p0Q) / nv);
-        return t <= 0 ? null : List.of(new GeoPoint (this,ray.getPoint(t)));
+        if (alignZero(t - max) <= 0)
+            return t <= 0 ? null : List.of(new GeoPoint (this,ray.getPoint(t)));
+        return null;
         // if ray start from plane there is no intersections
         // else return point intersections
     }

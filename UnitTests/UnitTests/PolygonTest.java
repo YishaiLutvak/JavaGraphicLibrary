@@ -200,7 +200,7 @@ public class PolygonTest {
                 new Point3D(0, 1, 0),
                 new Vector(0, 0, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses polygon", List.of(crossPoint), result);
+        assertEquals("Ray crosses polygon",List.of (new GeoPoint(polygon,crossPoint)) , result);
 
         //T17: Ray starts on the polygon(0 points)
         assertEquals("Ray starts on the polygon and orthogonal", null,
