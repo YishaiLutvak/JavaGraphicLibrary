@@ -50,12 +50,15 @@ public class ImprovedSpot extends SpotLight {
     public Color getIntensity(Point3D p) {
         double dSquared = p.distanceSquared(_position);
         double d = p.distance(_position);
-        Vector l;
+        if (p.equals(_position))
+            return null;
+        Vector l = p.subtract(_position).normalized();
+        /*Vector l;
         try {
             l = p.subtract(_position).normalized();
         } catch (IllegalArgumentException ex) {
             l = new Vector(_dir);
-        }
+        }*/
         return (_intensity.scale(Math.max(0,Math.pow(_dir.dotProduct(l),_focus))).reduce(_kC + _kL * d + _kQ * dSquared));
     }
 }
