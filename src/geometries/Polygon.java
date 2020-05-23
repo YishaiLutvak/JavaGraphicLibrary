@@ -121,8 +121,8 @@ public class Polygon extends Geometry {
         Point3D p0 = ray.get_start();
         Vector v =  ray.get_direction();
 
-        Vector v1 = _vertices.get(0).subtract(p0);
-        Vector v2 = _vertices.get(1).subtract(p0);
+        Vector v1 = _vertices.get(0).subtract(p0).normalize();
+        Vector v2 = _vertices.get(1).subtract(p0).normalize();
         double sign = v.dotProduct(v1.crossProduct(v2));
         if(isZero(sign))
             return null;
@@ -130,7 +130,7 @@ public class Polygon extends Geometry {
 
         for (int i = _vertices.size() -1; i > 0 ;i--) {
             v2 = v1;
-            v1 = _vertices.get(i).subtract(p0);
+            v1 = _vertices.get(i).subtract(p0).normalize();
             sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
             if (isZero(sign))
                 return null;

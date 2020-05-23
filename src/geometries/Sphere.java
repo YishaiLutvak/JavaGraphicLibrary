@@ -102,7 +102,9 @@ public class Sphere extends RadialGeometry {
         double thSquared = alignZero(_radius * _radius - dSquared);
         if (thSquared <= 0)
             return null;
-        double th =  Math.sqrt(thSquared);
+        double th = alignZero(Math.sqrt(thSquared));
+        if (th == 0)
+            return null;
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th); //Always t2 > t1 Because th is positive
         if (t2 <= 0) // t1 < t2 <= 0 < max

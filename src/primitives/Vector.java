@@ -145,7 +145,7 @@ public class Vector {
     }
 
     /**
-     * Acting a normlize of the vector
+     * Acting a normalize of the vector
      * @return a new vector cop of this vector after normalization
      */
     public Vector normalized () {

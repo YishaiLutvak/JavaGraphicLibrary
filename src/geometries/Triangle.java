@@ -100,9 +100,9 @@ public class Triangle extends Polygon {
         Point3D p0 = ray.get_start();
         Vector v =  ray.get_direction();
 
-        Vector v1 = getVertexA().subtract(p0);
-        Vector v2 = getVertexB().subtract(p0);
-        Vector v3 = getVertexC().subtract(p0);
+        Vector v1 = getVertexA().subtract(p0).normalize();
+        Vector v2 = getVertexB().subtract(p0).normalize();
+        Vector v3 = getVertexC().subtract(p0).normalize();
 
         double s1 = v.dotProduct(v1.crossProduct(v2));
         if(isZero(s1)) return null;
