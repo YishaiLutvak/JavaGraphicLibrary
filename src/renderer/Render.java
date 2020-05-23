@@ -83,7 +83,7 @@ public class Render {
      * @param intersection a GeoPoint for point 3D and its Geometry
      * @return color representing the point's appearance
      */
-    private Color calcColor(GeoPoint intersection){
+        private Color calcColor(GeoPoint intersection){
         Color color = _scene.getAmbientLight().getIntensity();
         color = color.add(intersection._geometry.getEmissionLight());
 

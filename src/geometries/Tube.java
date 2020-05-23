@@ -155,8 +155,8 @@ public class Tube extends RadialGeometry {
             return null;
 
         //Two solution
-        double t1 = (-B-Math.sqrt(desc))/(2*A);
-        double t2 = (-B+Math.sqrt(desc))/(2*A);// Always t2 > t1 Because sqrt(desc))/(2*A) is positive number
+        double t1 = alignZero((-B-Math.sqrt(desc))/(2*A));
+        double t2 = alignZero((-B+Math.sqrt(desc))/(2*A));// Always t2 > t1 Because sqrt(desc))/(2*A) is positive number
 
         if (t2 <= 0) // t1 < t2 <= 0 < max
             return null;
