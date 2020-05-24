@@ -23,7 +23,7 @@ public class Material {
     public Material(double kD, double kS,int nShininess, double kT, double kR) {
         this._kD = kD;
         this._kS = kS;
-        _nShininess = nShininess;
+        this._nShininess = nShininess;
         this._kT = kT;
         this._kR = kR;
     }
