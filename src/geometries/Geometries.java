@@ -42,7 +42,7 @@ public class Geometries implements Intersectable {
     /**
      * find intersections of all the geometries parts
      * @param ray that intersects the geometries
-     * @param max
+     * @param max the maximum range from the source of the ray to the point
      * @return a list of intersect points
      */
     @Override

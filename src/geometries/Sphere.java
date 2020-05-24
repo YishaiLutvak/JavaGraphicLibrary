@@ -81,7 +81,7 @@ public class Sphere extends RadialGeometry {
     /**
      *
      * @param ray that intersect the sphere
-     * @param max
+     * @param max the maximum range from the source of the ray to the point
      * @return a list of intersect points
      */
     @Override

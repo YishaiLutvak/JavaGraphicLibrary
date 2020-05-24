@@ -89,6 +89,7 @@ public class Triangle extends Polygon {
     /**
      *
      * @param ray that intersect the triangle
+     * @param max the maximum range from the source of the ray to the point
      * @return alist of intersect points
      */
     @Override

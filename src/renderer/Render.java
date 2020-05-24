@@ -99,25 +99,15 @@ public class Render {
         return new Ray(newPoint,newVector);
     }
 
-    /**
-     *
-     * @param normal
-     * @param rayPoint
-     * @param ray
-     * @return
-     */
-    private Ray constructRefractedRay(Vector normal ,Point3D rayPoint,Ray ray){
-        Vector rayVector = ray.get_direction();
-        Point3D newPoint = moveDelta(rayPoint,rayVector,normal);
-        return new Ray(newPoint,rayVector);
-    }
+
 
     /**
-     *
-     * @param p
-     * @param n
-     * @param v
-     * @return
+     * Adding a delta to points on geometry in order to avoid from
+     * calculation mistakes
+     * @param p the point on the geometry
+     * @param n normal from the geometry
+     * @param v the vector that hit the geometry
+     * @return new point over the geometry
      */
     private Point3D moveDelta (Point3D p ,Vector v, Vector n){
         Vector delta = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
@@ -125,10 +115,10 @@ public class Render {
     }
 
     /**
-     *
-     * @param v
-     * @param n
-     * @return
+     * caculate reflected ray from the geometry
+     * @param v the vector that hit the geometry
+     * @param n normal from the geometry
+     * @return a ray reflected from the geometry
      */
     private Vector reflectionDirection(Vector v,Vector n){
         return v.add(n.scale(-2*v.dotProduct(n)));
@@ -182,7 +172,7 @@ public class Render {
 
         double kt = gp._geometry.getMaterial().getKt(), kkt = k * kt;
         if (kkt > MIN_CALC_COLOR_K) {
-            Ray refractedRay = constructRefractedRay(n ,gp._point, inRay) ;
+            Ray refractedRay = constructReflectedRay(n ,gp._point, inRay) ;
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
             if (refractedPoint != null)
                 color = color.add(calcColor(refractedPoint, refractedRay, level, kkt).scale(kt));}

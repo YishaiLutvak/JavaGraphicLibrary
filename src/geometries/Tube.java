@@ -94,6 +94,7 @@ public class Tube extends RadialGeometry {
      * Function for finding intersections points with an infinite
      * tube.
      * @param ray The ray that we check if it intersects the tube.
+     * @param max the maximum range from the source of the ray to the point
      * @return A list of intersection points, if any.
      */
     @Override

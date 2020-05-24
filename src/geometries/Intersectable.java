@@ -45,6 +45,7 @@ public interface Intersectable {
     /**
      * The functions looks for intersection points between a basic or a composite
      * geometry and a given ray. the function returns null if there are no intersections
+     * The default value of max is Double.POSITIVE_INFINITY
      * @param ray the ray to intersect a geometries
      * @return list of intersection points
      */
@@ -53,10 +54,11 @@ public interface Intersectable {
     }
 
     /**
-     *
-     * @param ray
-     * @param max
-     * @return
+     *  The functions looks for intersection points between a basic or a composite
+     *  geometry and a given ray. the function returns null if there are no intersections
+     * @param ray the ray to intersect a geometries
+     * @param max the maximum range from the source of the ray to the point
+     * @return list of intersection points
      */
     List<GeoPoint> findIntersections(Ray ray, double max);
 }

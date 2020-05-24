@@ -132,7 +132,7 @@ public class Plane extends Geometry{
     /**
      *
      * @param ray that intersect the plane
-     * @param max
+     * @param max the maximum range from the source of the ray to the point
      * @return a list of intersect points
      */
     @Override

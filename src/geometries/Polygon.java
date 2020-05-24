@@ -109,7 +109,7 @@ public class Polygon extends Geometry {
     /**
      *
      * @param ray that intersect the polygon
-     * @param max
+     * @param max the maximum range from the source of the ray to the point
      * @return a list of the intersect points
      */
     @Override
