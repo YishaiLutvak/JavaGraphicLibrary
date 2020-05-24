@@ -6,27 +6,26 @@ package primitives;
 public class Material {
     private final double _kD;
     private final double _kS;
+    private final int _nShininess;
     private final double _kT;
     private final double _kR;
-    private final int _nShininess;
 
-    public final static Material DEFAULT = new Material(0d,0d,0d,0d,0);
+    public final static Material DEFAULT = new Material(0d,0d,0,0d,0d);
 
     /**
      * constructor
      * @param kD the diffusive factor
      * @param kS the specular factor
+     * @param nShininess shininess factor. represents concentration of specular effect
      * @param kT the transparency factor
      * @param kR the reflection factor
-     * @param nShininess shininess factor. represents concentration of specular effect
      */
-    public Material(double kD, double kS, double kT, double kR, int nShininess) {
+    public Material(double kD, double kS,int nShininess, double kT, double kR) {
         this._kD = kD;
         this._kS = kS;
+        _nShininess = nShininess;
         this._kT = kT;
         this._kR = kR;
-
-        _nShininess = nShininess;
     }
 
     /**
@@ -36,7 +35,7 @@ public class Material {
      * @param nShininess shininess factor. represents concentration of specular efect
      */
     public Material(double kD, double kS, int nShininess) {
-       this(kD,kS,0d,0d,nShininess);
+       this(kD,kS,nShininess,0d,0d);
     }
 
     /********************getters******************
@@ -52,15 +51,23 @@ public class Material {
      * getter
      * @return ks parameter
      */
-    public double getKs() {
+
+        public double getKs() {
         return _kS;
     }
+    /**
+     * getter
+     * @return nShininess parameter
+     */
 
+    public int getShininess() {
+        return _nShininess;
+    }
     /**
      * getter
      * @return kt parameter
      */
-    public double get_kT() {
+    public double getKt() {
         return _kT;
     }
 
@@ -68,15 +75,7 @@ public class Material {
      * getter
      * @return kr parameter
      */
-    public double get_kR() {
+    public double getKr() {
         return _kR;
-    }
-
-    /**
-     * getter
-     * @return nShininess parameter
-     */
-    public int getShininess() {
-        return _nShininess;
     }
 }

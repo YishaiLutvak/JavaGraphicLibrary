@@ -90,19 +90,26 @@ public class Render {
     /**
      * Calculate the reflection ray from point
      * @param ray ray to the point
-     * @param gp the intersection point
+     * @param rayPoint the intersection point
      * @return new reflection ray
      */
-    private Ray reflectionRay(Ray ray, GeoPoint gp){
-        Point3D rayPoint = gp._point;
-        Vector rayVector = ray.get_direction();
-        Vector normal = gp._geometry.getNormal(rayPoint);
-
-        /*Vector newVector = rayVector.add(normal.scale(-2*rayVector.dotProduct(normal)));*/
-        Vector newVector = reflectionDirection(rayVector,normal);
+    private Ray constructReflectedRay(Vector normal , Point3D rayPoint, Ray ray){
+        Vector newVector = reflectionDirection(ray.get_direction(),normal);
         Point3D newPoint = moveDelta(rayPoint,newVector,normal);
-
         return new Ray(newPoint,newVector);
+    }
+
+    /**
+     *
+     * @param normal
+     * @param rayPoint
+     * @param ray
+     * @return
+     */
+    private Ray constructRefractedRay(Vector normal ,Point3D rayPoint,Ray ray){
+        Vector rayVector = ray.get_direction();
+        Point3D newPoint = moveDelta(rayPoint,rayVector,normal);
+        return new Ray(newPoint,rayVector);
     }
 
     /**
@@ -135,12 +142,68 @@ public class Render {
     }
 
     /**
+     *
+     * @param gp
+     * @param inRay
+     * @param level
+     * @param k
+     * @return
+     */
+    private Color calcColor(GeoPoint gp, Ray inRay, int level, double k){
+        if (level == 0 || k < MIN_CALC_COLOR_K)
+            return Color.BLACK;
+
+        Color color = gp._geometry.getEmissionLight(); // remove Ambient Light
+        Vector v = gp._point.subtract(_scene.getCamera().getLocation()).normalize();
+        Vector n = gp._geometry.getNormal(gp._point);
+        Material material = gp._geometry.getMaterial();
+        int nShininess = material.getShininess();
+        double kd = material.getKd();
+        double ks = material.getKs();
+
+        for (LightSource lightSource : _scene.getLights()) {
+            Vector l = lightSource.getL(gp._point);
+            if ((n.dotProduct(l)) * (n.dotProduct(v)) > 0) {
+                if (unshaded(lightSource,l, n, gp)) {
+                    Color lightIntensity = lightSource.getIntensity(gp._point);
+                    color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity)); } } }
+
+        if (level == 1)
+            return Color.BLACK;
+
+        level -= 1;
+        double kr = gp._geometry.getMaterial().getKr(), kkr = k * kr;
+        if (kkr > MIN_CALC_COLOR_K) {
+            Ray reflectedRay = constructReflectedRay(n, gp._point, inRay);
+            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+            if (reflectedPoint != null)
+                color = color.add(calcColor(reflectedPoint, reflectedRay, level, kkr).scale(kr));}
+        double kt = gp._geometry.getMaterial().getKt(), kkt = k * kt;
+        if (kkt > MIN_CALC_COLOR_K) {
+            Ray refractedRay = constructRefractedRay(n ,gp._point, inRay) ;
+            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+            if (refractedPoint != null)
+                color = color.add(calcColor(refractedPoint, refractedRay, level, kkt).scale(kt));}
+        return color;
+    }
+
+    /**
+     *
+     * @param geopoint
+     * @param inRay
+     * @return
+     */
+    private Color calcColor (GeoPoint geopoint, Ray inRay) {
+        return calcColor(geopoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(_scene.getAmbientLight().getIntensity());
+    }
+
+    /**
      * calcColor function
      * Calculate the point's color
      * @param intersection a GeoPoint for point 3D and its Geometry
      * @return color representing the point's appearance
      */
-        private Color calcColor(GeoPoint intersection){
+    private Color calcColor(GeoPoint intersection){
         Color color = _scene.getAmbientLight().getIntensity();
         color = color.add(intersection._geometry.getEmissionLight());
 
@@ -241,6 +304,4 @@ public class Render {
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
         return intersections == null /*|| intersections.isEmpty()*/;
     }
-
-
 }

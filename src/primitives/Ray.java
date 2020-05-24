@@ -42,14 +42,14 @@ public class Ray {
      * @return start point of ray
      */
     public Point3D get_start() {
-        return _start;
+        return new Point3D(_start);
     }
 
     /**
      * @return direction of ray
      */
     public Vector get_direction() {
-        return _direction;
+        return new Vector(_direction);
     }
 
     /******************methods*****************/
