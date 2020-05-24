@@ -269,7 +269,7 @@ public class Render {
         Point3D point = moveDelta(gp._point,lightDirection,n);
         Ray lightRay = new Ray(point, lightDirection/*, n*/);
 
-        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
+        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay/*,light.getDistance(gp._point)*/);
         /*return intersections == null;*/
         if (intersections.isEmpty())
             return true;
@@ -280,6 +280,5 @@ public class Render {
                 return false;
         }
         return true;
-
     }
 }
