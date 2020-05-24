@@ -271,7 +271,7 @@ public class Render {
 
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay/*,light.getDistance(gp._point)*/);
         /*return intersections == null;*/
-        if (intersections.isEmpty())
+        if (intersections == null)
             return true;
         double lightDistance = light.getDistance(gp._point);
         for (GeoPoint geoPoint : intersections) {
