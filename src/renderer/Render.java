@@ -132,16 +132,30 @@ public class Render {
     }
 
     /**
-     *
-     * @param gp
-     * @param inRay
-     * @param level
-     * @param k
-     * @return
+     * calcColor function
+     * Calculate the point's color
+     * @param geoPoint a GeoPoint for point 3D and its Geometry
+     * @param inRay the ray of light we calculate its color reflection and transparency
+     * @return color representing the point's appearance
      */
-    private Color calcColor(GeoPoint gp, Ray inRay, int level, double k){
+    private Color calcColor (GeoPoint geoPoint, Ray inRay) {
+        return calcColorRec(geoPoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(_scene.getAmbientLight().getIntensity());
+    }
+
+
+    /**
+     * a recursive calculate of the color of the oint
+     * @param gp the point we looking for its color
+     * @param inRay the ray of light we calculate its color reflection and transparency
+     * @param level the current level of recursion
+     * @param k the proportional weight of the current recursion color calculation
+     * @return the total color of the point
+     */
+    private Color calcColorRec(GeoPoint gp, Ray inRay, int level, double k){
         if (level == 0 || k < MIN_CALC_COLOR_K)
             return Color.BLACK;
+
+
 
         Color color = gp._geometry.getEmissionLight(); // remove Ambient Light
         Vector v = gp._point.subtract(_scene.getCamera().getLocation()).normalize();
@@ -150,6 +164,8 @@ public class Render {
         int nShininess = material.getShininess();
         double kd = material.getKd();
         double ks = material.getKs();
+
+
 
         for (LightSource lightSource : _scene.getLights()) {
             Vector l = lightSource.getL(gp._point);
@@ -163,32 +179,25 @@ public class Render {
 
         level -= 1;
 
-        double kr = gp._geometry.getMaterial().getKr(), kkr = k * kr;
+        double kr = gp._geometry.getMaterial().getKr();
+        double kkr = k * kr;
         if (kkr > MIN_CALC_COLOR_K) {
             Ray reflectedRay = constructReflectedRay(n, gp._point, inRay);
             GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
             if (reflectedPoint != null)
-                color = color.add(calcColor(reflectedPoint, reflectedRay, level, kkr).scale(kr));}
-
+                color = color.add(calcColorRec(reflectedPoint, reflectedRay, level, kkr).scale(kr));}
+        //?????
         double kt = gp._geometry.getMaterial().getKt(), kkt = k * kt;
         if (kkt > MIN_CALC_COLOR_K) {
             Ray refractedRay = constructReflectedRay(n ,gp._point, inRay) ;
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
             if (refractedPoint != null)
-                color = color.add(calcColor(refractedPoint, refractedRay, level, kkt).scale(kt));}
+                color = color.add(calcColorRec(refractedPoint, refractedRay, level, kkt).scale(kt));}
 
         return color;
     }
 
-    /**
-     *
-     * @param geopoint
-     * @param inRay
-     * @return
-     */
-    private Color calcColor (GeoPoint geopoint, Ray inRay) {
-        return calcColor(geopoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(_scene.getAmbientLight().getIntensity());
-    }
+
 
    /* *//**
      * calcColor function
