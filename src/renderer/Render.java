@@ -66,7 +66,7 @@ public class Render {
             for (int j = 0; j < nX; j++) {
                 Ray ray = camera.constructRayThroughPixel(nX, nY, j, i, distance, width, height);
                 GeoPoint closestPoint = findClosestIntersection(ray);
-                _imageWriter.writePixel(j, i, closestPoint == null ? _scene.getBackground().getColor(): calcColor(closestPoint).getColor());
+                _imageWriter.writePixel(j, i, closestPoint == null ? _scene.getBackground().getColor(): calcColor(closestPoint,ray).getColor());
             }
         }
     }
@@ -172,18 +172,21 @@ public class Render {
             return Color.BLACK;
 
         level -= 1;
+
         double kr = gp._geometry.getMaterial().getKr(), kkr = k * kr;
         if (kkr > MIN_CALC_COLOR_K) {
             Ray reflectedRay = constructReflectedRay(n, gp._point, inRay);
             GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
             if (reflectedPoint != null)
                 color = color.add(calcColor(reflectedPoint, reflectedRay, level, kkr).scale(kr));}
+
         double kt = gp._geometry.getMaterial().getKt(), kkt = k * kt;
         if (kkt > MIN_CALC_COLOR_K) {
             Ray refractedRay = constructRefractedRay(n ,gp._point, inRay) ;
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
             if (refractedPoint != null)
                 color = color.add(calcColor(refractedPoint, refractedRay, level, kkt).scale(kt));}
+
         return color;
     }
 
@@ -197,12 +200,12 @@ public class Render {
         return calcColor(geopoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(_scene.getAmbientLight().getIntensity());
     }
 
-    /**
+   /* *//**
      * calcColor function
      * Calculate the point's color
      * @param intersection a GeoPoint for point 3D and its Geometry
      * @return color representing the point's appearance
-     */
+     *//*
     private Color calcColor(GeoPoint intersection){
         Color color = _scene.getAmbientLight().getIntensity();
         color = color.add(intersection._geometry.getEmissionLight());
@@ -223,7 +226,7 @@ public class Render {
                     color = color.add(calcDiffusive(kd, l, n, lightIntensity), calcSpecular(ks, l, n, v, nShininess, lightIntensity)); } } }
         return color;
     }
-
+*/
     /**
      *
      * @param kd kd value in the point's material
