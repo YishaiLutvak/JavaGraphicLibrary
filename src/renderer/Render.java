@@ -99,7 +99,7 @@ public class Render {
         Vector normal = gp._geometry.getNormal(rayPoint);
 
         /*Vector newVector = rayVector.add(normal.scale(-2*rayVector.dotProduct(normal)));*/
-        Vector newVector = reflectedAndSpecular(rayVector,normal);
+        Vector newVector = reflectiondirection(rayVector,normal);
         Point3D newPoint = moveDelta(rayPoint,newVector,normal);
 
         return new Ray(newPoint,newVector);
@@ -123,7 +123,7 @@ public class Render {
      * @param n
      * @return
      */
-    private Vector reflectedAndSpecular(Vector v,Vector n){
+    private Vector reflectiondirection(Vector v,Vector n){
         return v.add(n.scale(-2*v.dotProduct(n)));
     }
 
@@ -185,7 +185,7 @@ public class Render {
      */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
         //Vector r = l.add(n.scale(-2*l.dotProduct(n)));
-        Vector r = reflectedAndSpecular(l,n);
+        Vector r = reflectiondirection(l,n);
         return new Color(lightIntensity.scale(ks * Math.pow(v.scale(-1).dotProduct(r), nShininess)));
     }
 
