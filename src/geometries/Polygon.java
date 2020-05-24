@@ -2,7 +2,7 @@ package geometries;
 
 import java.util.List;
 
-import elements.Material;
+import primitives.Material;
 import primitives.*;
 import static primitives.Util.*;
 

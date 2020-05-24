@@ -1,6 +1,6 @@
 package geometries;
 
-import elements.Material;
+import primitives.Material;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;

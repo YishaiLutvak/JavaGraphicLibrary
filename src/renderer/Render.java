@@ -2,7 +2,7 @@ package renderer;
 
 import elements.Camera;
 import elements.LightSource;
-import elements.Material;
+import primitives.Material;
 import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
 import primitives.Color;
@@ -23,6 +23,14 @@ public class Render {
      * in order to avoid the unwanted case of self-shadow
      */
     private static final double DELTA = 0.1;
+    /**
+     *  The max recursion depth in calcColor
+     */
+    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    /**
+     * The minimum value of color necessary to calculate at calcColor function
+     */
+    private static final double MIN_CALC_COLOR_K = 0.001;
 
     ImageWriter _imageWriter;
     Scene _scene;
@@ -47,8 +55,6 @@ public class Render {
      */
     public void renderImage(){
         Camera camera = _scene.getCamera();
-        Intersectable geometries = _scene.getGeometries();
-        java.awt.Color background = _scene.getBackground().getColor();
 
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
@@ -59,15 +65,66 @@ public class Render {
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
                 Ray ray = camera.constructRayThroughPixel(nX, nY, j, i, distance, width, height);
-                List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
-                if (intersectionPoints==null)
-                    _imageWriter.writePixel(j, i, background);
-                else {
-                    GeoPoint closestPoint = getClosestPoint(intersectionPoints);
-                    _imageWriter.writePixel(j, i, calcColor(closestPoint).getColor());
-                }
+                GeoPoint closestPoint = findClosestIntersection(ray);
+                _imageWriter.writePixel(j, i, closestPoint == null ? _scene.getBackground().getColor(): calcColor(closestPoint).getColor());
             }
         }
+    }
+
+    /**
+     * The function gets a ray and find the closest intersection point to the ray origin
+     * @param ray a ray that intersect  the geometry
+     * @return the closest intersection point. If their is no points return null
+     */
+    private GeoPoint findClosestIntersection(Ray ray){
+        Intersectable geometries = _scene.getGeometries();
+        List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
+        if (intersectionPoints==null)
+            return null;
+        else {
+            GeoPoint closestPoint = getClosestPoint(intersectionPoints);
+            return  closestPoint;
+        }
+    }
+
+    /**
+     * Calculate the reflection ray from point
+     * @param ray ray to the point
+     * @param gp the intersection point
+     * @return new reflection ray
+     */
+    private Ray reflectionRay(Ray ray, GeoPoint gp){
+        Point3D rayPoint = gp._point;
+        Vector rayVector = ray.get_direction();
+        Vector normal = gp._geometry.getNormal(rayPoint);
+
+        /*Vector newVector = rayVector.add(normal.scale(-2*rayVector.dotProduct(normal)));*/
+        Vector newVector = reflectedAndSpecular(rayVector,normal);
+        Point3D newPoint = moveDelta(rayPoint,newVector,normal);
+
+        return new Ray(newPoint,newVector);
+    }
+
+    /**
+     *
+     * @param p
+     * @param n
+     * @param v
+     * @return
+     */
+    private Point3D moveDelta (Point3D p ,Vector v, Vector n){
+        Vector delta = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
+        return p.add(delta);
+    }
+
+    /**
+     *
+     * @param v
+     * @param n
+     * @return
+     */
+    private Vector reflectedAndSpecular(Vector v,Vector n){
+        return v.add(n.scale(-2*v.dotProduct(n)));
     }
 
     /**
@@ -127,7 +184,8 @@ public class Render {
      * @return the color with specular effect in the point
      */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-        Vector r = l.add(n.scale(-2*l.dotProduct(n)));
+        //Vector r = l.add(n.scale(-2*l.dotProduct(n)));
+        Vector r = reflectedAndSpecular(l,n);
         return new Color(lightIntensity.scale(ks * Math.pow(v.scale(-1).dotProduct(r), nShininess)));
     }
 
@@ -175,11 +233,14 @@ public class Render {
     private boolean unshaded(LightSource light ,Vector l, Vector n, GeoPoint gp){
         Vector lightDirection = l.scale(-1); // from point to light source
 
-        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
-        Point3D point = gp._point.add(delta);
+        /*Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
+        Point3D point = gp._point.add(delta);*/
+        Point3D point = moveDelta(gp._point,l,n);
         Ray lightRay = new Ray(point, lightDirection);
 
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
         return intersections == null /*|| intersections.isEmpty()*/;
     }
+
+
 }
