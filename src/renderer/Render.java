@@ -144,7 +144,7 @@ public class Render {
 
 
     /**
-     * a recursive calculate of the color of the oint
+     * a recursive calculate of the color of the point
      * @param gp the point we looking for its color
      * @param inRay the ray of light we calculate its color reflection and transparency
      * @param level the current level of recursion
@@ -179,7 +179,7 @@ public class Render {
 
         level -= 1;
 
-        double kr = gp._geometry.getMaterial().getKr();
+        double kr = material.getKr();
         double kkr = k * kr;
         if (kkr > MIN_CALC_COLOR_K) {
             Ray reflectedRay = constructReflectedRay(n, gp._point, inRay);
@@ -187,7 +187,7 @@ public class Render {
             if (reflectedPoint != null)
                 color = color.add(calcColorRec(reflectedPoint, reflectedRay, level, kkr).scale(kr));}
         //?????
-        double kt = gp._geometry.getMaterial().getKt(), kkt = k * kt;
+        double kt = material.getKt(), kkt = k * kt;
         if (kkt > MIN_CALC_COLOR_K) {
             Ray refractedRay = constructReflectedRay(n ,gp._point, inRay) ;
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
