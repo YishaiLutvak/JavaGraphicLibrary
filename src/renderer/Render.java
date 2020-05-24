@@ -184,8 +184,7 @@ public class Render {
      * @return the color with specular effect in the point
      */
     private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-        //Vector r = l.add(n.scale(-2*l.dotProduct(n)));
-        Vector r = reflectiondirection(l,n);
+        Vector r = l.add(n.scale(-2*l.dotProduct(n)));
         return new Color(lightIntensity.scale(ks * Math.pow(v.scale(-1).dotProduct(r), nShininess)));
     }
 
@@ -233,9 +232,8 @@ public class Render {
     private boolean unshaded(LightSource light ,Vector l, Vector n, GeoPoint gp){
         Vector lightDirection = l.scale(-1); // from point to light source
 
-        /*Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
-        Point3D point = gp._point.add(delta);*/
-        Point3D point = moveDelta(gp._point,l,n);
+        Vector delta = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : - DELTA);
+        Point3D point = gp._point.add(delta);
         Ray lightRay = new Ray(point, lightDirection);
 
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
