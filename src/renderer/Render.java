@@ -13,6 +13,8 @@ import scene.Scene;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * Render class for rendering a image
  * @author Michael Bergshtein and Yishai Lutvak
@@ -176,22 +178,20 @@ public class Render {
         if (level == 1)
             return Color.BLACK;
 
-        level -= 1;
-
         double kr = material.getKr();
         double kkr = k * kr;
         if (kkr > MIN_CALC_COLOR_K) {
             Ray reflectedRay = constructReflectedRay(n, gp._point, inRay);
             GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
             if (reflectedPoint != null)
-                color = color.add(calcColorRec(reflectedPoint, reflectedRay, level, kkr).scale(kr));}
+                color = color.add(calcColorRec(reflectedPoint, reflectedRay, level-1, kkr).scale(kr));}
 
         double kt = material.getKt(), kkt = k * kt;
         if (kkt > MIN_CALC_COLOR_K) {
             Ray refractedRay = constructReflectedRay(n ,gp._point, inRay) ;
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
             if (refractedPoint != null)
-                color = color.add(calcColorRec(refractedPoint, refractedRay, level, kkt).scale(kt));}
+                color = color.add(calcColorRec(refractedPoint, refractedRay, level-1, kkt).scale(kt));}
 
         return color;
     }
@@ -266,11 +266,20 @@ public class Render {
      */
     private boolean unshaded(LightSource light ,Vector l, Vector n, GeoPoint gp){
         Vector lightDirection = l.scale(-1); // from point to light source
-
         Point3D point = moveDelta(gp._point,lightDirection,n);
-        Ray lightRay = new Ray(point, lightDirection);
+        Ray lightRay = new Ray(point, lightDirection/*, n*/);
 
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay,light.getDistance(gp._point));
-        return intersections == null;
+        /*return intersections == null;*/
+        if (intersections.isEmpty())
+            return true;
+        double lightDistance = light.getDistance(gp._point);
+        for (GeoPoint geoPoint : intersections) {
+            if (alignZero(geoPoint._point.distance(gp._point) - lightDistance) <= 0 &&
+                    geoPoint._geometry.getMaterial().getKt() == 0)
+                return false;
+        }
+        return true;
+
     }
 }
