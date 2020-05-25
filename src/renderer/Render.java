@@ -190,8 +190,7 @@ public class Render {
         if (level == 1)
             return Color.BLACK;
 
-        double kr = material.getKr();
-        double kkr = k * kr;
+        double kr = material.getKr(), kkr = k * kr;
         if (kkr > MIN_CALC_COLOR_K) {
             Ray reflectedRay = constructReflectedRay(n, gp._point, inRay);
             GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
