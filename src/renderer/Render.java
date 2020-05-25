@@ -21,11 +21,6 @@ import static primitives.Util.alignZero;
  */
 public class Render {
     /**
-     * Constant for size of rays origin for shading, transparency and reflection
-     * in order to avoid the unwanted case of self-shadow
-     */
-    private static final double DELTA = 0.1;
-    /**
      *  The max recursion depth in calcColor
      */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
@@ -96,28 +91,34 @@ public class Render {
 
     /**
      * Calculate the reflection ray from point
-     * @param ray ray to the point
+     * @param normal the normal of the geometry
      * @param rayPoint the intersection point
+     * @param ray ray to the point
      * @return new reflection ray
      */
     private Ray constructReflectedRay(Vector normal , Point3D rayPoint, Ray ray){
         Vector newVector = reflectionDirection(ray.get_direction(),normal);
-        Point3D newPoint = moveDelta(rayPoint,newVector,normal);
-        return new Ray(newPoint,newVector);
+        /*Point3D newPoint = moveDelta(rayPoint,newVector,normal);*/
+        return new Ray(rayPoint,newVector,normal);
     }
 
     /**
-     * Adding a delta to points on geometry in order to avoid from
-     * calculation mistakes
-     * @param p the point on the geometry
-     * @param n normal from the geometry
-     * @param v the vector that hit the geometry
-     * @return new point over the geometry
+     * construct new refracted ray after shift in delta
+     * @param normal the normal of the geometry
+     * @param rayPoint the intersection point
+     * @param ray ray hit the geometry
+     * @return new ray
      */
+    private Ray constructRefractedRay(Vector normal , Point3D rayPoint, Ray ray){
+
+        return new Ray(rayPoint,ray.get_direction(),normal);
+    }
+
+   /*
     private Point3D moveDelta (Point3D p ,Vector v, Vector n){
         Vector delta = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
         return p.add(delta);
-    }
+    }*/
 
     /**
      * caculate reflected ray from the geometry
@@ -188,7 +189,7 @@ public class Render {
 
         double kt = material.getKt(), kkt = k * kt;
         if (kkt > MIN_CALC_COLOR_K) {
-            Ray refractedRay = constructReflectedRay(n ,gp._point, inRay) ;
+            Ray refractedRay = constructRefractedRay(n ,gp._point, inRay) ;
             GeoPoint refractedPoint = findClosestIntersection(refractedRay);
             if (refractedPoint != null)
                 color = color.add(calcColorRec(refractedPoint, refractedRay, level-1, kkt).scale(kt));}
@@ -266,17 +267,16 @@ public class Render {
      */
     private boolean unshaded(LightSource light ,Vector l, Vector n, GeoPoint gp){
         Vector lightDirection = l.scale(-1); // from point to light source
-        Point3D point = moveDelta(gp._point,lightDirection,n);
-        Ray lightRay = new Ray(point, lightDirection/*, n*/);
+        /*Point3D point = moveDelta(gp._point,lightDirection,n);*/
+        Ray lightRay = new Ray(gp._point, lightDirection, n);
 
-        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay/*,light.getDistance(gp._point)*/);
-        /*return intersections == null;*/
+        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay);
         if (intersections == null)
             return true;
         double lightDistance = light.getDistance(gp._point);
         for (GeoPoint geoPoint : intersections) {
             if (alignZero(geoPoint._point.distance(gp._point) - lightDistance) <= 0 &&
-                    geoPoint._geometry.getMaterial().getKt() == 0)
+                    geoPoint._geometry.getMaterial().getKt() == 0 )
                 return false;
         }
         return true;

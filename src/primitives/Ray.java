@@ -2,12 +2,19 @@ package primitives;
 
 import static primitives.Util.*;
 
+
 /**
  * Ray class represents a ray in 3D Cartesian coordinate system
  * by point and vector
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public class Ray {
+    /**
+     * Constant for size of rays origin for shading, transparency and reflection
+     * in order to avoid the unwanted case of self-shadow
+     */
+    private static final double DELTA = 0.1;
+
     /**
      * The point from which the ray starts.
      */
@@ -34,6 +41,20 @@ public class Ray {
     public Ray(Ray ray) {
         this._start = new Point3D(ray._start);
         this._direction = ray._direction.normalized();
+    }
+
+    /**
+     * constructor
+     * Add a delta to points on geometry in order to avoid from
+     * calculation mistakes
+     * @param p the point on the geometry
+     * @param n normal from the geometry
+     * @param v the vector that hit the geometry
+     */
+    public Ray (Point3D p ,Vector v, Vector n){
+        Vector delta = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
+        this._start =  p.add(delta);
+        this._direction = v.normalized();
     }
 
     /******************gettters****************/
