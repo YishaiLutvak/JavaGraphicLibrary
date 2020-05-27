@@ -14,6 +14,7 @@ import scene.Scene;
 import java.util.List;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * Render class for rendering a image
@@ -101,7 +102,6 @@ public class Render {
      */
     private Ray constructReflectedRay(Vector normal, Point3D rayPoint, Ray ray) {
         Vector newVector = reflectionDirection(ray.get_direction(), normal);
-        /*Point3D newPoint = moveDelta(rayPoint,newVector,normal);*/
         return new Ray(rayPoint, newVector, normal);
     }
 
@@ -114,15 +114,8 @@ public class Render {
      * @return new ray
      */
     private Ray constructRefractedRay(Vector normal, Point3D rayPoint, Ray ray) {
-
         return new Ray(rayPoint, ray.get_direction(), normal);
     }
-
-   /*
-    private Point3D moveDelta (Point3D p ,Vector v, Vector n){
-        Vector delta = n.scale(n.dotProduct(v) > 0 ? DELTA : - DELTA);
-        return p.add(delta);
-    }*/
 
     /**
      * caculate reflected ray from the geometry
@@ -132,6 +125,7 @@ public class Render {
      * @return a ray reflected from the geometry
      */
     private Vector reflectionDirection(Vector v, Vector n) {
+        //𝒓=𝒗 −𝟐∙(𝒗∙𝒏)∙𝒏
         return v.add(n.scale(-2 * v.dotProduct(n)));
     }
 
@@ -141,6 +135,135 @@ public class Render {
     public void writeToImage() {
         _imageWriter.writeToImage();
     }
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    /*private Ray constructRefractedRayTemp(Point3D pointGeo, Ray inRay, Vector n) {
+        return new Ray(pointGeo, inRay.get_direction(), n);
+    }
+
+    private Ray constructReflectedRayTemp(Point3D pointGeo, Ray inRay, Vector n) {
+        //𝒓=𝒗 −𝟐∙(𝒗∙𝒏)∙𝒏
+        Vector v = inRay.get_direction();
+        double vn = v.dotProduct(n);
+
+        if (vn == 0) {
+            return null;
+        }
+
+        Vector r = v.subtract(n.scale(2 * vn));
+        return new Ray(pointGeo, r, n);
+    }
+
+    private Color calcSpecularTemp(double ks, Vector l, Vector n, double nl, Vector V, int nShininess, Color ip) {
+        double p = nShininess;
+        if (isZero(nl)) {
+            throw new IllegalArgumentException("nl cannot be Zero for scaling the normal vector");
+        }
+        Vector R = l.add(n.scale(-2 * nl)); // nl must not be zero!
+        double VR = alignZero(V.dotProduct(R));
+        if (VR >= 0) {
+            return Color.BLACK; // view from direction opposite to r vector
+        }
+        // [rs,gs,bs]ks(-V.R)^p
+        return ip.scale(ks * Math.pow(-1d * VR, p));
+    }*/
+
+    /**
+     * Calculate Diffusive component of light reflection.
+     *
+     * @param kd diffusive component coef
+     * @param nl dot-product n*l
+     * @param ip light intensity at the point
+     * @return diffusive component of light reflection
+     * @author Dan Zilberstein
+     * <p>
+     * The diffuse component is that dot product n•L. It approximates light, originally from light source L,
+     * reflecting from a surface which is diffuse, or non-glossy. One example of a non-glossysurface is paper.
+     * In general, you'll also want this to have a non-gray color value,
+     * so this term would in general be a color defined as: [rd,gd,bd](n•L)
+     * </p>
+     *//*
+    private Color calcDiffusiveTemp(double kd, double nl, Color ip) {
+        return ip.scale(Math.abs(nl) * kd);
+    }
+
+    private Color calcColorTemp(GeoPoint geoPoint, Ray inRay) {
+        Color color = calcColorTemp(geoPoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0);
+        color = color.add(_scene.getAmbientLight().getIntensity());
+        return color;
+    }
+
+    private Color getLightSourcesColors(GeoPoint geoPoint, double k, Color result, Vector v, Vector n, double nv, int nShininess, double kd, double ks) {
+        Point3D pointGeo = geoPoint._point;
+        List<LightSource> lightSources = _scene.getLights();
+        if (lightSources != null) {
+            for (LightSource lightSource : lightSources) {
+                Vector l = lightSource.getL(pointGeo);
+                double nl = alignZero(n.dotProduct(l));
+                if (nl * nv > 0) {
+//                if (sign(nl) == sign(nv) && nl != 0 && nv != 0) {
+//                    if (unshaded(lightSource, l, n, geoPoint)) {
+                    double ktr = transparency(lightSource, l, n, geoPoint);
+                    if (ktr * k > MIN_CALC_COLOR_K) {
+                        Color ip = lightSource.getIntensity(pointGeo).scale(ktr);
+                        result = result.add(
+                                calcDiffusiveTemp(kd, nl, ip),
+                                calcSpecularTemp(ks, l, n, nl, v, nShininess, ip));
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private Color calcColorTemp(GeoPoint geoPoint, Ray inRay, int level, double k) {
+        if (level == 1 || k < MIN_CALC_COLOR_K) {
+            return Color.BLACK;
+        }
+
+        Color result = geoPoint._geometry.getEmissionLight();
+        Point3D pointGeo = geoPoint._point;
+
+        Vector v = pointGeo.subtract(_scene.getCamera().getLocation()).normalize();
+        Vector n = geoPoint._geometry.getNormal(pointGeo);
+
+        double nv = alignZero(n.dotProduct(v));
+        if (nv == 0) {
+            //ray parallel to geometry surface ??
+            //and orthogonal to normal
+            return result;
+        }
+
+        Material material = geoPoint._geometry.getMaterial();
+        int nShininess = material.getShininess();
+        double kd = material.getKd();
+        double ks = material.getKs();
+        double kr = geoPoint._geometry.getMaterial().getKr();
+        double kt = geoPoint._geometry.getMaterial().getKt();
+        double kkr = k * kr;
+        double kkt = k * kt;
+
+        result = result.add(getLightSourcesColors(geoPoint, k, result, v, n, nv, nShininess, kd, ks));
+
+        if (kkr > MIN_CALC_COLOR_K) {
+            Ray reflectedRay = constructReflectedRayTemp(pointGeo, inRay, n);
+            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+            if (reflectedPoint != null) {
+                result = result.add(calcColorTemp(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
+            }
+        }
+        if (kkt > MIN_CALC_COLOR_K) {
+            Ray refractedRay = constructRefractedRayTemp(pointGeo, inRay,n);
+            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+            if (refractedPoint != null) {
+                result = result.add(calcColorTemp(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
+            }
+        }
+        return result;
+    }*/
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     /**
      * calcColor function
@@ -178,7 +301,7 @@ public class Render {
 
         for (LightSource lightSource : _scene.getLights()) {
             Vector l = lightSource.getL(gp._point);
-            if ((n.dotProduct(l)) * (n.dotProduct(v)) > 0) {
+            if (alignZero(n.dotProduct(l)) * alignZero(n.dotProduct(v)) > 0) {
                 double ktr = transparency(lightSource,l,n,gp);
                 if (ktr*k > MIN_CALC_COLOR_K) {
                     Color lightIntensity = lightSource.getIntensity(gp._point).scale(ktr);
@@ -279,7 +402,6 @@ public class Render {
      */
     private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint gp) {
         Vector lightDirection = l.scale(-1); // from point to light source
-        /*Point3D point = moveDelta(gp._point,lightDirection,n);*/
         Ray lightRay = new Ray(gp._point, lightDirection, n);
 
         List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay);
@@ -317,9 +439,10 @@ public class Render {
 
         for (GeoPoint geoPoint : intersections) {
             if (alignZero(geoPoint._point.distance(gp._point) - lightDistance) <= 0) {
-                ktr *= gp._geometry.getMaterial().getKt();
-                if (ktr < MIN_CALC_COLOR_K)
+                ktr *= geoPoint._geometry.getMaterial().getKt();
+                if (ktr < MIN_CALC_COLOR_K) {
                     return 0d;
+                }
             }
         }
         return ktr;
