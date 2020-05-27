@@ -136,135 +136,6 @@ public class Render {
         _imageWriter.writeToImage();
     }
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    /*private Ray constructRefractedRayTemp(Point3D pointGeo, Ray inRay, Vector n) {
-        return new Ray(pointGeo, inRay.get_direction(), n);
-    }
-
-    private Ray constructReflectedRayTemp(Point3D pointGeo, Ray inRay, Vector n) {
-        //𝒓=𝒗 −𝟐∙(𝒗∙𝒏)∙𝒏
-        Vector v = inRay.get_direction();
-        double vn = v.dotProduct(n);
-
-        if (vn == 0) {
-            return null;
-        }
-
-        Vector r = v.subtract(n.scale(2 * vn));
-        return new Ray(pointGeo, r, n);
-    }
-
-    private Color calcSpecularTemp(double ks, Vector l, Vector n, double nl, Vector V, int nShininess, Color ip) {
-        double p = nShininess;
-        if (isZero(nl)) {
-            throw new IllegalArgumentException("nl cannot be Zero for scaling the normal vector");
-        }
-        Vector R = l.add(n.scale(-2 * nl)); // nl must not be zero!
-        double VR = alignZero(V.dotProduct(R));
-        if (VR >= 0) {
-            return Color.BLACK; // view from direction opposite to r vector
-        }
-        // [rs,gs,bs]ks(-V.R)^p
-        return ip.scale(ks * Math.pow(-1d * VR, p));
-    }*/
-
-    /**
-     * Calculate Diffusive component of light reflection.
-     *
-     * @param kd diffusive component coef
-     * @param nl dot-product n*l
-     * @param ip light intensity at the point
-     * @return diffusive component of light reflection
-     * @author Dan Zilberstein
-     * <p>
-     * The diffuse component is that dot product n•L. It approximates light, originally from light source L,
-     * reflecting from a surface which is diffuse, or non-glossy. One example of a non-glossysurface is paper.
-     * In general, you'll also want this to have a non-gray color value,
-     * so this term would in general be a color defined as: [rd,gd,bd](n•L)
-     * </p>
-     *//*
-    private Color calcDiffusiveTemp(double kd, double nl, Color ip) {
-        return ip.scale(Math.abs(nl) * kd);
-    }
-
-    private Color calcColorTemp(GeoPoint geoPoint, Ray inRay) {
-        Color color = calcColorTemp(geoPoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0);
-        color = color.add(_scene.getAmbientLight().getIntensity());
-        return color;
-    }
-
-    private Color getLightSourcesColors(GeoPoint geoPoint, double k, Color result, Vector v, Vector n, double nv, int nShininess, double kd, double ks) {
-        Point3D pointGeo = geoPoint._point;
-        List<LightSource> lightSources = _scene.getLights();
-        if (lightSources != null) {
-            for (LightSource lightSource : lightSources) {
-                Vector l = lightSource.getL(pointGeo);
-                double nl = alignZero(n.dotProduct(l));
-                if (nl * nv > 0) {
-//                if (sign(nl) == sign(nv) && nl != 0 && nv != 0) {
-//                    if (unshaded(lightSource, l, n, geoPoint)) {
-                    double ktr = transparency(lightSource, l, n, geoPoint);
-                    if (ktr * k > MIN_CALC_COLOR_K) {
-                        Color ip = lightSource.getIntensity(pointGeo).scale(ktr);
-                        result = result.add(
-                                calcDiffusiveTemp(kd, nl, ip),
-                                calcSpecularTemp(ks, l, n, nl, v, nShininess, ip));
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    private Color calcColorTemp(GeoPoint geoPoint, Ray inRay, int level, double k) {
-        if (level == 1 || k < MIN_CALC_COLOR_K) {
-            return Color.BLACK;
-        }
-
-        Color result = geoPoint._geometry.getEmissionLight();
-        Point3D pointGeo = geoPoint._point;
-
-        Vector v = pointGeo.subtract(_scene.getCamera().getLocation()).normalize();
-        Vector n = geoPoint._geometry.getNormal(pointGeo);
-
-        double nv = alignZero(n.dotProduct(v));
-        if (nv == 0) {
-            //ray parallel to geometry surface ??
-            //and orthogonal to normal
-            return result;
-        }
-
-        Material material = geoPoint._geometry.getMaterial();
-        int nShininess = material.getShininess();
-        double kd = material.getKd();
-        double ks = material.getKs();
-        double kr = geoPoint._geometry.getMaterial().getKr();
-        double kt = geoPoint._geometry.getMaterial().getKt();
-        double kkr = k * kr;
-        double kkt = k * kt;
-
-        result = result.add(getLightSourcesColors(geoPoint, k, result, v, n, nv, nShininess, kd, ks));
-
-        if (kkr > MIN_CALC_COLOR_K) {
-            Ray reflectedRay = constructReflectedRayTemp(pointGeo, inRay, n);
-            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
-            if (reflectedPoint != null) {
-                result = result.add(calcColorTemp(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
-            }
-        }
-        if (kkt > MIN_CALC_COLOR_K) {
-            Ray refractedRay = constructRefractedRayTemp(pointGeo, inRay,n);
-            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-            if (refractedPoint != null) {
-                result = result.add(calcColorTemp(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
-            }
-        }
-        return result;
-    }*/
-
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
     /**
      * calcColor function
      * Calculate the point's color
@@ -276,7 +147,6 @@ public class Render {
     private Color calcColor(GeoPoint geoPoint, Ray inRay) {
         return calcColorRec(geoPoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(_scene.getAmbientLight().getIntensity());
     }
-
 
     /**
      * a recursive calculate of the color of the point
@@ -357,24 +227,6 @@ public class Render {
         return new Color(lightIntensity.scale(ks * Math.pow(v.scale(-1).dotProduct(r), nShininess)));
     }
 
-
-    /**
-     * getClosestPoint private function
-     * @param intersectionPoints a list of intersection points
-     * between the geometries and the ray from the camera
-     * @return the closest point and its Geometry
-     */
-    /*private GeoPoint getClosestPoint(List<GeoPoint> intersectionPoints) {
-        Point3D cameraLocation = _scene.getCamera().getLocation();
-        GeoPoint minDistance = intersectionPoints.get(0);
-        for (GeoPoint geoPoint : intersectionPoints) {
-            if (geoPoint._point.distance(cameraLocation) < minDistance._point.distance(cameraLocation)) {
-                minDistance = geoPoint;
-            }
-        }
-        return minDistance;
-    }*/
-
     /**
      * printGrid function
      *
@@ -389,31 +241,6 @@ public class Render {
             for (int j = 0; j < Nx; j++)
                 if (i % interval == 0 || j % interval == 0)
                     _imageWriter.writePixel(j, i, color);
-    }
-
-    /**
-     * check if their is no shadow on the point
-     *
-     * @param l     vector from the light source the point
-     * @param n     the normal of the geometry
-     * @param gp    GeoPoint of the point checked
-     * @param light the light Source causing shadow
-     * @return true if their is no shadow on the point
-     */
-    private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint gp) {
-        Vector lightDirection = l.scale(-1); // from point to light source
-        Ray lightRay = new Ray(gp._point, lightDirection, n);
-
-        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay);
-        if (intersections == null)
-            return true;
-        double lightDistance = light.getDistance(gp._point);
-        for (GeoPoint geoPoint : intersections) {
-            if (alignZero(geoPoint._point.distance(gp._point) - lightDistance) <= 0 &&
-                    geoPoint._geometry.getMaterial().getKt() == 0)
-                return false;
-        }
-        return true;
     }
 
     /**
@@ -447,4 +274,47 @@ public class Render {
         }
         return ktr;
     }
+/*
+    *//**
+     * check if their is no shadow on the point
+     *
+     * @param l     vector from the light source the point
+     * @param n     the normal of the geometry
+     * @param gp    GeoPoint of the point checked
+     * @param light the light Source causing shadow
+     * @return true if their is no shadow on the point
+     *//*
+    private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint gp) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Ray lightRay = new Ray(gp._point, lightDirection, n);
+
+        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay);
+        if (intersections == null)
+            return true;
+        double lightDistance = light.getDistance(gp._point);
+        for (GeoPoint geoPoint : intersections) {
+            if (alignZero(geoPoint._point.distance(gp._point) - lightDistance) <= 0 &&
+                    geoPoint._geometry.getMaterial().getKt() == 0)
+                return false;
+        }
+        return true;
+    }
+
+    *//**
+     * getClosestPoint private function
+     * @param intersectionPoints a list of intersection points
+     * between the geometries and the ray from the camera
+     * @return the closest point and its Geometry
+     *//*
+    private GeoPoint getClosestPoint(List<GeoPoint> intersectionPoints) {
+        Point3D cameraLocation = _scene.getCamera().getLocation();
+        GeoPoint minDistance = intersectionPoints.get(0);
+        for (GeoPoint geoPoint : intersectionPoints) {
+            if (geoPoint._point.distance(cameraLocation) < minDistance._point.distance(cameraLocation)) {
+                minDistance = geoPoint;
+            }
+        }
+        return minDistance;
+    }
+*/
 }
