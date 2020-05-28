@@ -1,8 +1,11 @@
 package geometries;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 import primitives.Material;
 import primitives.*;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -79,7 +82,8 @@ public class Cylinder extends Tube {
 
         //The point is on the base that not contains the start point
         //Checks whether the point is on the center of the base or not
-        Point3D centerTop = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(_height)));
+        /*Point3D centerTop = new Point3D(_axisRay.get_start().add(_axisRay.get_direction().scale(_height)));*/
+        Point3D centerTop = _axisRay.getPoint(_height);
         if (p.equals(centerTop) ||
                 isZero(p.subtract(centerTop).dotProduct(_axisRay.get_direction())))
             return _axisRay.get_direction();
@@ -96,7 +100,42 @@ public class Cylinder extends Tube {
     }
 
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
-        return null;
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
+        Plane planeBottom = new Plane(_axisRay.get_start(),_axisRay.get_direction());
+        Plane planeTop = new Plane(_axisRay.getPoint(_height),_axisRay.get_direction());
+        List<GeoPoint> intersections = null;
+        List<GeoPoint> tempIntersections1 = planeBottom.findIntersections(ray, max);
+        if (tempIntersections1 != null) {
+            if (alignZero(_radius - _axisRay.get_start().distance(tempIntersections1.get(0)._point)) > 0) {
+                intersections = new LinkedList<GeoPoint>();
+                intersections.add(tempIntersections1.get(0));
+            }
+        }
+        List<GeoPoint> tempIntersections2 = planeTop.findIntersections(ray, max);
+        if (tempIntersections2 != null){
+            if (alignZero(_radius - _axisRay.getPoint(_height).distance(tempIntersections2.get(0)._point)) > 0) {
+                if (intersections == null)
+                    intersections = new LinkedList<GeoPoint>();
+                intersections.add(tempIntersections2.get(0));
+            }
+        }
+        List<GeoPoint> tempIntersections3 = super.findIntersections(ray, max);
+        if (tempIntersections3 != null) {
+            double maxLenSquare = _height*_height + _radius*_radius;
+            for (GeoPoint geoPoint : tempIntersections3) {
+                if (alignZero(maxLenSquare - geoPoint._point.distanceSquared(_axisRay.get_start())) > 0 &&
+                        alignZero(maxLenSquare - geoPoint._point.distanceSquared(_axisRay.getPoint(_height))) > 0 ){
+                    if (intersections == null)
+                        intersections = new LinkedList<GeoPoint>();
+                    intersections.add(geoPoint);
+                }
+            }
+        }
+        if (intersections!=null){
+            for (GeoPoint geoPoint : intersections) {
+                geoPoint._geometry = this;
+            }
+        }
+        return intersections;
     }
 }
