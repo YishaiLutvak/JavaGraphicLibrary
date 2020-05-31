@@ -125,7 +125,8 @@ public class Render {
      * @return a ray reflected from the geometry
      */
     private Vector reflectionDirection(Vector v, Vector n) {
-        //𝒓=𝒗 −𝟐∙(𝒗∙𝒏)∙𝒏
+        //r = v - 2*(v*n)*n
+
         return v.add(n.scale(-2 * v.dotProduct(n)));
     }
 
