@@ -162,7 +162,7 @@ public class ShadowTests {
                 new Triangle(Color.BLACK, new Material(0, 0.8, 60), //
                         new Point3D(-150, 150, 115), new Point3D(-70, -70, 140), new Point3D(75, -75, 150)), //
                 /*new Cylinder(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 30), 20, // )
-                        new Ray(new Point3D(60, 30, 115),new Vector(0,-1,-0.2)), 60),*/
+                        new Ray(new Point3D(60, 30, 115),new Vector(0.35,-1,-0.35)), 60),*/
                 new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 30), // )
                         30, new Point3D(0, 0, 115)));
 
