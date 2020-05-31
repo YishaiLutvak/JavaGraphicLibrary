@@ -76,7 +76,7 @@ public class ReflectionRefractionTests {
 
     /**
      * Produce a picture of a two triangles lighted by a spot light with a partially transparent Sphere
-     *  producing partial shadow
+     * producing partial shadow
      */
     @Test
     public void trianglesTransparentSphere() {
@@ -105,8 +105,7 @@ public class ReflectionRefractionTests {
     }
 
     /**
-     * Produce a picture of a two triangles lighted by a spot light with a partially transparent Sphere
-     *  producing partial shadow
+     * Produce a picture of all the geometries in one scene
      */
     @Test
     public void trianglesTransparentCylinder() {
@@ -117,16 +116,24 @@ public class ReflectionRefractionTests {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.addGeometries( //
-                new Triangle(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)), //
+                new Polygon(new Color(0,30,0), new Material(0.5, 0.5, 60, 0.95,0), //
+                        new Point3D(0, 150, 140) ,new Point3D(150, 150, 140), new Point3D(75, -73, 170), new Point3D(25, -73, 170)), //
+                new Plane(new Color(80,30,30), new Material(0.8, 0.2, 60),
+                        new Point3D(150, 120, 150), new Vector(0,1,0.1)),
                 new Triangle(Color.BLACK, new Material(0.2, 0.8, 60,0,0.8), //
                         new Point3D(-150, 150, 115), new Point3D(-70, -70, 120), new Point3D(75, -75, 150)), //
-                new Cylinder(new Color(java.awt.Color.BLUE), new Material(0.2, 0.2, 30, 0.6, 0), 30, // )
-                        new Ray(new Point3D(55, -35, 50),new Vector(1,0,-0.25)),30),
+                new Cylinder(new Color(java.awt.Color.BLUE), new Material(0.2, 0.2, 30, 0.5, 0), 30, // )
+                        new Ray(new Point3D(55, -35, 50),new Vector(1,-0.3,-0.8)),30),
+                new Tube(new Color(300,30,30), new Material(0.2, 0.2, 30, 0.6, 0), 2, // )
+                        new Ray(new Point3D(55, -35, 50),new Vector(1,-0.3,-0.8))),
                 new Sphere(Color.BLACK, new Material(0.2, 0.8, 30, 0, 0.8), // )
                         30, new Point3D(-50, -50, 50)),
                 new Sphere(new Color(25,0,0), new Material(0, 0, 30, 1, 0), // )
-                        50, new Point3D(-50, -50, 50))
+                        50, new Point3D(80, 80, 115)),
+                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.5), 20, // )
+                        new Ray(new Point3D(-80, 100, 115),new Vector(0.2,-1,0.6)), 60),
+                new Sphere(new Color(50,0,0), new Material(0.5, 0.5, 30,0,0.5), // )
+                        30, new Point3D(80, 80, 115))
         );
 
         scene.addLights(new SpotLight(new Color(700, 400, 400), //
@@ -178,11 +185,11 @@ public class ReflectionRefractionTests {
 
                 new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
                         new Point3D(0, -50, 0), new Point3D(100, -50, 0), new Point3D(50, -75, 50)),
-                new Triangle(new Color(java.awt.Color.RED), new Material(0.5, 0.5, 60), //
+                new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
                         new Point3D(0, -50, 0), new Point3D(0, -50, 100), new Point3D(50, -75, 50)),
                 new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
                         new Point3D(0, -50, 100), new Point3D(100, -50, 100), new Point3D(50, -75, 50)),
-                new Triangle(new Color(java.awt.Color.RED), new Material(0.5, 0.5, 60), //
+                new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
                         new Point3D(100, -50, 100), new Point3D(100, -50, 0), new Point3D(50, -75, 50))
                 //
 
