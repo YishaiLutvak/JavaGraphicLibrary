@@ -120,7 +120,7 @@ public class ReflectionRefractionTests {
                 new Triangle(Color.BLACK, new Material(0.5, 0.5, 60), //
                         new Point3D(-150, 150, 115), new Point3D(150, 150, 135), new Point3D(75, -75, 150)), //
                 new Triangle(Color.BLACK, new Material(0.2, 0.8, 60,0,0.8), //
-                        new Point3D(-150, 150, 115), new Point3D(-70, -70, 123), new Point3D(75, -75, 150)), //
+                        new Point3D(-150, 150, 115), new Point3D(-70, -70, 120), new Point3D(75, -75, 150)), //
                 new Cylinder(new Color(java.awt.Color.BLUE), new Material(0.2, 0.2, 30, 0.6, 0), 30, // )
                         new Ray(new Point3D(55, -35, 50),new Vector(1,0,-0.25)),30),
                 new Sphere(Color.BLACK, new Material(0.2, 0.8, 30, 0, 0.8), // )
