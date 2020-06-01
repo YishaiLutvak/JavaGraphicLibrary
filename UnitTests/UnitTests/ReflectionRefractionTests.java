@@ -107,15 +107,30 @@ public class ReflectionRefractionTests {
     /**
      * Produce a picture of all the geometries in one scene
      */
+
+    public void allGeometriesTestBuild(Scene scene, String name) {
+
+        ImageWriter imageWriter = new ImageWriter(name, 200, 200, 600, 600);
+        Render render = new Render(imageWriter, scene);
+
+        render.renderImage();
+        render.writeToImage();
+    }
+
+
+    /**
+     * Run allGeometriesTestBuild with different locations of the camera
+     */
     @Test
-    public void trianglesTransparentCylinder() {
+    public void allGeometriesDifferentView() {
         Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
+        Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0));
+        scene.setCamera(camera);
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
-        scene.addGeometries( //
+        scene.addGeometries(
                 new Polygon(new Color(0,30,0), new Material(0.5, 0.5, 60, 0.95,0),
                         new Point3D(0, 150, 140) ,new Point3D(150, 150, 140), new Point3D(75, -73, 170), new Point3D(25, -73, 170)),
                 new Plane(new Color(40,10,20), new Material(0.8, 0.2, 60),
@@ -143,11 +158,16 @@ public class ReflectionRefractionTests {
         scene.addLights(new SpotLight(new Color(700, 400, 400), //
                 new Point3D(70, -50, -20), new Vector(0, 0, 1), 1, 4E-5, 2E-7));
 
-        ImageWriter imageWriter = new ImageWriter("all the geometries", 200, 200, 600, 600);
-        Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
-        render.writeToImage();
+        allGeometriesTestBuild(scene,"all geometries test 1");
+
+        scene.setDistance(500);
+        scene.setCamera(new Camera(new Point3D(0, 0, 1000),
+                new Vector(0, 0, -1), new Vector(0, -1, 0)));
+        allGeometriesTestBuild(scene,"all geometries test 2");
+
+        scene.setCamera(new Camera(new Point3D(1000, 0, 0),
+                new Vector(-1, 0, 0), new Vector(0, -1, 0)));
+        allGeometriesTestBuild(scene,"all geometries test 3");
     }
-
 }
