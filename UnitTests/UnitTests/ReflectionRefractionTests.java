@@ -116,94 +116,34 @@ public class ReflectionRefractionTests {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.addGeometries( //
-                new Polygon(new Color(0,30,0), new Material(0.5, 0.5, 60, 0.95,0), //
-                        new Point3D(0, 150, 140) ,new Point3D(150, 150, 140), new Point3D(75, -73, 170), new Point3D(25, -73, 170)), //
+                new Polygon(new Color(0,30,0), new Material(0.5, 0.5, 60, 0.95,0),
+                        new Point3D(0, 150, 140) ,new Point3D(150, 150, 140), new Point3D(75, -73, 170), new Point3D(25, -73, 170)),
                 new Plane(new Color(40,10,20), new Material(0.8, 0.2, 60),
                         new Point3D(150, 120, 150), new Vector(0,1,0.1)),
-                new Triangle(Color.BLACK, new Material(0.2, 0.8, 60,0,0.8), //
-                        new Point3D(-150, 150, 115), new Point3D(-70, -70, 120), new Point3D(75, -75, 150)), //
-                new Cylinder(new Color(java.awt.Color.BLUE), new Material(0.2, 0.2, 30, 0.5, 0), 30, // )
+                new Triangle(Color.BLACK, new Material(0.4, 0.45, 60,0,0.15),
+                        new Point3D(-150, 150, 115), new Point3D(-70, -70, 120), new Point3D(75, -75, 150)),
+                new Cylinder(new Color(java.awt.Color.BLUE), new Material(0.2, 0.2, 30, 0.5, 0), 30,
                         new Ray(new Point3D(55, -35, 50),new Vector(1,-0.3,-0.8)),30),
-                new Tube(new Color(300,30,30), new Material(0.2, 0.2, 30, 0.6, 0), 2, // )
+                new Tube(new Color(300,30,30), new Material(0.2, 0.2, 30, 0.6, 0), 2,
                         new Ray(new Point3D(55, -35, 50),new Vector(1,-0.3,-0.8))),
-                new Sphere(Color.BLACK, new Material(0.2, 0.8, 30, 0, 0.8), // )
+                new Sphere(Color.BLACK, new Material(0.2, 0.8, 30, 0, 0.8),
                         40, new Point3D(-50, -50, 50)),
-                new Sphere(new Color(25,0,0), new Material(0, 0, 30, 0.8, 0), // )
+                new Sphere(new Color(25,0,0), new Material(0, 0, 30, 0.8, 0),
                         50, new Point3D(80, 80, 115)),
-                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.5), 20, // )
+                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.5), 20,
                         new Ray(new Point3D(-80, 100, 115),new Vector(0.2,-1,0.6)), 60),
-                new Sphere(new Color(50,0,0), new Material(0.5, 0.5, 30,0,0.5), // )
+                new Sphere(new Color(50,0,0), new Material(0.5, 0.5, 30,0,0.5),
                         30, new Point3D(80, 80, 115))
         );
 
         scene.addLights(new SpotLight(new Color(700, 400, 400), //
                 new Point3D(70, -50, -20), new Vector(0, 0, 1), 1, 4E-5, 2E-7));
 
-        ImageWriter imageWriter = new ImageWriter("Cylinder shadow transparency", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("all the geometries", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
         render.writeToImage();
     }
 
-    /**
-     * Produce a picture of a two triangles lighted by a spot light with a partially transparent Sphere
-     *  producing partial shadow
-     */
-    @Test
-    public void myPicture() {
-        Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(new Point3D(-300, -100, -300), new Vector(1, 0.2, 1), new Vector(1, -10, 1)));
-        scene.setDistance(1000);
-        scene.setBackground(Color.BLACK);
-        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.white), 0.05));
-
-        scene.addGeometries( //
-                //surface
-                new Plane(new Color(java.awt.Color.BLACK), new Material(0.5, 0.2, 60,0.2, 0.5),
-                        new Point3D(0, 0 , 0), new Vector(0, 1, 0)),
-
-                //Wall of the house with a door
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(0, 0 , 0), new Point3D(0, -50, 0),new Point3D(30, -50, 0), new Point3D(30, 0, 0)), //
-                new Polygon(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 60,0.6, 0), //
-                        new Point3D(30, 0, 0), new Point3D(30, -30, 0),new Point3D(70, -30, 0), new Point3D(70, 0, 0)),
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(30, -30, 0), new Point3D(30, -50, 0), new Point3D(70, -50, 0), new Point3D(70, -30, 0)),
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(70, 0, 0), new Point3D(100, 0, 0), new Point3D(100, -50, 0),new Point3D(70, -50, 0)),
-
-                //Wall of the house with a window
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(0, 0 , 0), new Point3D(0, -50, 0),new Point3D(0, -50, 10), new Point3D(0, 0, 10)), //
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(0, 0, 100), new Point3D(0, -50, 100),new Point3D(0, -50, 90), new Point3D(0, 0, 90)),
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(0, -50, 10), new Point3D(0, -40, 10), new Point3D(0, -40, 90), new Point3D(0, -50, 90)),
-                new Polygon(Color.BLACK, new Material(0.5, 0.5, 60), //
-                        new Point3D(0, 0, 10), new Point3D(0, -20, 10), new Point3D(0, -20, 90),new Point3D(0, 0, 90)),
-
-                new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
-                        new Point3D(0, -50, 0), new Point3D(100, -50, 0), new Point3D(50, -75, 50)),
-                new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
-                        new Point3D(0, -50, 0), new Point3D(0, -50, 100), new Point3D(50, -75, 50)),
-                new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
-                        new Point3D(0, -50, 100), new Point3D(100, -50, 100), new Point3D(50, -75, 50)),
-                new Triangle(new Color(java.awt.Color.red), new Material(0.5, 0.5, 60), //
-                        new Point3D(100, -50, 100), new Point3D(100, -50, 0), new Point3D(50, -75, 50))
-                //
-
-//                new Sphere(new Color(java.awt.Color.BLUE), new Material(0.2, 0.2, 30, 0.6, 0), // )
-//                        30, new Point3D(60, -50, 50))
-        );
-
-        scene.addLights(new DirectionalLight(new Color(250, 150, 0), new Vector(1, 5, 0)),
-                new PointLight(new Color(700, 400, 400), new Point3D(60, -50, 0), 1, 4E-5, 2E-7));
-
-        ImageWriter imageWriter = new ImageWriter("my picture", 200, 200, 600, 600);
-        Render render = new Render(imageWriter, scene);
-
-        render.renderImage();
-        render.writeToImage();
-    }
 }
