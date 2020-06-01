@@ -130,8 +130,12 @@ public class ReflectionRefractionTests {
                         40, new Point3D(-50, -50, 50)),
                 new Sphere(new Color(25,0,0), new Material(0, 0, 30, 0.8, 0),
                         50, new Point3D(80, 80, 115)),
-                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.5), 20,
+                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.1), 10,
                         new Ray(new Point3D(-80, 100, 115),new Vector(0.2,-1,0.6)), 60),
+                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.1), 18,
+                        new Ray(new Point3D(-79, 95, 118),new Vector(0.2,-1,0.6)), 60),
+                new Cylinder(new Color(0,50,0), new Material(0.5, 0.5, 30,0,0.1), 26,
+                        new Ray(new Point3D(-78, 90, 121),new Vector(0.2,-1,0.6)), 60),
                 new Sphere(new Color(50,0,0), new Material(0.5, 0.5, 30,0,0.5),
                         30, new Point3D(80, 80, 115))
         );
