@@ -5,12 +5,27 @@ import elements.Camera;
 import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
+import geometries.Plane;
 import primitives.Color;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Contain all the elements of the scene
+ */
 public class Scene {
+    /**
+     *
+     * _name The name of the scene
+     * _background The background color of the scene
+     * _ambientLight    The ambient light color of the scene
+     * _cameraThe
+     * _distance
+     * _geometries
+     * _lights
+     * _actDepthOfField
+     */
     private final  String _name;
     private  Color _background;
     private  AmbientLight _ambientLight;
@@ -18,6 +33,8 @@ public class Scene {
     private  double _distance;
     private Geometries _geometries;
     private List<LightSource> _lights;
+
+    private boolean _actDepthOfField;
 
 
     /**
@@ -28,6 +45,7 @@ public class Scene {
         this._name = name;
         this._geometries = new Geometries();
         this._lights = new LinkedList<LightSource>();
+        this._actDepthOfField = false;
     }
 
 
@@ -88,6 +106,15 @@ public class Scene {
         return _lights;
     }
 
+
+    /**
+     *
+     * @return
+     */
+    public boolean is_actDepthOfField() {
+        return _actDepthOfField;
+    }
+
     // ***************** Setters ********************** //
 
     /**
@@ -122,6 +149,14 @@ public class Scene {
         this._distance = _distance;
     }
 
+
+    /**
+     *
+     * @param _actDepthOfField
+     */
+    public void set_actDepthOfField(boolean _actDepthOfField) {
+        this._actDepthOfField = _actDepthOfField;
+    }
 
     /**
      * Adding a new geometry to the geometry list

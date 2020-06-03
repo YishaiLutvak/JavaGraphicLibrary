@@ -1,5 +1,6 @@
 package elements;
 
+import geometries.Plane;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -18,6 +19,10 @@ public class Camera {
     protected Vector vTo;
     protected Vector vUp;
     protected Vector vRight;
+
+    private double _focusDistance;
+    private Plane _focalPlane;
+    private double _aperture;
 
     /**
      * Construct a camera by two vectors and location. Calculate the third vector
