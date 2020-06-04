@@ -225,12 +225,34 @@ public class Camera {
         Point3D focalPoint = (Point3D) _focalPlane.findIntersections(rayThroughPixel);
 
         // Calculate the length and width of the pixel
-        double rxOfAperture = screenWidth/nX*_aperture;
-        double ryOfAperture = screenHeight/nY*_aperture;
+        double focalPlaneWidth = screenWidth/nX*_aperture;
+        double focalPlaneHeight = screenHeight/nY*_aperture;
 
-        Ray apertureUp = new Ray(pIJ,_vUp);
-        Ray apertureRight = new Ray(pIJ,_vRight);
+        // Calculate the length and width of the pixel of focalPlane
+        double FPX = focalPlaneWidth/_dimensionRays;
+        double FPY = focalPlaneHeight/_dimensionRays;
 
+
+
+        List<Ray> beam = new LinkedList<>();
+        for (int m = 0; m < _dimensionRays; m++) {
+            for (int n = 0; n < _dimensionRays; n++) {
+
+                // Calculate the distance between the center of the pixel and the center point on the x axis and the y axis
+                double FPyM = (m-(double)nY/2)*FPY + _dimensionRays/2;
+                double FPxN = (n-(double)nX/2)*FPX + _dimensionRays/2;
+
+                // Calculate the point3D of the pixel center point
+                Point3D pMN = pCenter;
+
+                // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the View Plane
+                if (FPxN != 0)
+                    pMN = pMN.add(_vRight.scale(FPxN));
+                if (FPyM != 0)
+                    pMN = pMN.add(_vUp.scale(-FPyM));
+
+
+            }}
         return null;
     }
 }
