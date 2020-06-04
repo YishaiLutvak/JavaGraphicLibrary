@@ -45,19 +45,19 @@ public class IntegrationTest {
     public IntegrationTest() {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
-                rays1.add(camera1.constructRayThroughPixel(
-                        3, 3, j, i, 1, 3, 3));
+                rays1.add((Ray) camera1.constructBeamThroughPixel(
+                        3, 3, j, i, 1, 3, 3).get(0));
 
 
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
-                rays2.add(camera2.constructRayThroughPixel(
-                        3, 3, j, i, 1, 3, 3));
+                rays2.add((Ray) camera2.constructBeamThroughPixel(
+                        3, 3, j, i, 1, 3, 3).get(0));
     }
 
     /**
      * A test for the integration between the camera and the intersecting of the sphere by rays
-     * {@link elements.Camera#constructRayThroughPixel(int, int, int, int, double, double, double)}.
+     * {@link elements.Camera#constructBeamThroughPixel(int, int, int, int, double, double, double)}.
      * {@link geometries.Sphere#findIntersections(primitives.Ray)}.
      */
     @Test
@@ -141,7 +141,7 @@ public class IntegrationTest {
 
     /**
      * A test for the integration between the camera and the intersecting of the plane by rays
-     * {@link elements.Camera#constructRayThroughPixel(int, int, int, int, double, double, double)}.
+     * {@link elements.Camera#constructBeamThroughPixel(int, int, int, int, double, double, double)}.
      * {@link geometries.Plane#findIntersections(primitives.Ray)}.
      */
     @Test
@@ -197,7 +197,7 @@ public class IntegrationTest {
 
     /**
      * A test for the integration between the camera and the intersecting of the triangle by rays
-     * {@link elements.Camera#constructRayThroughPixel(int, int, int, int, double, double, double)}.
+     * {@link elements.Camera#constructBeamThroughPixel(int, int, int, int, double, double, double)}.
      * {@link geometries.Triangle#findIntersections(primitives.Ray)}.
      */
     @Test

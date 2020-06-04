@@ -33,7 +33,6 @@ public class Scene {
     private double _distance;
     private Geometries _geometries;
     private List<LightSource> _lights;
-    private boolean _actDepthOfField;
 
 
     /**
@@ -44,7 +43,6 @@ public class Scene {
         this._name = name;
         this._geometries = new Geometries();
         this._lights = new LinkedList<LightSource>();
-        this._actDepthOfField = false;
     }
 
 
@@ -106,14 +104,6 @@ public class Scene {
     }
 
 
-    /**
-     *
-     * @return
-     */
-    public boolean is_actDepthOfField() {
-        return _actDepthOfField;
-    }
-
     // ***************** Setters ********************** //
 
     /**
@@ -148,14 +138,6 @@ public class Scene {
         this._distance = _distance;
     }
 
-
-    /**
-     *
-     * @param _actDepthOfField
-     */
-    public void set_actDepthOfField(boolean _actDepthOfField) {
-        this._actDepthOfField = _actDepthOfField;
-    }
 
     /**
      * Adding a new geometry to the geometry list

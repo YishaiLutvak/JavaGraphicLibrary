@@ -5,6 +5,7 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -24,7 +25,9 @@ public class Camera {
     private double _focusDistance;
     private Plane _focalPlane;
     private double _aperture;
-    int _dimensionRays;
+    private int _dimensionRays;
+    private boolean _actDepthOfField;
+
 
     /**
      * Construct a camera by two vectors and location. Calculate the third vector
@@ -32,7 +35,7 @@ public class Camera {
      * @param vTo vector from the camera to the geometry
      * @param vUp vector from the camera up - orthogonal to vTo
      */
-    public Camera(Point3D location,Vector vTo ,Vector vUp ) {
+    public Camera(Point3D location,Vector vTo ,Vector vUp) {
 
         this._location = new Point3D(location);
         this._vTo = vTo.normalized();
@@ -44,6 +47,9 @@ public class Camera {
 
         //Calculate the third vector
         this._vRight = vTo.crossProduct(vUp);
+
+        this._actDepthOfField = false;
+
     }
 
     /**
@@ -54,7 +60,7 @@ public class Camera {
      * @param focusDistance
      * @param aperture
      */
-    public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture) {
+    public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture, boolean actDepthOfField) {
 
         this._location = new Point3D(location);
         this._vTo = vTo.normalized();
@@ -70,6 +76,7 @@ public class Camera {
         this._aperture = aperture;
         this._focusDistance = focusDistance;
         this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
+        this._actDepthOfField = actDepthOfField;
     }
 /**********getters**********/
 
@@ -110,7 +117,16 @@ public class Camera {
         this._aperture = _aperture;
     }*/
 
-    /**
+    public boolean isActDepthOfField() {
+        return _actDepthOfField;
+    }
+
+    public void setActDepthOfField(boolean _actDepthOfField) {
+        this._actDepthOfField = _actDepthOfField;
+    }
+
+
+   /* *//**
      * The constructRayThroughPixel function
      * accepts parameters that represent View Plane
      * and a specific pixel
@@ -123,7 +139,7 @@ public class Camera {
      * @param screenWidth the total width of the view plane
      * @param screenHeight the total height of the view plane
      * @return ray from the camera to the pixel
-     */
+     *//*
     public Ray constructRayThroughPixel (int nX, int nY,
                                          int j, int i, double screenDistance,
                                      double screenWidth, double screenHeight){
@@ -151,7 +167,7 @@ public class Camera {
         // Calculates and returns the vector between the camera and the pixel center
         Vector vIJ = pIJ.subtract(_location);
         return new Ray(getLocation(),vIJ);
-    }
+    }*/
 
 
     /**
@@ -197,6 +213,14 @@ public class Camera {
 
         Vector vIJ = pIJ.subtract(_location);
         Ray rayThroughPixel = new Ray(getLocation(),vIJ);
+
+        List<Ray> raysList = new LinkedList<Ray> ();
+
+        if(!_actDepthOfField){
+            raysList.add(rayThroughPixel);
+            return raysList;
+        }
+
         Point3D focalPoint = (Point3D) _focalPlane.findIntersections(rayThroughPixel);
 
         // Calculate the length and width of the pixel
