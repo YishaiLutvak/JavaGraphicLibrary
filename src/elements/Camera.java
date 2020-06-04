@@ -232,15 +232,13 @@ public class Camera {
         double FPX = focalPlaneWidth/_dimensionRays;
         double FPY = focalPlaneHeight/_dimensionRays;
 
-
-
         List<Ray> beam = new LinkedList<>();
         for (int m = 0; m < _dimensionRays; m++) {
             for (int n = 0; n < _dimensionRays; n++) {
 
                 // Calculate the distance between the center of the pixel and the center point on the x axis and the y axis
-                double FPyM = (m-(double)nY/2)*FPY + _dimensionRays/2;
-                double FPxN = (n-(double)nX/2)*FPX + _dimensionRays/2;
+                double FPyM = (m-(double)_dimensionRays/2)*FPY + _dimensionRays/2;
+                double FPxN = (n-(double)_dimensionRays/2)*FPX + _dimensionRays/2;
 
                 // Calculate the point3D of the pixel center point
                 Point3D pMN = pCenter;
@@ -250,8 +248,6 @@ public class Camera {
                     pMN = pMN.add(_vRight.scale(FPxN));
                 if (FPyM != 0)
                     pMN = pMN.add(_vUp.scale(-FPyM));
-
-
             }}
         return null;
     }
