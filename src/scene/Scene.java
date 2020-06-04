@@ -17,9 +17,9 @@ import java.util.List;
 public class Scene {
     /**
      *
-     * _name The name of the scene
-     * _background The background color of the scene
-     * _ambientLight    The ambient light color of the scene
+     * _name - The name of the scene
+     * _background - The background color of the scene
+     * _ambientLight - The ambient light color of the scene
      * _cameraThe
      * _distance
      * _geometries
@@ -27,13 +27,12 @@ public class Scene {
      * _actDepthOfField
      */
     private final  String _name;
-    private  Color _background;
-    private  AmbientLight _ambientLight;
-    private  Camera _camera;
-    private  double _distance;
+    private Color _background;
+    private AmbientLight _ambientLight;
+    private Camera _camera;
+    private double _distance;
     private Geometries _geometries;
     private List<LightSource> _lights;
-
     private boolean _actDepthOfField;
 
 

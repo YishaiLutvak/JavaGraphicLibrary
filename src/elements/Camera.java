@@ -5,6 +5,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 
@@ -15,14 +17,14 @@ import static primitives.Util.isZero;
 
 public class Camera {
 
-    protected Point3D location;
-    protected Vector vTo;
-    protected Vector vUp;
-    protected Vector vRight;
-
+    private Point3D _location;
+    private Vector _vTo;
+    private Vector _vUp;
+    private Vector _vRight;
     private double _focusDistance;
     private Plane _focalPlane;
     private double _aperture;
+    int _dimensionRays;
 
     /**
      * Construct a camera by two vectors and location. Calculate the third vector
@@ -32,16 +34,42 @@ public class Camera {
      */
     public Camera(Point3D location,Vector vTo ,Vector vUp ) {
 
-        this.location = new Point3D(location);
-        this.vTo = vTo.normalized();
-        this.vUp = vUp.normalized();
+        this._location = new Point3D(location);
+        this._vTo = vTo.normalized();
+        this._vUp = vUp.normalized();
 
         //Make sure the vectors vTo orthogonal to vUp
         if (!isZero(vTo.dotProduct(vUp)))
             throw new IllegalArgumentException("vTo not orthogonal to vUp!");
 
         //Calculate the third vector
-        this.vRight = vTo.crossProduct(vUp);
+        this._vRight = vTo.crossProduct(vUp);
+    }
+
+    /**
+     * Construct a camera by two vectors and location. Calculate the third vector
+     * @param location the location of the camera
+     * @param vTo vector from the camera to the geometry
+     * @param vUp vector from the camera up - orthogonal to vTo
+     * @param focusDistance
+     * @param aperture
+     */
+    public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture) {
+
+        this._location = new Point3D(location);
+        this._vTo = vTo.normalized();
+        this._vUp = vUp.normalized();
+
+        //Make sure the vectors vTo orthogonal to vUp
+        if (!isZero(vTo.dotProduct(vUp)))
+            throw new IllegalArgumentException("vTo not orthogonal to vUp!");
+
+        //Calculate the third vector
+        this._vRight = vTo.crossProduct(vUp);
+
+        this._aperture = aperture;
+        this._focusDistance = focusDistance;
+        this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
     }
 /**********getters**********/
 
@@ -49,29 +77,38 @@ public class Camera {
      * @return location point3D of camera
      */
     public Point3D getLocation() {
-        return new Point3D(location);
+        return new Point3D(_location);
     }
 
     /**
      * @return vUp vector of camera
      */
     public Vector getVup() {
-        return new Vector(vUp);
+        return new Vector(_vUp);
     }
 
     /**
      * @return vRight vector of camera
      */
     public Vector getVright() {
-        return new Vector(vRight);
+        return new Vector(_vRight);
     }
 
     /**
      * @return vTo vector of camera
      */
     public Vector getVto() {
-        return new Vector(vTo);
+        return new Vector(_vTo);
     }
+
+    /*public void setFocusDistance(double _focusDistance) {
+        this._focusDistance = _focusDistance;
+        this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
+    }
+
+    public void setAperture(double _aperture) {
+        this._aperture = _aperture;
+    }*/
 
     /**
      * The constructRayThroughPixel function
@@ -95,7 +132,7 @@ public class Camera {
             throw new IllegalArgumentException("distance must to be greater from zero");
 
         // Calculate the center point3D of the view plane
-        Point3D pCenter = location.add(vTo.scale(screenDistance));
+        Point3D pCenter = _location.add(_vTo.scale(screenDistance));
 
         // Calculate the length and width of the pixel
         double rX = screenWidth/nX;
@@ -108,11 +145,67 @@ public class Camera {
         // Calculate the point3D of the pixel center point
         Point3D pIJ = pCenter;
         // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the View Plane
-        if (xJ != 0) pIJ = pIJ.add(vRight.scale(xJ));
-        if (yI != 0) pIJ = pIJ.add(vUp.scale(-yI));
+        if (xJ != 0) pIJ = pIJ.add(_vRight.scale(xJ));
+        if (yI != 0) pIJ = pIJ.add(_vUp.scale(-yI));
 
         // Calculates and returns the vector between the camera and the pixel center
-        Vector vIJ = pIJ.subtract(location);
+        Vector vIJ = pIJ.subtract(_location);
         return new Ray(getLocation(),vIJ);
+    }
+
+
+    /**
+     * The constructRayThroughPixel function
+     * accepts parameters that represent View Plane
+     * and a specific pixel
+     * and returns a ray from the camera to the same pixel
+     * @param nX number of pixels in x axis of view plane
+     * @param nY number of pixels in y axis of view plane
+     * @param j index of column on the view plane
+     * @param i index of row on the view plane
+     * @param screenDistance the distance from the camera to the view plane
+     * @param screenWidth the total width of the view plane
+     * @param screenHeight the total height of the view plane
+     * @return ray from the camera to the pixel
+     */
+    public List<Ray> constructBeamThroughPixel (int nX, int nY,
+                                             int j, int i, double screenDistance,
+                                             double screenWidth, double screenHeight){
+        // If the distance between the View Plane and the camera is not positive, an error will be thrown
+        if (screenDistance <= 0)
+            throw new IllegalArgumentException("distance must to be greater from zero");
+
+        // Calculate the center point3D of the view plane
+        Point3D pCenter = _location.add(_vTo.scale(screenDistance));
+
+        // Calculate the length and width of the pixel
+        double rX = screenWidth/nX;
+        double rY = screenHeight/nY;
+
+        // Calculate the distance between the center of the pixel and the center point on the x axis and the y axis
+        double yI = (i-(double)nY/2)*rY + rY/2;
+        double xJ = (j-(double)nX/2)*rX + rX/2;
+
+        // Calculate the point3D of the pixel center point
+        Point3D pIJ = pCenter;
+
+        // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the View Plane
+        if (xJ != 0)
+            pIJ = pIJ.add(_vRight.scale(xJ));
+        if (yI != 0)
+            pIJ = pIJ.add(_vUp.scale(-yI));
+
+        Vector vIJ = pIJ.subtract(_location);
+        Ray rayThroughPixel = new Ray(getLocation(),vIJ);
+        Point3D focalPoint = (Point3D) _focalPlane.findIntersections(rayThroughPixel);
+
+        // Calculate the length and width of the pixel
+        double rxOfAperture = screenWidth/nX*_aperture;
+        double ryOfAperture = screenHeight/nY*_aperture;
+
+        Ray apertureUp = new Ray(pIJ,_vUp);
+        Ray apertureRight = new Ray(pIJ,_vRight);
+
+        return null;
     }
 }

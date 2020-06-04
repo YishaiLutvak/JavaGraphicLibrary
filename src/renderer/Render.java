@@ -2,15 +2,12 @@ package renderer;
 
 import elements.Camera;
 import elements.LightSource;
-import primitives.Material;
+import primitives.*;
 import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
-import primitives.Color;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
 import scene.Scene;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -60,12 +57,25 @@ public class Render {
         double width = _imageWriter.getWidth();
         double height = _imageWriter.getHeight();
         double distance = _scene.getDistance();
+        boolean actDepthOfField = _scene.is_actDepthOfField();
 
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
-                Ray ray = camera.constructRayThroughPixel(nX, nY, j, i, distance, width, height);
-                GeoPoint closestPoint = findClosestIntersection(ray);
-                _imageWriter.writePixel(j, i, closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor());
+                Ray centeralRay = camera.constructRayThroughPixel(nX, nY, j, i, distance, width, height);
+                if (actDepthOfField) {
+                    List<Color> colors = new LinkedList<Color>();
+                    List<Ray> rays = camera.constructBeamThroughPixel(nX, nY, j, i, distance, width, height);
+                    for (Ray ray: rays
+                         ) {
+                        GeoPoint closestPoint = findClosestIntersection(ray);
+                        colors.add(new Color(closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor()));
+                    }
+                    _imageWriter.writePixel(j, i, new Color(colors).getColor());
+                }
+                else{
+                    GeoPoint closestPoint = findClosestIntersection(centeralRay);
+                    _imageWriter.writePixel(j, i, closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, centeralRay).getColor());
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Wrapper class for java.jwt.Color The constructors operate with any
  * non-negative RGB values. The colors are maintained without upper limit of
@@ -60,6 +62,18 @@ public class Color {
         _b = other.getBlue();
     }
 
+
+    /**
+     *
+     */
+    public Color(List<Color> colors) {
+        Color sumColor = Color.BLACK;
+        for (Color color: colors)
+            sumColor = sumColor.add(color);
+        _r = sumColor._r / colors.size();
+        _g = sumColor._g / colors.size();
+        _b = sumColor._b / colors.size();
+    }
     /**
      * Color setter to reset the color to BLACK
      *
