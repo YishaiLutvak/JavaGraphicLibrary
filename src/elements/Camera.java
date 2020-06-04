@@ -237,8 +237,8 @@ public class Camera {
             for (int n = 0; n < _dimensionRays; n++) {
 
                 // Calculate the distance between the center of the pixel and the center point on the x axis and the y axis
-                double FPyM = (m-(double)_dimensionRays/2)*FPY + _dimensionRays/2;
-                double FPxN = (n-(double)_dimensionRays/2)*FPX + _dimensionRays/2;
+                double FPyM = (m-(double)_dimensionRays/2)*FPY + FPY/2;
+                double FPxN = (n-(double)_dimensionRays/2)*FPX + FPX/2;
 
                 // Calculate the point3D of the pixel center point
                 Point3D pMN = pCenter;
