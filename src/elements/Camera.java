@@ -22,6 +22,7 @@ public class Camera {
     private Vector _vTo;
     private Vector _vUp;
     private Vector _vRight;
+
     private double _focusDistance;
     private Plane _focalPlane;
     private double _aperture;
@@ -215,9 +216,9 @@ public class Camera {
         Ray rayThroughPixel = new Ray(getLocation(),vIJ);
 
         List<Ray> raysList = new LinkedList<Ray> ();
+        raysList.add(rayThroughPixel);
 
         if(!_actDepthOfField){
-            raysList.add(rayThroughPixel);
             return raysList;
         }
 

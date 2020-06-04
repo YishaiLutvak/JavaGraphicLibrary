@@ -64,8 +64,7 @@ public class Render {
                 if (actDepthOfField) {*/
                     List<Color> colors = new LinkedList<Color>();
                     List<Ray> rays = camera.constructBeamThroughPixel(nX, nY, j, i, distance, width, height);
-                    for (Ray ray: rays
-                         ) {
+                    for (Ray ray: rays) {
                         GeoPoint closestPoint = findClosestIntersection(ray);
                         colors.add(new Color(closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor()));
                     }
