@@ -241,7 +241,7 @@ public class Camera {
                 double FPxN = (n-(double)_dimensionRays/2)*FPX + FPX/2;
 
                 // Calculate the point3D of the pixel center point
-                Point3D pMN = pCenter;
+                Point3D pMN = pIJ;
 
                 // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the View Plane
                 if (FPxN != 0)
