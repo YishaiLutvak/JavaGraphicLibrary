@@ -7,7 +7,9 @@ import primitives.Vector;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 
@@ -61,22 +63,14 @@ public class Camera {
      * @param focusDistance
      * @param aperture
      */
-    public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture, boolean actDepthOfField) {
+    public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture, int dimensionRays, boolean actDepthOfField) {
 
-        this._location = new Point3D(location);
-        this._vTo = vTo.normalized();
-        this._vUp = vUp.normalized();
-
-        //Make sure the vectors vTo orthogonal to vUp
-        if (!isZero(vTo.dotProduct(vUp)))
-            throw new IllegalArgumentException("vTo not orthogonal to vUp!");
-
-        //Calculate the third vector
-        this._vRight = vTo.crossProduct(vUp);
+        this(location,vTo,vUp);
 
         this._aperture = aperture;
         this._focusDistance = focusDistance;
         this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
+        this._dimensionRays = dimensionRays;
         this._actDepthOfField = actDepthOfField;
     }
 /**********getters**********/
@@ -109,6 +103,13 @@ public class Camera {
         return new Vector(_vTo);
     }
 
+    /**
+     * @return
+     */
+    public boolean isActDepthOfField() {
+        return _actDepthOfField;
+    }
+
     /*public void setFocusDistance(double _focusDistance) {
         this._focusDistance = _focusDistance;
         this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
@@ -118,12 +119,9 @@ public class Camera {
         this._aperture = _aperture;
     }*/
 
-    public boolean isActDepthOfField() {
-        return _actDepthOfField;
-    }
-
     public void setActDepthOfField(boolean _actDepthOfField) {
-        this._actDepthOfField = _actDepthOfField;
+       if (_focalPlane != null)
+           this._actDepthOfField = _actDepthOfField;
     }
 
 
@@ -216,13 +214,16 @@ public class Camera {
         Ray rayThroughPixel = new Ray(getLocation(),vIJ);
 
         List<Ray> raysList = new LinkedList<Ray> ();
-        raysList.add(rayThroughPixel);
 
         if(!_actDepthOfField){
+            raysList.add(rayThroughPixel);
             return raysList;
         }
 
-        Point3D focalPoint = (Point3D) _focalPlane.findIntersections(rayThroughPixel);
+        if (!(alignZero(_focusDistance - screenDistance ) > 0))
+            throw new IllegalArgumentException ("_focusDistance can't little from screenDistance");
+
+        Point3D focalPoint = _focalPlane.findIntersections(rayThroughPixel).get(0)._point;
 
         // Calculate the length and width of the pixel
         double focalPlaneWidth = screenWidth/nX*_aperture;
@@ -232,7 +233,6 @@ public class Camera {
         double FPX = focalPlaneWidth/_dimensionRays;
         double FPY = focalPlaneHeight/_dimensionRays;
 
-        List<Ray> beam = new LinkedList<>();
         for (int m = 0; m < _dimensionRays; m++) {
             for (int n = 0; n < _dimensionRays; n++) {
 
@@ -248,7 +248,15 @@ public class Camera {
                     pMN = pMN.add(_vRight.scale(FPxN));
                 if (FPyM != 0)
                     pMN = pMN.add(_vUp.scale(-FPyM));
-            }}
-        return null;
+
+                double r1 = (Math.random()*FPX) - FPX/2;;
+                double r2 = (Math.random()*FPY) - FPY/2;
+                pMN = pMN.add(_vRight.scale(r1));
+                pMN = pMN.add(_vUp.scale(r2));
+
+                raysList.add(new Ray(pMN,focalPoint.subtract(pMN)));
+            }
+        }
+        return raysList;
     }
 }
