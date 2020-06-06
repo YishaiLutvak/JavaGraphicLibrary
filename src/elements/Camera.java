@@ -240,15 +240,16 @@ public class Camera {
                 double FPyM = (m-(double)_dimensionRays/2)*FPY + FPY/2;
                 double FPxN = (n-(double)_dimensionRays/2)*FPX + FPX/2;
 
-                // Calculate the point3D of the pixel center point
+                // Calculate the point3D of the pixel center point of aperture
                 Point3D pMN = pIJ;
 
-                // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the View Plane
+                // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the aperture
                 if (FPxN != 0)
                     pMN = pMN.add(_vRight.scale(FPxN));
                 if (FPyM != 0)
                     pMN = pMN.add(_vUp.scale(-FPyM));
 
+                //randomly moving
                 double r1 = (Math.random()*FPX) - FPX/2;;
                 double r2 = (Math.random()*FPY) - FPY/2;
                 pMN = pMN.add(_vRight.scale(r1));

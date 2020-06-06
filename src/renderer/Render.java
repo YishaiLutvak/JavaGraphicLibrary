@@ -60,20 +60,13 @@ public class Render {
 
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
-                /*Ray centeralRay = camera.constructRayThroughPixel(nX, nY, j, i, distance, width, height);
-                if (actDepthOfField) {*/
-                    List<Color> colors = new LinkedList<Color>();
-                    List<Ray> rays = camera.constructBeamThroughPixel(nX, nY, j, i, distance, width, height);
-                    for (Ray ray: rays) {
-                        GeoPoint closestPoint = findClosestIntersection(ray);
-                        colors.add(new Color(closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor()));
-                    }
-                    _imageWriter.writePixel(j, i, new Color(colors).getColor());
-                /*}
-                else{
-                    GeoPoint closestPoint = findClosestIntersection(centeralRay);
-                    _imageWriter.writePixel(j, i, closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, centeralRay).getColor());
-                }*/
+                List<Color> colors = new LinkedList<Color>();
+                List<Ray> rays = camera.constructBeamThroughPixel(nX, nY, j, i, distance, width, height);
+                for (Ray ray: rays) {
+                    GeoPoint closestPoint = findClosestIntersection(ray);
+                    colors.add(new Color(closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor()));
+                }
+                _imageWriter.writePixel(j, i, new Color(colors).getColor());
             }
         }
     }
