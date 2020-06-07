@@ -53,6 +53,9 @@ public class Camera {
 
         this._actDepthOfField = false;
 
+        this._aperture = 1;
+
+        this._dimensionRays = 9;
     }
 
     /**
@@ -110,64 +113,19 @@ public class Camera {
         return _actDepthOfField;
     }
 
-    /*public void setFocusDistance(double _focusDistance) {
+    public void setFocusDistance(double _focusDistance) {
         this._focusDistance = _focusDistance;
         this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
     }
 
     public void setAperture(double _aperture) {
         this._aperture = _aperture;
-    }*/
+    }
 
     public void setActDepthOfField(boolean _actDepthOfField) {
        if (_focalPlane != null)
            this._actDepthOfField = _actDepthOfField;
     }
-
-
-   /* *//**
-     * The constructRayThroughPixel function
-     * accepts parameters that represent View Plane
-     * and a specific pixel
-     * and returns a ray from the camera to the same pixel
-     * @param nX number of pixels in x axis of view plane
-     * @param nY number of pixels in y axis of view plane
-     * @param j index of column on the view plane
-     * @param i index of row on the view plane
-     * @param screenDistance the distance from the camera to the view plane
-     * @param screenWidth the total width of the view plane
-     * @param screenHeight the total height of the view plane
-     * @return ray from the camera to the pixel
-     *//*
-    public Ray constructRayThroughPixel (int nX, int nY,
-                                         int j, int i, double screenDistance,
-                                     double screenWidth, double screenHeight){
-        // If the distance between the View Plane and the camera is not positive, an error will be thrown
-        if (screenDistance <= 0)
-            throw new IllegalArgumentException("distance must to be greater from zero");
-
-        // Calculate the center point3D of the view plane
-        Point3D pCenter = _location.add(_vTo.scale(screenDistance));
-
-        // Calculate the length and width of the pixel
-        double rX = screenWidth/nX;
-        double rY = screenHeight/nY;
-
-        // Calculate the distance between the center of the pixel and the center point on the x axis and the y axis
-        double yI = (i-(double)nY/2)*rY + rY/2;
-        double xJ = (j-(double)nX/2)*rX + rX/2;
-
-        // Calculate the point3D of the pixel center point
-        Point3D pIJ = pCenter;
-        // Avoid generating vector (0.0 ,0.0, 0.0) in case the center of the pixel is in the center of the View Plane
-        if (xJ != 0) pIJ = pIJ.add(_vRight.scale(xJ));
-        if (yI != 0) pIJ = pIJ.add(_vUp.scale(-yI));
-
-        // Calculates and returns the vector between the camera and the pixel center
-        Vector vIJ = pIJ.subtract(_location);
-        return new Ray(getLocation(),vIJ);
-    }*/
-
 
     /**
      * The constructRayThroughPixel function
@@ -220,23 +178,30 @@ public class Camera {
             return raysList;
         }
 
+        //+++++++++++++++++++++++
+
         if (!(alignZero(_focusDistance - screenDistance ) > 0))
-            throw new IllegalArgumentException ("_focusDistance can't little from screenDistance");
+            throw new IllegalArgumentException ("focusDistance can't little from screenDistance");
+
+        if (_focalPlane == null){
+            _focusDistance = screenDistance * 1.2;
+            this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
+        }
 
         Point3D focalPoint = _focalPlane.findIntersections(rayThroughPixel).get(0)._point;
 
-        // Calculate the length and width of the pixel
-        double focalPlaneWidth = screenWidth/nX*_aperture;
-        double focalPlaneHeight = screenHeight/nY*_aperture;
+        // Calculate the length and width of the grid
+        double apertureWidth = screenWidth/nX*_aperture;
+        double apertureHeight = screenHeight/nY*_aperture;
 
         // Calculate the length and width of the pixel of focalPlane
-        double FPX = focalPlaneWidth/_dimensionRays;
-        double FPY = focalPlaneHeight/_dimensionRays;
+        double FPX = apertureWidth/_dimensionRays;
+        double FPY = apertureHeight/_dimensionRays;
 
         for (int m = 0; m < _dimensionRays; m++) {
             for (int n = 0; n < _dimensionRays; n++) {
 
-                // Calculate the distance between the center of the pixel and the center point on the x axis and the y axis
+                // Calculate the distance between the center of the aperture and the center point on the x axis and the y axis
                 double FPyM = (m-(double)_dimensionRays/2)*FPY + FPY/2;
                 double FPxN = (n-(double)_dimensionRays/2)*FPX + FPX/2;
 
@@ -250,10 +215,10 @@ public class Camera {
                     pMN = pMN.add(_vUp.scale(-FPyM));
 
                 //randomly moving
-                double r1 = (Math.random()*FPX) - FPX/2;;
+                double r1 = (Math.random()*FPX) - FPX/2;
                 double r2 = (Math.random()*FPY) - FPY/2;
                 pMN = pMN.add(_vRight.scale(r1));
-                pMN = pMN.add(_vUp.scale(r2));
+                pMN = pMN.add(_vUp.scale(-r2));
 
                 raysList.add(new Ray(pMN,focalPoint.subtract(pMN)));
             }

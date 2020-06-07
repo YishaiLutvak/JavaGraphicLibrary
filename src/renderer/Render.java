@@ -18,6 +18,99 @@ import static primitives.Util.isZero;
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public class Render {
+    // ...........
+    private int _threads = 3;
+    private final int SPARE_THREADS = 2;
+    private boolean _print = false;
+
+    /**
+     * Pixel is an internal helper class whose objects are associated with a Render object that
+     * they are generated in scope of. It is used for multithreading in the Renderer and for follow up
+     * its progress.<br/>
+     * There is a main follow up object and several secondary objects - one in each thread.
+     * @author Dan
+     *
+     */
+    private class Pixel {
+        private long _maxRows = 0;
+        private long _maxCols = 0;
+        private long _pixels = 0;
+        public volatile int row = 0;
+        public volatile int col = -1;
+        private long _counter = 0;
+        private int _percents = 0;
+        private long _nextCounter = 0;
+
+        /**
+         * The constructor for initializing the main follow up Pixel object
+         * @param maxRows the amount of pixel rows
+         * @param maxCols the amount of pixel columns
+         */
+        public Pixel(int maxRows, int maxCols) {
+            _maxRows = maxRows;
+            _maxCols = maxCols;
+            _pixels = maxRows * maxCols;
+            _nextCounter = _pixels / 100;
+            if (Render.this._print) System.out.printf("\r %02d%%", _percents);
+        }
+
+        /**
+         *  Default constructor for secondary Pixel objects
+         */
+        public Pixel() {}
+
+        /**
+         * Internal function for thread-safe manipulating of main follow up Pixel object - this function is
+         * critical section for all the threads, and main Pixel object data is the shared data of this critical
+         * section.<br/>
+         * The function provides next pixel number each call.
+         * @param target target secondary Pixel object to copy the row/column of the next pixel
+         * @return the progress percentage for follow up: if it is 0 - nothing to print, if it is -1 - the task is
+         * finished, any other value - the progress percentage (only when it changes)
+         */
+        private synchronized int nextP(Pixel target) {
+            ++col;
+            ++_counter;
+            if (col < _maxCols) {
+                target.row = this.row;
+                target.col = this.col;
+                if (_counter == _nextCounter) {
+                    ++_percents;
+                    _nextCounter = _pixels * (_percents + 1) / 100;
+                    return _percents;
+                }
+                return 0;
+            }
+            ++row;
+            if (row < _maxRows) {
+                col = 0;
+                if (_counter == _nextCounter) {
+                    ++_percents;
+                    _nextCounter = _pixels * (_percents + 1) / 100;
+                    return _percents;
+                }
+                return 0;
+            }
+            return -1;
+        }
+
+        /**
+         * Public function for getting next pixel number into secondary Pixel object.
+         * The function prints also progress percentage in the console window.
+         * @param target target secondary Pixel object to copy the row/column of the next pixel
+         * @return true if the work still in progress, -1 if it's done
+         */
+        public boolean nextPixel(Pixel target) {
+            int percents = nextP(target);
+            if (percents > 0)
+                if (Render.this._print) System.out.printf("\r %02d%%", percents);
+            if (percents >= 0)
+                return true;
+            if (Render.this._print) System.out.printf("\r %02d%%", 100);
+            return false;
+        }
+    }
+
     /**
      * The max recursion depth in calcColor
      */
@@ -48,6 +141,8 @@ public class Render {
      * the function Takes the closest intersection points to the camera,
      * and paints the pixels of the closest points in the color of the points.
      * In addition, the function colors the rest of the pixels in the background color
+     * In case the depth of field feature is on the color constructor get a list of rays
+     * and calculate the average color
      */
     public void renderImage() {
         Camera camera = _scene.getCamera();
@@ -57,26 +152,72 @@ public class Render {
         double width = _imageWriter.getWidth();
         double height = _imageWriter.getHeight();
         double distance = _scene.getDistance();
+        final Pixel thePixel = new Pixel(nY, nX);
 
-        for (int i = 0; i < nY; i++) {
-            for (int j = 0; j < nX; j++) {
-                List<Color> colors = new LinkedList<Color>();
-                List<Ray> rays = camera.constructBeamThroughPixel(nX, nY, j, i, distance, width, height);
-                for (Ray ray: rays) {
-                    GeoPoint closestPoint = findClosestIntersection(ray);
-                    colors.add(new Color(closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor()));
+        // Generate threads
+        Thread[] threads = new Thread[_threads];
+        for (int i = _threads - 1; i >= 0; --i) {
+            threads[i] = new Thread(() -> {
+                Pixel pixel = new Pixel();
+                while (thePixel.nextPixel(pixel)) {
+                    List<Color> colors = new LinkedList<Color>();
+                    List<Ray> rays = camera.constructBeamThroughPixel(nX, nY, pixel.col, pixel.row, //
+                            distance, width, height);
+                    for (Ray ray: rays) {
+                        GeoPoint closestPoint = findClosestIntersection(ray);
+                        colors.add(new Color(closestPoint == null ? _scene.getBackground().getColor() : calcColor(closestPoint, ray).getColor()));
+                    }
+                    _imageWriter.writePixel(pixel.col, pixel.row,  new Color(colors).getColor());
                 }
-                _imageWriter.writePixel(j, i, new Color(colors).getColor());
-            }
+            });
         }
+        // Start threads
+		for (Thread thread : threads) thread.start();
+
+        // Wait for all threads to finish
+		for (Thread thread : threads) try { thread.join(); } catch (Exception e) {}
+		if (_print) System.out.printf("\r100%%\n");
     }
 
     /**
-     * The function gets a ray and find the closest intersection point to the ray origin
+     * Set multithreading <br>
+     * - if the parameter is 0 - number of coress less 2 is taken
      *
-     * @param ray a ray that intersect  the geometry
-     * @return the closest intersection point. If their is no points return null
+     * @param threads number of threads
+     * @return the Render object itself
      */
+    public Render setMultithreading(int threads) {
+        if (threads < 0)
+            throw new IllegalArgumentException("Multithreading patameter must be 0 or higher");
+        if (threads != 0)
+            _threads = threads;
+        else {
+            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+            if (cores <= 2)
+                _threads = 1;
+            else
+                _threads = cores;
+        }
+        return this;
+    }
+
+    /**
+     * Set debug printing on
+     *
+     * @return the Render object itself
+     */
+    public Render setDebugPrint() {
+        _print = true;
+        return this;
+    }
+
+
+/**
+ * The function gets a ray and find the closest intersection point to the ray origin
+ *
+ * @param ray a ray that intersect  the geometry
+ * @return the closest intersection point. If their is no points return null
+ */
     private GeoPoint findClosestIntersection(Ray ray) {
         Intersectable geometries = _scene.getGeometries();
         List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
