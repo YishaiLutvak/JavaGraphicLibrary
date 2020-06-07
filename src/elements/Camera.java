@@ -63,8 +63,8 @@ public class Camera {
      * @param location the location of the camera
      * @param vTo vector from the camera to the geometry
      * @param vUp vector from the camera up - orthogonal to vTo
-     * @param focusDistance
-     * @param aperture
+     * @param focusDistance the distance between the camera and the focal plane
+     * @param aperture Factor to the aperture size. Scaled in the pixel size
      */
     public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture, int dimensionRays, boolean actDepthOfField) {
 
@@ -107,21 +107,33 @@ public class Camera {
     }
 
     /**
-     * @return
+     * @return the status of the dpth of field feature
      */
     public boolean isActDepthOfField() {
         return _actDepthOfField;
     }
 
+    /**
+     * setter
+     * @param _focusDistance the distance from the focus plane
+     */
     public void setFocusDistance(double _focusDistance) {
         this._focusDistance = _focusDistance;
         this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
     }
 
+    /**
+     * setter
+     * @param _aperture factor to the aperture size. Scaled in the pixel size
+     */
     public void setAperture(double _aperture) {
         this._aperture = _aperture;
     }
 
+    /**
+     * setter
+     * @param _actDepthOfField act depth of field feature
+     */
     public void setActDepthOfField(boolean _actDepthOfField) {
        if (_focalPlane != null)
            this._actDepthOfField = _actDepthOfField;
@@ -131,7 +143,9 @@ public class Camera {
      * The constructRayThroughPixel function
      * accepts parameters that represent View Plane
      * and a specific pixel
-     * and returns a ray from the camera to the same pixel
+     * and returns a list of rays contain a ray from the camera to the same pixel.
+     * If depth of field feature is on return a list of rays contains in addition
+     * randomize rays from the aperture to the focus distance
      * @param nX number of pixels in x axis of view plane
      * @param nY number of pixels in y axis of view plane
      * @param j index of column on the view plane
@@ -139,7 +153,7 @@ public class Camera {
      * @param screenDistance the distance from the camera to the view plane
      * @param screenWidth the total width of the view plane
      * @param screenHeight the total height of the view plane
-     * @return ray from the camera to the pixel
+     * @return a list of rays to the geometry
      */
     public List<Ray> constructBeamThroughPixel (int nX, int nY,
                                              int j, int i, double screenDistance,
