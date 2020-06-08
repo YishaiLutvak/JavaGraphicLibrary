@@ -1,9 +1,6 @@
 package UnitTests;
 
-import elements.AmbientLight;
-import elements.Camera;
-import elements.ImprovedSpot;
-import elements.SpotLight;
+import elements.*;
 import geometries.*;
 import org.junit.Test;
 import primitives.*;
@@ -74,7 +71,7 @@ public class DepthOfFieldTest {
     public void depthOfFieldFullImage() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                7000, 16, 3, true));
+                7000, 16, 3, false));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -92,6 +89,11 @@ public class DepthOfFieldTest {
 
         Tube MyCylinder = new Cylinder(new Color(50,0,0), new Material(0.2, 0.2, 500,0,0.6),//
                 80,new Ray(new Point3D(0,50,6000),new Vector(0,-1,0)),50);
+
+        Geometries lightBall = new Geometries(new Sphere(new Color(30,30,30),new Material(0.2, 0.2, 500,0.99,0),//
+                10,new Point3D(-70,-70,150)),
+                new Cylinder(new Color(0,51,0), new Material(0.5,0.5,700,0,0),//
+                        3,new Ray(new Point3D(-70,-60,150),new Vector(0,1,0)),120 ));
 
         Geometries table  = new Geometries(
                 //plate of the table
@@ -155,19 +157,21 @@ public class DepthOfFieldTest {
                         40,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 150)
         );
 
-        scene.addGeometries(table, bottle, planes, KiddushCup , balls, cylinders/*,MyCylinder, MyTube*/);
+        scene.addGeometries(table, bottle, planes, KiddushCup , balls, cylinders,lightBall/*,MyCylinder, MyTube*/);
 
 
         scene.addLights(
-                new SpotLight(new Color(150, 150, 150), //
-                        new Point3D(0, -50, 0), new Vector(0, 0, 1), 1, 4E-3, 2E-5),
+                /*new SpotLight(new Color(150, 150, 150), //
+                        new Point3D(0, -50, 0), new Vector(0, 0, 1), 1, 4E-3, 2E-5),*/
+                new PointLight(new Color(500,500,500),//
+                        new Point3D(-70,-70,150), 1, 4E-3, 2E-5 ),
                 new SpotLight(new Color(700, 400, 400), //
-                        new Point3D(200, -350, 5), new Vector(-1, 1, 4), 1, 4E-6, 2E-8)/*,
-                new ImprovedSpot(new Color(500, 500, 500),
-                        new Point3D(0,-100,6000), new Vector(-2, 1, 0), 1, 0.0001, 0.000005, 2)*/
+                        new Point3D(200, -350, 5), new Vector(-1, 1, 4), 1, 4E-6, 2E-8),
+                new ImprovedSpot(new Color(1000, 1000, 1000),
+                        new Point3D(10,-100,175), new Vector(0, 1, 0), 1, 0.0001, 0.000005, 50)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_3", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_trySpot", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
