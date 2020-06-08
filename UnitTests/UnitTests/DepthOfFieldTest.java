@@ -74,7 +74,7 @@ public class DepthOfFieldTest {
     public void depthOfFieldFullImage() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                1175, 12, 3, false));
+                7000, 16, 3, true));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -167,7 +167,7 @@ public class DepthOfFieldTest {
                         new Point3D(0,-100,6000), new Vector(-2, 1, 0), 1, 0.0001, 0.000005, 2)*/
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage1", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_3", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
