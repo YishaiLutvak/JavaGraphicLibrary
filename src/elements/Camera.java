@@ -26,7 +26,6 @@ public class Camera {
     private Vector _vRight;
 
     private double _focusDistance;
-    /*private Plane _focalPlane;*/
     private double _aperture;
     private int _dimensionRays;
     private boolean _actDepthOfField;
@@ -72,7 +71,6 @@ public class Camera {
 
         this._aperture = aperture;
         this._focusDistance = focusDistance;
-        /*this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);*/
         this._dimensionRays = dimensionRays;
         this._actDepthOfField = actDepthOfField;
     }
@@ -119,7 +117,6 @@ public class Camera {
      */
     public void setFocusDistance(double _focusDistance) {
         this._focusDistance = _focusDistance;
-        /*this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);*/
     }
 
     /**
@@ -135,8 +132,7 @@ public class Camera {
      * @param _actDepthOfField act depth of field feature
      */
     public void setActDepthOfField(boolean _actDepthOfField) {
-       /*if (_focalPlane != null)*/
-           this._actDepthOfField = _actDepthOfField;
+         this._actDepthOfField = _actDepthOfField;
     }
 
     /**
@@ -192,21 +188,13 @@ public class Camera {
             return raysList;
         }
 
-        //+++++++++++++++++++++++
-
         if (!(alignZero(_focusDistance - screenDistance ) > 0))
-            throw new IllegalArgumentException ("focusDistance can't little from screenDistance");
-
-        /*if (_focalPlane == null){
-            _focusDistance = screenDistance * 1.2;
-            this._focalPlane = new Plane(new Ray(_location,_vTo).getPoint(_focusDistance),_vTo);
-        }*/
+            throw new IllegalArgumentException ("focusDistance can't be small than screenDistance");
 
         if (_focusDistance == 0){
             _focusDistance = screenDistance * 1.2;
         }
 
-        /*Point3D focalPoint = _focalPlane.findIntersections(rayThroughPixel).get(0)._point;*/
         double cos = _vTo.dotProduct(rayThroughPixel.get_direction());
         double dis = _focusDistance/cos;
         Point3D focalPoint = rayThroughPixel.getPoint(dis);
