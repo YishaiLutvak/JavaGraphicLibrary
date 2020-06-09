@@ -71,7 +71,7 @@ public class DepthOfFieldTest {
     public void depthOfFieldFullImage() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                7000, 16, 3, false));
+                1175, 3, 9, true));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -110,13 +110,13 @@ public class DepthOfFieldTest {
                         10,new Point3D(10,-25,175)));
 
         Geometries KiddushCup = new Geometries(
-                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
+                new Cylinder(/*Color.BLACK*/new Color(32,32,32), new Material(0.4, 0.4, 60,0,0.2),
                         6,new Ray(new Point3D(-15,0,175),new Vector(0,-1,0)), 2),
-                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
+                new Cylinder(/*Color.BLACK*/new Color(32,32,32), new Material(0.4, 0.4, 60,0,0.2),
                         1,new Ray(new Point3D(-15,-2,175),new Vector(0,-1,0)), 5),
-                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
+                new Cylinder(/*Color.BLACK*/new Color(32,32,32), new Material(0.4, 0.4, 60,0,0.2),
                         6,new Ray(new Point3D(-15,-13,175),new Vector(0,-1,0)), 10),
-                new Sphere(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
+                new Sphere(/*Color.BLACK*/new Color(32,32,32), new Material(0.4, 0.4, 60,0,0.2),
                         6,new Point3D(-15,-13,175)));
 
         Geometries balls = new Geometries(
@@ -131,17 +131,17 @@ public class DepthOfFieldTest {
         );
 
         Geometries cylinders = new Geometries(
-                new Cylinder(new Color(0,73,25), new Material(0.2, 0.2, 60,0,0.6),
+                new Cylinder(new Color(0,93,25), new Material(0.2, 0.2, 60,0,0.6),
                         80,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 70),
-                new Cylinder(new Color(0,73,25), new Material(0.2, 0.2, 60,0,0.6),
+                new Cylinder(new Color(0,93,25), new Material(0.2, 0.2, 60,0,0.6),
                         60,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 110),
-                new Cylinder(new Color(0,73,25), new Material(0.2, 0.2, 60,0,0.6),
+                new Cylinder(new Color(0,93,25), new Material(0.2, 0.2, 60,0,0.6),
                         40,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 150),
-                new Cylinder(new Color(102,51,0), new Material(0.5, 0.5, 60,0,0),
+                new Cylinder(new Color(102,71,0), new Material(0.5, 0.5, 60,0,0),
                         80,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 70),
-                new Cylinder(new Color(102,51,0), new Material(0.5, 0.5, 60,0,0),
+                new Cylinder(new Color(102,71,0), new Material(0.5, 0.5, 60,0,0),
                         60,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 110),
-                new Cylinder(new Color(102,51,0), new Material(0.5, 0.5, 60,0,0),
+                new Cylinder(new Color(102,71,0), new Material(0.5, 0.5, 60,0,0),
                         40,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 150)
         );
 
@@ -157,7 +157,7 @@ public class DepthOfFieldTest {
                         new Point3D(10,-100,175), new Vector(0, 1, 0), 1, 0.0001, 0.000005, 50)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_trySpot_2", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_trySpot_5", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();

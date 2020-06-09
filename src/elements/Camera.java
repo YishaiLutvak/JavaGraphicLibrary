@@ -190,11 +190,6 @@ public class Camera {
 
         if (!(alignZero(_focusDistance - screenDistance ) > 0))
             throw new IllegalArgumentException ("focusDistance can't be small than screenDistance");
-
-        if (_focusDistance == 0){
-            _focusDistance = screenDistance * 1.2;
-        }
-
         double cos = _vTo.dotProduct(rayThroughPixel.get_direction());
         double dis = _focusDistance/cos;
         Point3D focalPoint = rayThroughPixel.getPoint(dis);

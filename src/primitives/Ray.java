@@ -96,6 +96,12 @@ public class Ray {
      * @return the point
      */
     public Point3D getPoint(double t){
-        return isZero(t) ? get_start() : new Point3D(_start.add(_direction.scale(t)));
+        if (isZero(t) ||
+                (isZero(_direction.get_head().get_x().get()*t) &
+                isZero(_direction.get_head().get_y().get()*t) &
+                isZero(_direction.get_head().get_z().get()*t)))
+            return get_start();
+        else
+            return new Point3D(_start.add(_direction.scale(t)));
     }
 }
