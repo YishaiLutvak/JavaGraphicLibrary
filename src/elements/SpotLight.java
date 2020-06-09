@@ -6,7 +6,8 @@ import primitives.Vector;
 
 /**
  * PointLight class represents models point light source with direction
- * such as a luxo lamp
+ * such as a luxo lamp. The attenuation by distance is represented by 3 parameters:
+ * kC,kL,kQ for constant, linear and squared.
  * @author Michael Bergshtein and Yishay Lutvak
  */
 public class SpotLight extends PointLight {

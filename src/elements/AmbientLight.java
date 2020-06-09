@@ -3,7 +3,10 @@ package elements;
 import primitives.Color;
 
 /**
- * AmbientLight class represent the Ambient light in the scene
+ * AmbientLight class represent the Ambient light in the scene.
+ * Influence all the scene in the same way. Extends Light abstract class.
+ * Gets color and intensity factor separately and scaled them in
+ * order to get the color of the light.
  * @author Michael Bergshtein and Yishay Lutvak
  */
 public class AmbientLight extends Light {
