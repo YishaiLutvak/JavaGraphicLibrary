@@ -102,30 +102,30 @@ public class DepthOfFieldTest {
                         1,new Ray(new Point3D(-39,0,190),new Vector(0,1,0)), 60));
 
         Geometries bottle = new Geometries(
-                new Cylinder(new Color(70,0,0), new Material(0.5, 0.5, 60,0.5,0),
+                new Cylinder(new Color(30,0,0), new Material(0.5, 0.5, 60,0.5,0),
                         10,new Ray(new Point3D(10,0,175),new Vector(0,-1,0)), 25),
-                new Cylinder(new Color(70,0,0), new Material(0.5, 0.5, 60,0.5,0),
+                new Cylinder(new Color(30,0,0), new Material(0.5, 0.5, 60,0.5,0),
                         2,new Ray(new Point3D(10,-35,175),new Vector(0,-1,0)), 10),
-                new Sphere(new Color(70,0,0), new Material(0.5, 0.5, 60,0.5,0),
+                new Sphere(new Color(30,0,0), new Material(0.5, 0.5, 60,0.5,0),
                         10,new Point3D(10,-25,175)));
 
         Geometries KiddushCup = new Geometries(
-                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.3, 0.3, 60,0,0.4),
+                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
                         6,new Ray(new Point3D(-15,0,175),new Vector(0,-1,0)), 2),
-                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.3, 0.3, 60,0,0.4),
+                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
                         1,new Ray(new Point3D(-15,-2,175),new Vector(0,-1,0)), 5),
-                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.3, 0.3, 60,0,0.4),
+                new Cylinder(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
                         6,new Ray(new Point3D(-15,-13,175),new Vector(0,-1,0)), 10),
-                new Sphere(Color.BLACK/*new Color(32,32,32)*/, new Material(0.3, 0.3, 60,0,0.4),
+                new Sphere(Color.BLACK/*new Color(32,32,32)*/, new Material(0.4, 0.4, 60,0,0.2),
                         6,new Point3D(-15,-13,175)));
 
         Geometries balls = new Geometries(
                 new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 30),
                         150,new Point3D(0,-200,6000)),
-                new Sphere(new Color(80,80,0), new Material(0.1, 0.1 ,0,0.8,0),
-                        120,new Point3D(270,-170,6000)),
-                new Sphere(new Color(0,50,0), new Material(0.1, 0.1 ,0,0.8,0.8),
+                new Sphere(new Color(200,200,0), new Material(0.1, 0.1 ,0,0,0.8),
                         120,new Point3D(-270,-170,6000)),
+                new Sphere(new Color(0,50,0), new Material(0.1, 0.1 ,0,0.8,0.8),
+                        120,new Point3D(270,-170,6000)),
                 new Sphere(new Color(60,0,0), new Material(0.05, 0.05, 60,0.0,0.9),
                         5000,new Point3D(0,4950,6000))
         );
@@ -151,7 +151,7 @@ public class DepthOfFieldTest {
         scene.addLights(
                 new PointLight(new Color(500,500,500),//
                         new Point3D(-70,-70,150), 1, 4E-3, 2E-5 ),
-                new SpotLight(new Color(500, 400, 400), //
+                new SpotLight(new Color(700, 400, 400), //
                         new Point3D(200, -350, 5), new Vector(-1, 1, 4), 1, 4E-6, 2E-8),
                 new ImprovedSpot(new Color(300, 300, 300),
                         new Point3D(10,-100,175), new Vector(0, 1, 0), 1, 0.0001, 0.000005, 50)
