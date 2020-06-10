@@ -14,7 +14,7 @@ public class Point3D {
     protected final Coordinate _z;
 /***************constractors***********************/
     /**
-     * constractor by 3 coordinates
+     * constructor by 3 coordinates
      * @param x for x coordinate
      * @param y for y coordinate
      * @param z for z coordinate
@@ -26,7 +26,7 @@ public class Point3D {
     }
 
     /**
-     * constactor by coordinates values
+     * constructor by coordinates values
      * @param x for value of coordinate x
      * @param y for value of coordinate y
      * @param z for value of coordinate z

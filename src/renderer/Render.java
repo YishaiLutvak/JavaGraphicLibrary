@@ -14,7 +14,10 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
- * Render class for rendering a image
+ * Render class for rendering an image. Contain a Scene and an ImageWriter.
+ * The main method in this class is renderImage that activate the constructRayThroughPixel
+ * of the camera and calculate the pixel of every pixel. After that write to image.
+ * Threading is optional in contructing of the pixels
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public class Render {
@@ -140,9 +143,10 @@ public class Render {
      * If their are intersection points with geometries,
      * the function Takes the closest intersection points to the camera,
      * and paints the pixels of the closest points in the color of the points.
-     * In addition, the function colors the rest of the pixels in the background color
+     * In addition, the function colors the rest of the pixels in the background color.
      * In case the depth of field feature is on the color constructor get a list of rays
-     * and calculate the average color
+     * and calculate the average color. Threading is optional in constructing the rays.
+     * By the end write the pixel to the image in the scene
      */
     public void renderImage() {
         Camera camera = _scene.getCamera();
@@ -260,7 +264,7 @@ public class Render {
     }
 
     /**
-     * caculate reflected ray from the geometry
+     * calculate reflected ray from the geometry.
      *
      * @param v the vector that hit the geometry
      * @param n normal from the geometry
@@ -281,7 +285,7 @@ public class Render {
 
     /**
      * calcColor function
-     * Calculate the point's color
+     * Calculate the point's color. Activate the recursive calcColor function
      *
      * @param geoPoint a GeoPoint for point 3D and its Geometry
      * @param inRay    the ray of light we calculate its color reflection and transparency
@@ -292,7 +296,10 @@ public class Render {
     }
 
     /**
-     * a recursive calculate of the color of the point
+     * a recursive calculate of the color of the point.
+     * First calculate the emmitionLight of the geometry and the
+     * directive light from every light Source. Then calculate
+     * recursively every reflection and refraction ray in the scene and add them.
      *
      * @param gp    the point we looking for its color
      * @param inRay the ray of light we calculate its color reflection and transparency
@@ -304,7 +311,7 @@ public class Render {
         if (level == 0 || k < MIN_CALC_COLOR_K)
             return Color.BLACK;
 
-        Color color = gp._geometry.getEmissionLight(); // remove Ambient Light
+        Color color = gp._geometry.getEmissionLight();
         Vector v = gp._point.subtract(_scene.getCamera().getLocation()).normalize();
         Vector n = gp._geometry.getNormal(gp._point);
         Material material = gp._geometry.getMaterial();
@@ -387,7 +394,8 @@ public class Render {
     }
 
     /**
-     * calculate the total transparency factor for the light ray hit the geopoint
+     * calculate the total transparency factor for the light ray hit the geopoint.
+     * Replace the unshaded function.
      * @param light a light source
      * @param l light vector
      * @param n normal from the point
