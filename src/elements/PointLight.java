@@ -6,8 +6,8 @@ import primitives.Vector;
 
 /**
  * PointLight class represents models omni-directional point source such as a bulb.
- *  The attenuation by distance is represented by 3 parameters: kC,kL,kQ for constant,
- *  linear and squared.
+ * The attenuation by distance is represented by 3 parameters: kC,kL,kQ for constant,
+ * linear and squared.
  * @author Michael Bergshtein and Yishay Lutvak
  */
 public class PointLight extends Light implements LightSource {

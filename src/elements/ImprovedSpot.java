@@ -7,10 +7,10 @@ import primitives.Vector;
 /**
  * PointLight class represents models point light source with direction
  * such as a luxo lamp. The attenuation by distance is represented by 3 parameters:
- *  kC,kL,kQ for constant, linear and squared. The spot light of the ImprovedSpot
- *  is thinner than the regular SpotLight. We get the effect by power the direction
- *  value by focus parameter.
- *  @author Michael Bergshtein and Yishay Lutvak
+ * kC,kL,kQ for constant, linear and squared. The spot light of the ImprovedSpot
+ * is thinner than the regular SpotLight. We get the effect by power the direction
+ * value by focus parameter.
+ * @author Michael Bergshtein and Yishay Lutvak
  */
 public class ImprovedSpot extends SpotLight {
     private int _focus;

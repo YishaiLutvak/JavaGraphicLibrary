@@ -1,14 +1,10 @@
 package elements;
 
-import geometries.Plane;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
