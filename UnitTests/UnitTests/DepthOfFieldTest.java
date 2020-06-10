@@ -113,13 +113,13 @@ public class DepthOfFieldTest {
                         10,new Point3D(10,-25,175)));
 
         Geometries KiddushCup = new Geometries(
-                new Cylinder(/*Color.BLACK*/new Color(10,10,10), new Material(0.3, 0.2, 60,0.2,0.5),
+                new Cylinder(/*Color.BLACK*/new Color(50,50,50), new Material(0.3, 0.5, 60,0.2,0.5),
                         6,new Ray(new Point3D(-15,0,175),new Vector(0,-1,0)), 2),
-                new Cylinder(/*Color.BLACK*/new Color(10,10,10), new Material(0.3, 0.2, 60,0.2,0.5),
+                new Cylinder(/*Color.BLACK*/new Color(50,50,50), new Material(0.3, 0.5, 60,0.2,0.5),
                         1,new Ray(new Point3D(-15,-2,175),new Vector(0,-1,0)), 5),
-                new Cylinder(/*Color.BLACK*/new Color(10,10,10), new Material(0.3, 0.2, 60,0.2,0.5),
+                new Cylinder(/*Color.BLACK*/new Color(50,50,50), new Material(0.3, 0.5, 60,0.2,0.5),
                         6,new Ray(new Point3D(-15,-13,175),new Vector(0,-1,0)), 10),
-                new Sphere(/*Color.BLACK*/new Color(10,10,10), new Material(0.3, 0.5, 60,0.2,0.5),
+                new Sphere(/*Color.BLACK*/new Color(50,50,50), new Material(0.3, 0.5, 60,0.2,0.5),
                         6,new Point3D(-15,-13,175)));
 
         Geometries balls = new Geometries(
@@ -162,7 +162,7 @@ public class DepthOfFieldTest {
                         new Point3D(-2.5,-13,150), new Vector(0.5, 0, 1), 1, 0.0001, 0.000005, 20)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_trySpot3", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_3", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
