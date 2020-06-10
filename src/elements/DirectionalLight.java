@@ -5,7 +5,9 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * DirectionalLight class represents directional light source (like sun)
+ * DirectionalLight class represents directional light source (like sun).
+ * Come from infinity distance, all the rays of the light in the same direction and
+ * the intensity of the light don't reduce by distance.
  * @author Michael Bergshtein and Yishay Lutvak
  */
 public class DirectionalLight extends Light implements LightSource {

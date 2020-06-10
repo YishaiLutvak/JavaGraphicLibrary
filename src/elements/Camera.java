@@ -14,7 +14,10 @@ import static primitives.Util.isZero;
 
 
 /**
- * Camera class represent a camera that photo 3D geometries
+ * Camera class represent a camera that photo 3D geometries in the scene.
+ * Represented by point3D for the location of the camera and two vectors
+ * vUp and vTo for the directions of the camera. Photo the picture by constructing
+ * a Rays through pixels on the view plane.
  * @author Yishai Lutvak and Michael Bergshtein
  */
 
@@ -137,8 +140,7 @@ public class Camera {
 
     /**
      * The constructRayThroughPixel function
-     * accepts parameters that represent View Plane
-     * and a specific pixel
+     * accepts parameters that represent View Plane and a specific pixel
      * and returns a list of rays contain a ray from the camera to the same pixel.
      * If depth of field feature is on return a list of rays contains in addition
      * randomize rays from the aperture to the focus distance
