@@ -20,11 +20,11 @@ public class Scene {
      * _name - The name of the scene
      * _background - The background color of the scene
      * _ambientLight - The ambient light color of the scene
-     * _cameraThe
-     * _distance
-     * _geometries
-     * _lights
-     * _actDepthOfField
+     * _camera - The camera that photo the scene
+     * _distance - The distance between the camera and the viewPlane
+     * _geometries - a struct of the geometries in the scene
+     * _lights - a list of all the lights in the scene
+     * _actDepthOfField - boolean field activate the depth of field feature
      */
     private final  String _name;
     private Color _background;
@@ -96,7 +96,7 @@ public class Scene {
     }
 
     /**
-     *
+     * getter of lights
      * @return lights
      */
     public List<LightSource> getLights() {

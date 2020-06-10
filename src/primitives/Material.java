@@ -1,7 +1,8 @@
 package primitives;
 
 /**
- * Class for the material attributes
+ * Class for the material attributes. Contain factors
+ * for the diffusive, specular, transparency and reflection.
  */
 public class Material {
     private final double _kD;
