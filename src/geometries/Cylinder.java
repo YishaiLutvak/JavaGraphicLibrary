@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Cilinder class represents a cylinder in 3D Cartesian coordinate system
+ * Cylinder class represents a cylinder in 3D Cartesian coordinate system
  * by radius, ray that start in the base, and height from the base
  *
  * @author Michael Bergshtein and Ishay Lutvak
@@ -99,11 +99,19 @@ public class Cylinder extends Tube {
                 ", height= " + _height;
     }
 
+    /**
+     * Function for finding intersections points with an cylinder
+     * @param ray The ray that we check if it intersects the cylinder.
+     * @param max the maximum range from the source of the ray to the point
+     * @return a list of intersection points, if any.
+     */
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         Plane planeBottom = new Plane(_axisRay.get_start(),_axisRay.get_direction());
         Plane planeTop = new Plane(_axisRay.getPoint(_height),_axisRay.get_direction());
         List<GeoPoint> intersections = null;
+
+        //Uses a Plane class to find intersection points on the bottom base
         List<GeoPoint> tempIntersections1 = planeBottom.findIntersections(ray, max);
         if (tempIntersections1 != null) {
             if (alignZero(_radius - _axisRay.get_start().distance(tempIntersections1.get(0)._point)) > 0) {
@@ -111,6 +119,8 @@ public class Cylinder extends Tube {
                 intersections.add(tempIntersections1.get(0));
             }
         }
+
+        //Uses a Plane class to find intersection points on the top base
         List<GeoPoint> tempIntersections2 = planeTop.findIntersections(ray, max);
         if (tempIntersections2 != null){
             if (alignZero(_radius - _axisRay.getPoint(_height).distance(tempIntersections2.get(0)._point)) > 0) {
@@ -119,6 +129,8 @@ public class Cylinder extends Tube {
                 intersections.add(tempIntersections2.get(0));
             }
         }
+
+        //Uses the parent class to find intersection points on the rest of the cylinder
         List<GeoPoint> tempIntersections3 = super.findIntersections(ray, max);
         if (tempIntersections3 != null) {
             double maxLenSquare = _height*_height + _radius*_radius;
@@ -131,11 +143,13 @@ public class Cylinder extends Tube {
                 }
             }
         }
+
         if (intersections!=null){
             for (GeoPoint geoPoint : intersections) {
                 geoPoint._geometry = this;
             }
         }
+
         return intersections;
     }
 }

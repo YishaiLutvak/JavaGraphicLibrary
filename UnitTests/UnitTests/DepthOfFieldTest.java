@@ -162,7 +162,7 @@ public class DepthOfFieldTest {
                         new Point3D(-2.5,-13,150), new Vector(0.5, 0, 1), 1, 0.0001, 0.000005, 20)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage_2", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldFullImage", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
