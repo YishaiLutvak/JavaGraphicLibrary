@@ -106,8 +106,9 @@ public class ReflectionRefractionTests {
 
     /**
      * Produce a picture of all the geometries in one scene
+     * @param scene the scene
+     * @param name the scene name
      */
-
     public void allGeometriesTestBuild(Scene scene, String name) {
 
         ImageWriter imageWriter = new ImageWriter(name, 200, 200, 600, 600);
@@ -116,6 +117,7 @@ public class ReflectionRefractionTests {
         render.renderImage();
         render.writeToImage();
     }
+
 
 
     /**

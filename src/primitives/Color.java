@@ -64,7 +64,9 @@ public class Color {
 
 
     /**
-     *
+     * constructor. gets a list of colors and calculate the
+     * total color.
+     * @param colors a list of colors
      */
     public Color(List<Color> colors) {
         Color sumColor = Color.BLACK;

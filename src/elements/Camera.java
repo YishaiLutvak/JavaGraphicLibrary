@@ -63,6 +63,9 @@ public class Camera {
      * @param vUp vector from the camera up - orthogonal to vTo
      * @param focusDistance the distance between the camera and the focal plane
      * @param aperture Factor to the aperture size. Scaled in the pixel size
+     * @param dimensionRays square root of number of dimension rays.
+     * @param actDepthOfField boolean variable that act or cancel the feature of
+     *                        depth of field
      */
     public Camera(Point3D location,Vector vTo ,Vector vUp ,double focusDistance, double aperture, int dimensionRays, boolean actDepthOfField) {
 
