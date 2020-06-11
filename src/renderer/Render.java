@@ -156,8 +156,8 @@ public class Render {
         double width = _imageWriter.getWidth();
         double height = _imageWriter.getHeight();
         double distance = _scene.getDistance();
-        final Pixel thePixel = new Pixel(nY, nX);
 
+        final Pixel thePixel = new Pixel(nY, nX);
         // Generate threads
         Thread[] threads = new Thread[_threads];
         for (int i = _threads - 1; i >= 0; --i) {
@@ -297,14 +297,14 @@ public class Render {
 
     /**
      * a recursive calculate of the color of the point.
-     * First calculate the emmitionLight of the geometry and the
+     * First calculate the emissionLight of the geometry and the
      * directive light from every light Source. Then calculate
      * recursively every reflection and refraction ray in the scene and add them.
      *
-     * @param gp    the point we looking for its color
+     * @param gp the point we looking for its color
      * @param inRay the ray of light we calculate its color reflection and transparency
      * @param level the current level of recursion
-     * @param k     the proportional weight of the current recursion color calculation
+     * @param k the proportional weight of the current recursion color calculation
      * @return the total color of the point
      */
     private Color calcColorRec(GeoPoint gp, Ray inRay, int level, double k) {
@@ -353,9 +353,9 @@ public class Render {
     }
 
     /**
-     * @param kd             kd value in the point's material
-     * @param l              vector in the direction from the light source the point
-     * @param n              the normal of the geometry
+     * @param kd kd value in the point's material
+     * @param l vector in the direction from the light source the point
+     * @param n the normal of the geometry
      * @param lightIntensity the intensity of the light source
      * @return the diffusive in the point
      */
@@ -364,11 +364,11 @@ public class Render {
     }
 
     /**
-     * @param ks             ks value in the point's material
-     * @param l              vector from the light source the point
-     * @param n              the normal of the geometry
-     * @param v              vector from the camera to the point
-     * @param nShininess     the shininess factor in the point
+     * @param ks ks value in the point's material
+     * @param l vector from the light source the point
+     * @param n the normal of the geometry
+     * @param v vector from the camera to the point
+     * @param nShininess the shininess factor in the point
      * @param lightIntensity the intensity of the light source
      * @return the color with specular effect in the point
      */
@@ -381,7 +381,7 @@ public class Render {
      * printGrid function
      *
      * @param interval the size of the grid's squares
-     * @param color    the color of the grid
+     * @param color the color of the grid
      */
     public void printGrid(int interval, java.awt.Color color) {
         int Nx = _imageWriter.getNx();
@@ -429,9 +429,9 @@ public class Render {
     *//**
      * check if their is no shadow on the point
      *
-     * @param l     vector from the light source the point
-     * @param n     the normal of the geometry
-     * @param gp    GeoPoint of the point checked
+     * @param l vector from the light source the point
+     * @param n the normal of the geometry
+     * @param gp GeoPoint of the point checked
      * @param light the light Source causing shadow
      * @return true if their is no shadow on the point
      *//*
