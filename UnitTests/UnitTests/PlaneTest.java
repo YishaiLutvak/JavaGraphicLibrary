@@ -1,7 +1,7 @@
 package UnitTests;
 
 import geometries.Intersectable;
-import geometries.Intersectable.GeoPoint;
+import geometries.Intersectable2.GeoPoint;
 import geometries.Plane;
 import org.junit.Test;
 import primitives.Point3D;
@@ -36,7 +36,7 @@ public class PlaneTest {
     }
 
     /**
-     * Test method for {@link Plane#findIntersections(Ray)}.
+     * Test method for {@link Plane#getFindIntersections(Ray)}.
      */
     @Test
     public void testFindIntersections() {
@@ -47,13 +47,13 @@ public class PlaneTest {
 
         //T01: Ray's line don't cross the plane(0 points)
         assertEquals("Ray's line out of plane", null,
-                plane.findIntersections(new Ray(
+                plane.getFindIntersections(new Ray(
                         new Point3D(0, 0, 2),
                         new Vector(1, 0, 0))));
 
         //T02: Ray starts before the plane(1 points)
         Point3D crossPoint = new Point3D(0,2,1);
-        List<GeoPoint> result = plane.findIntersections(new Ray(
+        List<GeoPoint> result = plane.getFindIntersections(new Ray(
                 new Point3D(0, 1, 0),
                 new Vector(0, 1, 1)));
         assertEquals("Wrong number of points", 1, result.size());
@@ -61,7 +61,7 @@ public class PlaneTest {
 
         //T03: Ray starts after the plane(0 points)
         assertEquals("Ray's starts after plane", null,
-                plane.findIntersections(new Ray(
+                plane.getFindIntersections(new Ray(
                         new Point3D(0, 0, 2),
                         new Vector(0, 1, 1))));
 
@@ -69,13 +69,13 @@ public class PlaneTest {
 
         //T11: Ray starts on the plane(0 points)
         assertEquals("Ray's starts on the plane", null,
-                plane.findIntersections(new Ray(
+                plane.getFindIntersections(new Ray(
                         new Point3D(0, 0, 1),
                         new Vector(0, 1, 1))));
 
         //T12: Ray is contained in the plane(0 points)
         assertEquals("Ray's contained in the plane", null,
-                plane.findIntersections(new Ray(
+                plane.getFindIntersections(new Ray(
                         new Point3D(0, 0, 1),
                         new Vector(0, 1, 0))));
 
@@ -83,19 +83,19 @@ public class PlaneTest {
 
         //T13: Ray starts after the plane(0 points)
         assertEquals("Ray is orthogonal to the plane, ray starts after the plane", null,
-                plane.findIntersections(new Ray(
+                plane.getFindIntersections(new Ray(
                         new Point3D(0, 1, 2),
                         new Vector(0, 0, 1))));
 
         //T14: Ray starts on the plane(0 points)
         assertEquals("Ray is orthogonal to the plane, ray starts on the plane", null,
-                plane.findIntersections(new Ray(
+                plane.getFindIntersections(new Ray(
                         new Point3D(0, 1, 1),
                         new Vector(0, 0, 1))));
 
         //T15: Ray starts before the plane(1 points)
         crossPoint = new Point3D(0,1,1);
-        result = plane.findIntersections(new Ray(
+        result = plane.getFindIntersections(new Ray(
                 new Point3D(0, 1, 0),
                 new Vector(0, 0, 1)));
         assertEquals("Wrong number of points", 1, result.size());

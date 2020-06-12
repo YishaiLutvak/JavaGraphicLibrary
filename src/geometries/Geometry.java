@@ -7,7 +7,7 @@ import primitives.*;
  * Interface for all basic geometries providing mandatory methods
  * @author Michael Bergshtein and Yishai Lutvak
  */
-public abstract class Geometry implements Intersectable  {
+public abstract class Geometry /*implements Intersectable*/ extends Intersectable2  {
 
     protected Color _emissionLight;
     protected Material _material;

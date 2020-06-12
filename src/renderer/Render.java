@@ -2,9 +2,10 @@ package renderer;
 
 import elements.Camera;
 import elements.LightSource;
+import geometries.Intersectable2;
 import primitives.*;
 import geometries.Intersectable;
-import geometries.Intersectable.GeoPoint;
+import geometries.Intersectable2.GeoPoint;
 import scene.Scene;
 
 import java.util.LinkedList;
@@ -223,8 +224,8 @@ public class Render {
  * @return the closest intersection point. If their is no points return null
  */
     private GeoPoint findClosestIntersection(Ray ray) {
-        Intersectable geometries = _scene.getGeometries();
-        List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
+        Intersectable2 geometries = _scene.getGeometries();
+        List<GeoPoint> intersectionPoints = geometries.getFindIntersections(ray);
         if (intersectionPoints == null)
             return null;
         else {
@@ -409,7 +410,7 @@ public class Render {
 
         Ray lightRay = new Ray(gp._point, lightDirection, n);
 
-        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(lightRay);
+        List<GeoPoint> intersections = _scene.getGeometries().getFindIntersections(lightRay);
         if (intersections == null)
             return 1d;
         double lightDistance = light.getDistance(gp._point);

@@ -5,6 +5,7 @@ import elements.Camera;
 import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
+import geometries.Intersectable2;
 import geometries.Plane;
 import primitives.Color;
 
@@ -143,7 +144,7 @@ public class Scene {
      * Adding a new geometry to the geometry list
      * @param geometries one or more new geometries
      */
-    public void addGeometries(Intersectable... geometries){
+    public void addGeometries(Intersectable2... geometries){
         _geometries.add(geometries);
     }
 

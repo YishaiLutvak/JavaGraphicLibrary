@@ -10,12 +10,12 @@ import java.util.List;
  * composite class which include a collection of any base and composite geometries
  * @author Michael Bergshtein and Yishai Lutvak
  */
-public class Geometries implements Intersectable {
+public class Geometries /*implements Intersectable*/ extends Intersectable2 {
 
-    private List<Intersectable> _geometries;
+    private List<Intersectable2> _geometries;
 
     public Geometries() {
-        _geometries = new LinkedList<Intersectable>();
+        _geometries = new LinkedList<Intersectable2>();
     }
 
     /**
@@ -23,8 +23,8 @@ public class Geometries implements Intersectable {
      * while  creating it
      * @param geometries to add to the collection
      */
-    public Geometries(Intersectable... geometries) {
-        _geometries = new LinkedList<Intersectable>();
+    public Geometries(Intersectable2... geometries) {
+        _geometries = new LinkedList<Intersectable2>();
         add(geometries);
     }
 
@@ -33,8 +33,8 @@ public class Geometries implements Intersectable {
      * composite geometry
      * @param geometries to add to the collection
      */
-    public void add(Intersectable... geometries) {
-        for (Intersectable geo : geometries) {
+    public void add(Intersectable2... geometries) {
+        for (Intersectable2 geo : geometries) {
             _geometries.add(geo);
         }
     }
@@ -48,7 +48,7 @@ public class Geometries implements Intersectable {
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> intersections = null;
-        for (Intersectable geo : _geometries) {
+        for (Intersectable2 geo : _geometries) {
             List<GeoPoint> tempIntersections = geo.findIntersections(ray,max);
             if (tempIntersections != null) {
                 if (intersections == null)

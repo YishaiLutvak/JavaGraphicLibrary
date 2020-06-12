@@ -2,7 +2,7 @@ package UnitTests;
 
 import elements.Camera;
 import geometries.Intersectable;
-import geometries.Intersectable.GeoPoint;
+import geometries.Intersectable2.GeoPoint;
 import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
@@ -58,7 +58,7 @@ public class IntegrationTest {
     /**
      * A test for the integration between the camera and the intersecting of the sphere by rays
      * {@link elements.Camera#constructBeamThroughPixel(int, int, int, int, double, double, double)}.
-     * {@link geometries.Sphere#findIntersections(primitives.Ray)}.
+     * {@link geometries.Sphere#getFindIntersections(primitives.Ray)}.
      */
     @Test
     public void CameraSphereIntersections() {
@@ -72,7 +72,7 @@ public class IntegrationTest {
                 new Point3D(0, 0, 3));
 
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = sphere1.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere1.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -88,7 +88,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays2) {
-            List<GeoPoint> tempIntersections = sphere2.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere2.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -103,7 +103,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays2) {
-            List<GeoPoint> tempIntersections = sphere3.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere3.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -117,7 +117,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = sphere4.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere4.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -132,7 +132,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = sphere5.findIntersections(ray);
+            List<GeoPoint> tempIntersections = sphere5.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -142,7 +142,7 @@ public class IntegrationTest {
     /**
      * A test for the integration between the camera and the intersecting of the plane by rays
      * {@link elements.Camera#constructBeamThroughPixel(int, int, int, int, double, double, double)}.
-     * {@link geometries.Plane#findIntersections(primitives.Ray)}.
+     * {@link geometries.Plane#getFindIntersections(primitives.Ray)}.
      */
     @Test
     public void CameraPlaneIntersections() {
@@ -152,7 +152,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = plane1.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane1.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -164,7 +164,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = plane2.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane2.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -176,7 +176,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = plane3.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane3.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -188,7 +188,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = plane4.findIntersections(ray);
+            List<GeoPoint> tempIntersections = plane4.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -198,7 +198,7 @@ public class IntegrationTest {
     /**
      * A test for the integration between the camera and the intersecting of the triangle by rays
      * {@link elements.Camera#constructBeamThroughPixel(int, int, int, int, double, double, double)}.
-     * {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     * {@link geometries.Triangle#getFindIntersections(primitives.Ray)}.
      */
     @Test
     public void CameraTriangleIntersections() {
@@ -211,7 +211,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = triangle1.findIntersections(ray);
+            List<GeoPoint> tempIntersections = triangle1.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
@@ -226,7 +226,7 @@ public class IntegrationTest {
 
         sumIntersections = 0;
         for (Ray ray : rays1) {
-            List<GeoPoint> tempIntersections = triangle2.findIntersections(ray);
+            List<GeoPoint> tempIntersections = triangle2.getFindIntersections(ray);
             if (tempIntersections != null)
                 sumIntersections += tempIntersections.size();
         }
