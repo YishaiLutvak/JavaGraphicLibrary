@@ -31,6 +31,14 @@ public class Sphere extends RadialGeometry {
     public Sphere(Color emissionLight, Material material, double radius, Point3D center) {
         super(emissionLight, material, radius);
         this._center = center;
+
+        this._max_X = _center.get_x().get() + _radius;
+        this._max_Y = _center.get_y().get() + _radius;
+        this._max_Z = _center.get_z().get() + _radius;
+
+        this._min_X = _center.get_x().get() - _radius;
+        this._min_Y = _center.get_y().get() - _radius;
+        this._min_Z = _center.get_z().get() - _radius;
     }
 
     /**

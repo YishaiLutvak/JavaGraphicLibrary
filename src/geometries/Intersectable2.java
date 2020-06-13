@@ -13,12 +13,12 @@ import java.util.Objects;
  * @author Michael Bergshtein and Yishai Lutvak
  */
 public abstract class Intersectable2 {
-    protected double _max_X;
-    protected double _min_X;
-    protected double _max_Y;
-    protected double _min_Y;
-    protected double _max_Z;
-    protected double _min_Z;
+    protected double _max_X = Double.POSITIVE_INFINITY;
+    protected double _min_X = Double.NEGATIVE_INFINITY;
+    protected double _max_Y = Double.POSITIVE_INFINITY;
+    protected double _min_Y = Double.NEGATIVE_INFINITY;
+    protected double _max_Z = Double.POSITIVE_INFINITY;
+    protected double _min_Z = Double.NEGATIVE_INFINITY;
 
     private static boolean _actBoundingBox = false;
 
@@ -117,55 +117,82 @@ public abstract class Intersectable2 {
         double direction_Y = direction.get_head().get_y().get();
         double direction_Z = direction.get_head().get_z().get();
 
-        if ((direction_X < 0 ? (_min_X - start_X):(_max_X- start_X)) < 0  ||
-                (direction_Y < 0 ? (_min_Y - start_Y):(_max_Y- start_Y)) <0 ||
-                (direction_Z < 0 ? (_min_Z - start_Z):(_max_Z- start_Z)) <0)
-            return false;
+        double max_t_for_X;
+        double min_t_for_X;
 
-        double t = 0;
-        double coordinate_X;
-        double coordinate_Y;
-        double coordinate_Z;
-
-        if (direction_X < 0)
-            t = (_max_X-start_X)/direction_X;
-        else if(direction_X > 0)
-            t = (_min_X-start_X)/direction_X;
-        if (t > 0){
-            coordinate_Y = start_Y+ direction_Y*t;
-            if ( _min_Y < coordinate_Y && coordinate_Y < _max_Y) {
-                coordinate_Z = start_Z+ direction_Z*t;
-                if ( _min_Z < coordinate_Z && coordinate_Z < _max_Z)
-                    return true;
+        if (direction_X < 0) {
+            max_t_for_X = (_min_X - start_X) / direction_X;
+            if (max_t_for_X <= 0) return false;
+            min_t_for_X = (_max_X - start_X) / direction_X;
+        }
+        else if (direction_X > 0) {
+            max_t_for_X = (_max_X - start_X) / direction_X;
+            if (max_t_for_X <= 0) return false;
+            min_t_for_X = (_min_X - start_X) / direction_X;
+        }
+        else {
+            if (start_X >= _max_X || start_X <= _min_X)
+                return false;
+            else{
+                max_t_for_X = Double.POSITIVE_INFINITY;
+                min_t_for_X = Double.NEGATIVE_INFINITY;
             }
         }
 
-        if (direction_Y < 0)
-            t = (_max_Y-start_Y)/direction_Y;
-        else if(direction_Y > 0)
-            t = (_min_Y-start_Y)/direction_Y;
-        if (t > 0){
-            coordinate_X = start_X+ direction_X*t;
-            if ( _min_X < coordinate_X && coordinate_X < _max_X) {
-                coordinate_Z = start_Z+ direction_Z*t;
-                if ( _min_Z < coordinate_Z && coordinate_Z < _max_Z)
-                    return true;
+        double max_t_for_Y;
+        double min_t_for_Y;
+
+        if (direction_Y < 0) {
+            max_t_for_Y = (_min_Y - start_Y) / direction_Y;
+            if (max_t_for_Y <= 0) return false;
+            min_t_for_Y = (_max_Y - start_Y) / direction_Y;
+        }
+        else if (direction_Y > 0) {
+            max_t_for_Y = (_max_Y - start_Y) / direction_Y;
+            if (max_t_for_Y <= 0) return false;
+            min_t_for_Y = (_min_Y - start_Y) / direction_Y;
+        }
+        else {
+            if (start_Y >= _max_Y || start_Y <= _min_Y)
+                return false;
+            else{
+                max_t_for_Y = Double.POSITIVE_INFINITY;
+                min_t_for_Y = Double.NEGATIVE_INFINITY;
             }
         }
 
-        if (direction_Z < 0)
-            t = (_max_Z-start_Z)/direction_Z;
-        else if(direction_Z > 0)
-            t = (_min_Z-start_Z)/direction_Z;
-        if (t > 0){
-            coordinate_X = start_X+ direction_X*t;
-            if ( _min_X < coordinate_X && coordinate_X < _max_X) {
-                coordinate_Y = start_Y+ direction_Y*t;
-                if ( _min_Y < coordinate_Y && coordinate_Y < _max_Y)
-                    return true;
+        double temp_max = Math.min(max_t_for_Y,max_t_for_X);
+        double temp_min = Math.max(min_t_for_Y,min_t_for_X);
+
+        if (temp_max<=temp_min) return false;
+
+        double max_t_for_Z;
+        double min_t_for_Z;
+
+        if (direction_Z < 0) {
+            max_t_for_Z = (_min_Z - start_Z) / direction_Z;
+            if (max_t_for_Z <= 0) return false;
+            min_t_for_Z = (_max_Z - start_Z) / direction_Z;
+        }
+        else if (direction_Z > 0) {
+            max_t_for_Z = (_max_Z - start_Z) / direction_Z;
+            if (max_t_for_Z <= 0) return false;
+            min_t_for_Z = (_min_Z - start_Z) / direction_Z;
+        }
+        else {
+            if (start_Z >= _max_Z || start_Z <= _min_Z)
+                return false;
+            else{
+                max_t_for_Z = Double.POSITIVE_INFINITY;
+                min_t_for_Z = Double.NEGATIVE_INFINITY;
             }
         }
 
-        return false;
+        temp_max = Math.min(max_t_for_Z,temp_max);
+        temp_min = Math.max(min_t_for_Z,temp_min);
+
+        if (temp_max <= temp_min) return false;
+
+        return true;
     }
 }

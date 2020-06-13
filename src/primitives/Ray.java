@@ -97,10 +97,11 @@ public class Ray {
      */
     public Point3D getPoint(double t){
         try {
-            return isZero(t) ? get_start() : new Point3D(_start.add(_direction.scale(t)));
-        }catch (IllegalArgumentException ex){
+            return new Point3D(_start.add(_direction.scale(t)));
+        } catch (IllegalArgumentException ex){
             return get_start();
         }
+
         /*if (isZero(t) ||
                 (isZero(_direction.get_head().get_x().get()*t) &
                 isZero(_direction.get_head().get_y().get()*t) &
