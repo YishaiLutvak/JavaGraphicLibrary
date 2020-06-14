@@ -17,16 +17,12 @@ public class Plane extends Geometry{
 
     /**********constractors**********/
 
-    private void initNormal(Point3D p1, Point3D p2, Point3D p3) {
-        _p = new Point3D(p1);
 
-        //Calculate the normal by creating two vectors between the points
-        Vector u = new Vector(p2.subtract(p1));
-        Vector v = new Vector(p3.subtract(p1));
-        Vector n = u.crossProduct(v);
-        n.normalize();
-
-        _normal = n.scale(-1);
+    private void buildBoundingBox(){
+        if (_normal.get_head().get_x().get() == 0 && _normal.get_head().get_z().get()==0){
+            this._max_Y = _p.get_y().get();
+            this._min_Y = _p.get_y().get();
+        }
     }
 
     /**
@@ -35,7 +31,7 @@ public class Plane extends Geometry{
      * @param material for material attributes of plane
      * @param p1 first point
      * @param p2 second point
-     * @param p3 theard point
+     * @param p3 third point
      */
     public Plane(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
         super(emissionLight, material);
@@ -49,6 +45,7 @@ public class Plane extends Geometry{
         n.normalize();
 
         _normal = n.scale(-1);
+        buildBoundingBox();
     }
 
     /**
@@ -83,6 +80,7 @@ public class Plane extends Geometry{
         super(emissionLight,material);
         this._p = new Point3D(point);
         this._normal = new Vector(vector);
+        buildBoundingBox();
     }
 
     /**

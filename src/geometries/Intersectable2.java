@@ -163,8 +163,9 @@ public abstract class Intersectable2 {
 
         double temp_max = Math.min(max_t_for_Y,max_t_for_X);
         double temp_min = Math.max(min_t_for_Y,min_t_for_X);
+        temp_min = Math.max(temp_min,0);
 
-        if (temp_max<=temp_min) return false;
+        if (temp_max<temp_min) return false;
 
         double max_t_for_Z;
         double min_t_for_Z;
@@ -191,7 +192,7 @@ public abstract class Intersectable2 {
         temp_max = Math.min(max_t_for_Z,temp_max);
         temp_min = Math.max(min_t_for_Z,temp_min);
 
-        if (temp_max <= temp_min) return false;
+        if (temp_max < temp_min) return false;
 
         return true;
     }

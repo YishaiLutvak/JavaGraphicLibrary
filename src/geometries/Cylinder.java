@@ -30,6 +30,22 @@ public class Cylinder extends Tube {
     public Cylinder(Color emissionLight, Material material, double radius, Ray ray, double height) {
         super(emissionLight, material, radius, ray);
         this._height = height;
+        
+        if(this._axisRay.get_direction().get_head().get_x().get() == 0 && this._axisRay.get_direction().get_head().get_z().get() ==0){
+            if (this._axisRay.get_direction().get_head().get_y().get() > 0){
+                this._min_Y = this._axisRay.get_start().get_y().get();
+                this._max_Y = _min_Y+_height;
+            }
+            else {
+                this._max_Y = this._axisRay.get_start().get_y().get();
+                this._min_Y = _max_Y -_height;
+            }
+            this._max_X = this._axisRay.get_start().get_x().get() + _radius;
+            this._min_X = this._axisRay.get_start().get_x().get() - _radius;
+
+            this._max_Z = this._axisRay.get_start().get_z().get() + _radius;
+            this._min_Z = this._axisRay.get_start().get_z().get() - _radius;
+        }
     }
 
     /**
