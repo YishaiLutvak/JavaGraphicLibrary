@@ -18,20 +18,10 @@ public class Cylinder extends Tube {
     protected double _height;
 
     /****************Constructors***************/
-    /**
-     * constructor with all parameters
-     *
-     * @param emissionLight for color of tube
-     * @param material for material attributes of tube
-     * @param radius for radius of Tube
-     * @param ray    for center of tube
-     * @param height for height of tube
-     */
-    public Cylinder(Color emissionLight, Material material, double radius, Ray ray, double height) {
-        super(emissionLight, material, radius, ray);
-        this._height = height;
-        
-        if(this._axisRay.get_direction().get_head().get_x().get() == 0 && this._axisRay.get_direction().get_head().get_z().get() ==0){
+
+    private void buildBoundingBox(){
+        if (this._axisRay.get_direction().get_head().get_x().get() == 0 &&
+                this._axisRay.get_direction().get_head().get_z().get() ==0){
             if (this._axisRay.get_direction().get_head().get_y().get() > 0){
                 this._min_Y = this._axisRay.get_start().get_y().get();
                 this._max_Y = _min_Y+_height;
@@ -46,6 +36,39 @@ public class Cylinder extends Tube {
             this._max_Z = this._axisRay.get_start().get_z().get() + _radius;
             this._min_Z = this._axisRay.get_start().get_z().get() - _radius;
         }
+        else {
+            double start_X, end_X, start_Y, end_Y, start_Z, end_Z;
+
+            start_X = _axisRay.get_start().get_x().get();
+            end_X = _axisRay.getPoint(_height).get_x().get();
+            this._max_X = Math.max(start_X,end_X) + _radius;
+            this._min_X = Math.min(start_X,end_X) - _radius;
+
+            start_Y = _axisRay.get_start().get_y().get();
+            end_Y = _axisRay.getPoint(_height).get_y().get();
+            this._max_Y = Math.max(start_Y,end_Y) + _radius;
+            this._min_Y = Math.min(start_Y,end_Y) - _radius;
+
+            start_Z = _axisRay.get_start().get_z().get();
+            end_Z = _axisRay.getPoint(_height).get_z().get();
+            this._max_Z = Math.max(start_Z,end_Z) + _radius;
+            this._min_Z = Math.min(start_Z,end_Z) - _radius;
+        }
+    }
+    /**
+     * constructor with all parameters
+     *
+     * @param emissionLight for color of tube
+     * @param material for material attributes of tube
+     * @param radius for radius of Tube
+     * @param ray    for center of tube
+     * @param height for height of tube
+     */
+    public Cylinder(Color emissionLight, Material material, double radius, Ray ray, double height) {
+        super(emissionLight, material, radius, ray);
+        this._height = height;
+
+        buildBoundingBox();
     }
 
     /**
@@ -83,7 +106,7 @@ public class Cylinder extends Tube {
     /****************methods*****************/
 
     /**
-     * getNormal functiom
+     * getNormal function
      * @param p point on the cylinder. The normal is from point p
      * @return a normal in the point
      */
