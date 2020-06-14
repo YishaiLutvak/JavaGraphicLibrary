@@ -1,8 +1,7 @@
 package UnitTests;
 
 import elements.Camera;
-import geometries.Intersectable;
-import geometries.Intersectable2.GeoPoint;
+import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;

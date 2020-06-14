@@ -1,7 +1,7 @@
 package UnitTests;
 
 import geometries.*;
-import geometries.Intersectable2.GeoPoint;
+import geometries.Intersectable.GeoPoint;
 import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;

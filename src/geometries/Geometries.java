@@ -1,6 +1,5 @@
 package geometries;
 
-import primitives.Point3D;
 import primitives.Ray;
 
 import java.util.LinkedList;
@@ -10,12 +9,12 @@ import java.util.List;
  * composite class which include a collection of any base and composite geometries
  * @author Michael Bergshtein and Yishai Lutvak
  */
-public class Geometries /*implements Intersectable*/ extends Intersectable2 {
+public class Geometries extends Intersectable {
 
-    private List<Intersectable2> _geometries;
+    private List<Intersectable> _geometries;
 
     public Geometries() {
-        _geometries = new LinkedList<Intersectable2>();
+        _geometries = new LinkedList<Intersectable>();
     }
 
     /**
@@ -23,8 +22,16 @@ public class Geometries /*implements Intersectable*/ extends Intersectable2 {
      * while  creating it
      * @param geometries to add to the collection
      */
-    public Geometries(Intersectable2... geometries) {
-        _geometries = new LinkedList<Intersectable2>();
+    public Geometries(Intersectable... geometries) {
+        //Initial the max/min values in order that the first geometries
+        //will give the right value
+        this.box._max_X = Double.NEGATIVE_INFINITY;
+        this.box._min_X = Double.POSITIVE_INFINITY;
+        this.box._max_Y = Double.NEGATIVE_INFINITY;
+        this.box._min_Y = Double.POSITIVE_INFINITY;
+        this.box._max_Z = Double.NEGATIVE_INFINITY;
+        this.box._min_Z = Double.POSITIVE_INFINITY;
+        _geometries = new LinkedList<Intersectable>();
         add(geometries);
     }
 
@@ -33,9 +40,21 @@ public class Geometries /*implements Intersectable*/ extends Intersectable2 {
      * composite geometry
      * @param geometries to add to the collection
      */
-    public void add(Intersectable2... geometries) {
-        for (Intersectable2 geo : geometries) {
+    public void add(Intersectable... geometries) {
+        for (Intersectable geo : geometries) {
             _geometries.add(geo);
+            if (geo.box._max_X > this.box._max_X)
+                this.box._max_X = geo.box._max_X;
+            if (geo.box._min_X < this.box._min_X)
+                this.box._min_X = geo.box._min_X;
+            if (geo.box._max_Y > this.box._max_Y)
+                this.box._max_Y = geo.box._max_Y;
+            if (geo.box._min_Y < this.box._min_Y)
+                this.box._min_Y = geo.box._min_Y;
+            if (geo.box._max_Z > this.box._max_Z)
+                this.box._max_Z = geo.box._max_Z;
+            if (geo.box._min_Z < this.box._min_Z)
+                this.box._min_Z = geo.box._min_Z;
         }
     }
 
@@ -46,9 +65,9 @@ public class Geometries /*implements Intersectable*/ extends Intersectable2 {
      * @return a list of intersect points
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray, double max) {
+    protected List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> intersections = null;
-        for (Intersectable2 geo : _geometries) {
+        for (Intersectable geo : _geometries) {
             List<GeoPoint> tempIntersections = geo.findIntersections(ray,max);
             if (tempIntersections != null) {
                 if (intersections == null)

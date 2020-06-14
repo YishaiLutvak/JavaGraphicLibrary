@@ -2,17 +2,15 @@ package renderer;
 
 import elements.Camera;
 import elements.LightSource;
-import geometries.Intersectable2;
-import primitives.*;
 import geometries.Intersectable;
-import geometries.Intersectable2.GeoPoint;
+import primitives.*;
+import geometries.Intersectable.GeoPoint;
 import scene.Scene;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
 
 /**
  * Render class for rendering an image. Contain a Scene and an ImageWriter.
@@ -224,7 +222,7 @@ public class Render {
  * @return the closest intersection point. If their is no points return null
  */
     private GeoPoint findClosestIntersection(Ray ray) {
-        Intersectable2 geometries = _scene.getGeometries();
+        Intersectable geometries = _scene.getGeometries();
         List<GeoPoint> intersectionPoints = geometries.getFindIntersections(ray);
         if (intersectionPoints == null)
             return null;

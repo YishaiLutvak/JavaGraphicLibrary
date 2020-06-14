@@ -2,15 +2,36 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Vector;
+
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Interface for Composite Design Pattern the Composite Class - Geometries the
  * basic Classes - all the specific geometries
  * @author Michael Bergshtein and Yishai Lutvak
  */
-public interface Intersectable {
+public abstract class Intersectable {
+
+
+    protected class Box{
+        protected double _max_X = Double.POSITIVE_INFINITY;
+        protected double _min_X = Double.NEGATIVE_INFINITY;
+        protected double _max_Y = Double.POSITIVE_INFINITY;
+        protected double _min_Y = Double.NEGATIVE_INFINITY;
+        protected double _max_Z = Double.POSITIVE_INFINITY;
+        protected double _min_Z = Double.NEGATIVE_INFINITY;
+    }
+
+    protected Box box = new Box();
+
+    private static boolean _actBoundingBox = false;
+
+
+
+    public static void set_actBoundingBox(boolean _actBoundingBox) {
+        Intersectable._actBoundingBox = _actBoundingBox;
+    }
 
     /**
      * Represent a point and the geometry it belong to
@@ -47,10 +68,15 @@ public interface Intersectable {
      * @param ray the ray to intersect a geometries
      * @return list of intersection points
      */
-    default List<GeoPoint> findIntersections(Ray ray) {
-        return findIntersections(ray, Double.POSITIVE_INFINITY);
+    public List<GeoPoint> getFindIntersections(Ray ray) {
+        return getFindIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
+    public List<GeoPoint> getFindIntersections(Ray ray,double max) {
+        if(!_actBoundingBox || isIntersectionWithBox(ray))
+            return findIntersections(ray, max);
+        return null;
+    }
     /**
      *  The functions looks for intersection points between a basic or a composite
      *  geometry and a given ray. the function returns null if there are no intersections
@@ -58,5 +84,108 @@ public interface Intersectable {
      * @param max the maximum range from the source of the ray to the point
      * @return list of intersection points
      */
-    List<GeoPoint> findIntersections(Ray ray, double max);
+    abstract List<GeoPoint> findIntersections(Ray ray, double max);
+
+    /**
+     * Calculate if the ray intersect the box. Using parametric
+     * presentation of line.
+     * @param ray a ray in the scene that intersect the Intersectable
+     * @return boolean value if their is intersection with the box.
+     */
+    public boolean isIntersectionWithBox(Ray ray){
+
+        Point3D start = ray.get_start();
+
+        double start_X = start.get_x().get();
+        double start_Y = start.get_y().get();
+        double start_Z = start.get_z().get();
+
+        Vector direction = ray.get_direction();
+
+        double direction_X = direction.get_head().get_x().get();
+        double direction_Y = direction.get_head().get_y().get();
+        double direction_Z = direction.get_head().get_z().get();
+
+        double max_t_for_X;
+        double min_t_for_X;
+
+        //If the direction_X is negative then the _min_X give the maximal value
+        if (direction_X < 0) {
+            max_t_for_X = (box._min_X - start_X) / direction_X;
+            // Check if the Intersectble is behind the camera
+            if (max_t_for_X <= 0) return false;
+            min_t_for_X = (box._max_X - start_X) / direction_X;
+        }
+        else if (direction_X > 0) {
+            max_t_for_X = (box._max_X - start_X) / direction_X;
+            if (max_t_for_X <= 0) return false;
+            min_t_for_X = (box._min_X - start_X) / direction_X;
+        }
+        else {
+            if (start_X >= box._max_X || start_X <= box._min_X)
+                return false;
+            else{
+                max_t_for_X = Double.POSITIVE_INFINITY;
+                min_t_for_X = Double.NEGATIVE_INFINITY;
+            }
+        }
+
+        double max_t_for_Y;
+        double min_t_for_Y;
+
+        if (direction_Y < 0) {
+            max_t_for_Y = (box._min_Y - start_Y) / direction_Y;
+            if (max_t_for_Y <= 0) return false;
+            min_t_for_Y = (box._max_Y - start_Y) / direction_Y;
+        }
+        else if (direction_Y > 0) {
+            max_t_for_Y = (box._max_Y - start_Y) / direction_Y;
+            if (max_t_for_Y <= 0) return false;
+            min_t_for_Y = (box._min_Y - start_Y) / direction_Y;
+        }
+        else {
+            if (start_Y >= box._max_Y || start_Y <= box._min_Y)
+                return false;
+            else{
+                max_t_for_Y = Double.POSITIVE_INFINITY;
+                min_t_for_Y = Double.NEGATIVE_INFINITY;
+            }
+        }
+
+        //Check the maximal and the minimal value for t
+        double temp_max = Math.min(max_t_for_Y,max_t_for_X);
+        double temp_min = Math.max(min_t_for_Y,min_t_for_X);
+        temp_min = Math.max(temp_min,0);
+
+        if (temp_max < temp_min) return false;
+
+        double max_t_for_Z;
+        double min_t_for_Z;
+
+        if (direction_Z < 0) {
+            max_t_for_Z = (box._min_Z - start_Z) / direction_Z;
+            if (max_t_for_Z <= 0) return false;
+            min_t_for_Z = (box._max_Z - start_Z) / direction_Z;
+        }
+        else if (direction_Z > 0) {
+            max_t_for_Z = (box._max_Z - start_Z) / direction_Z;
+            if (max_t_for_Z <= 0) return false;
+            min_t_for_Z = (box._min_Z - start_Z) / direction_Z;
+        }
+        else {
+            if (start_Z >= box._max_Z || start_Z <= box._min_Z)
+                return false;
+            else{
+                max_t_for_Z = Double.POSITIVE_INFINITY;
+                min_t_for_Z = Double.NEGATIVE_INFINITY;
+            }
+        }
+
+        temp_max = Math.min(max_t_for_Z,temp_max);
+        temp_min = Math.max(min_t_for_Z,temp_min);
+
+        if (temp_max < temp_min) return false;
+
+        return true;
+    }
 }

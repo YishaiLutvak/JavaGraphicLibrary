@@ -1,6 +1,5 @@
 package UnitTests;
 
-import geometries.Intersectable;
 import geometries.Triangle;
 import org.junit.Test;
 import primitives.Point3D;
@@ -9,7 +8,7 @@ import primitives.Vector;
 
 import java.util.List;
 
-import static geometries.Intersectable2.*;
+import static geometries.Intersectable.*;
 import static org.junit.Assert.*;
 
 /**

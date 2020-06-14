@@ -23,36 +23,36 @@ public class Cylinder extends Tube {
         if (this._axisRay.get_direction().get_head().get_x().get() == 0 &&
                 this._axisRay.get_direction().get_head().get_z().get() ==0){
             if (this._axisRay.get_direction().get_head().get_y().get() > 0){
-                this._min_Y = this._axisRay.get_start().get_y().get();
-                this._max_Y = _min_Y+_height;
+                this.box._min_Y = this._axisRay.get_start().get_y().get();
+                this.box._max_Y = box._min_Y+_height;
             }
             else {
-                this._max_Y = this._axisRay.get_start().get_y().get();
-                this._min_Y = _max_Y -_height;
+                this.box._max_Y = this._axisRay.get_start().get_y().get();
+                this.box._min_Y = box._max_Y -_height;
             }
-            this._max_X = this._axisRay.get_start().get_x().get() + _radius;
-            this._min_X = this._axisRay.get_start().get_x().get() - _radius;
+            this.box._max_X = this._axisRay.get_start().get_x().get() + _radius;
+            this.box._min_X = this._axisRay.get_start().get_x().get() - _radius;
 
-            this._max_Z = this._axisRay.get_start().get_z().get() + _radius;
-            this._min_Z = this._axisRay.get_start().get_z().get() - _radius;
+            this.box._max_Z = this._axisRay.get_start().get_z().get() + _radius;
+            this.box._min_Z = this._axisRay.get_start().get_z().get() - _radius;
         }
         else {
             double start_X, end_X, start_Y, end_Y, start_Z, end_Z;
 
             start_X = _axisRay.get_start().get_x().get();
             end_X = _axisRay.getPoint(_height).get_x().get();
-            this._max_X = Math.max(start_X,end_X) + _radius;
-            this._min_X = Math.min(start_X,end_X) - _radius;
+            this.box._max_X = Math.max(start_X,end_X) + _radius;
+            this.box._min_X = Math.min(start_X,end_X) - _radius;
 
             start_Y = _axisRay.get_start().get_y().get();
             end_Y = _axisRay.getPoint(_height).get_y().get();
-            this._max_Y = Math.max(start_Y,end_Y) + _radius;
-            this._min_Y = Math.min(start_Y,end_Y) - _radius;
+            this.box._max_Y = Math.max(start_Y,end_Y) + _radius;
+            this.box._min_Y = Math.min(start_Y,end_Y) - _radius;
 
             start_Z = _axisRay.get_start().get_z().get();
             end_Z = _axisRay.getPoint(_height).get_z().get();
-            this._max_Z = Math.max(start_Z,end_Z) + _radius;
-            this._min_Z = Math.min(start_Z,end_Z) - _radius;
+            this.box._max_Z = Math.max(start_Z,end_Z) + _radius;
+            this.box._min_Z = Math.min(start_Z,end_Z) - _radius;
         }
     }
     /**

@@ -2,7 +2,7 @@ package UnitTests;
 
 import static org.junit.Assert.*;
 
-import geometries.Intersectable2.GeoPoint;
+import geometries.Intersectable.GeoPoint;
 import org.junit.Test;
 import geometries.*;
 import primitives.*;

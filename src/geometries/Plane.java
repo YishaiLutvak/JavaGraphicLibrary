@@ -20,8 +20,8 @@ public class Plane extends Geometry{
 
     private void buildBoundingBox(){
         if (_normal.get_head().get_x().get() == 0 && _normal.get_head().get_z().get()==0){
-            this._max_Y = _p.get_y().get();
-            this._min_Y = _p.get_y().get();
+            this.box._max_Y = _p.get_y().get();
+            this.box._min_Y = _p.get_y().get();
         }
     }
 
