@@ -18,37 +18,13 @@ public abstract class Intersectable {
         Intersectable._actBoundingBox = _actBoundingBox;
     }
 
-    public class Box{
+    protected class Box{
         protected double _max_X = Double.POSITIVE_INFINITY;
         protected double _min_X = Double.NEGATIVE_INFINITY;
         protected double _max_Y = Double.POSITIVE_INFINITY;
         protected double _min_Y = Double.NEGATIVE_INFINITY;
         protected double _max_Z = Double.POSITIVE_INFINITY;
         protected double _min_Z = Double.NEGATIVE_INFINITY;
-
-        public void set_max_X(double _max_X) {
-            this._max_X = _max_X;
-        }
-
-        public void set_min_X(double _min_X) {
-            this._min_X = _min_X;
-        }
-
-        public void set_max_Y(double _max_Y) {
-            this._max_Y = _max_Y;
-        }
-
-        public void set_min_Y(double _min_Y) {
-            this._min_Y = _min_Y;
-        }
-
-        public void set_max_Z(double _max_Z) {
-            this._max_Z = _max_Z;
-        }
-
-        public void set_min_Z(double _min_Z) {
-            this._min_Z = _min_Z;
-        }
     }
 
     protected Box box = new Box();
@@ -56,6 +32,31 @@ public abstract class Intersectable {
     public Box getBox() {
         return box;
     }
+
+    public void set_max_X(double _max_X) {
+        this.box._max_X = _max_X;
+    }
+
+    public void set_min_X(double _min_X) {
+        this.box._min_X = _min_X;
+    }
+
+    public void set_max_Y(double _max_Y) {
+        this.box._max_Y = _max_Y;
+    }
+
+    public void set_min_Y(double _min_Y) {
+        this.box._min_Y = _min_Y;
+    }
+
+    public void set_max_Z(double _max_Z) {
+        this.box._max_Z = _max_Z;
+    }
+
+    public void set_min_Z(double _min_Z) {
+        this.box._min_Z = _min_Z;
+    }
+
 
     /**
      * Represent a point and the geometry it belong to
@@ -126,9 +127,9 @@ public abstract class Intersectable {
 
         Vector direction = ray.get_direction();
 
-        double direction_X = direction.get_head().get_x().get()*10000;
-        double direction_Y = direction.get_head().get_y().get()*10000;
-        double direction_Z = direction.get_head().get_z().get()*10000;
+        double direction_X = direction.get_head().get_x().get();
+        double direction_Y = direction.get_head().get_y().get();
+        double direction_Z = direction.get_head().get_z().get();
 
         double max_t_for_X;
         double min_t_for_X;

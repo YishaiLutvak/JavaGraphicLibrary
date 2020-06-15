@@ -14,6 +14,12 @@ public class Geometries extends Intersectable {
     private List<Intersectable> _geometries;
 
     public Geometries() {
+        this.box._max_X = Double.NEGATIVE_INFINITY;
+        this.box._min_X = Double.POSITIVE_INFINITY;
+        this.box._max_Y = Double.NEGATIVE_INFINITY;
+        this.box._min_Y = Double.POSITIVE_INFINITY;
+        this.box._max_Z = Double.NEGATIVE_INFINITY;
+        this.box._min_Z = Double.POSITIVE_INFINITY;
         _geometries = new LinkedList<Intersectable>();
     }
 
@@ -25,13 +31,7 @@ public class Geometries extends Intersectable {
     public Geometries(Intersectable... geometries) {
         //Initial the max/min values in order that the first geometries
         //will give the right value
-        this.box._max_X = Double.NEGATIVE_INFINITY;
-        this.box._min_X = Double.POSITIVE_INFINITY;
-        this.box._max_Y = Double.NEGATIVE_INFINITY;
-        this.box._min_Y = Double.POSITIVE_INFINITY;
-        this.box._max_Z = Double.NEGATIVE_INFINITY;
-        this.box._min_Z = Double.POSITIVE_INFINITY;
-        _geometries = new LinkedList<Intersectable>();
+        this();
         add(geometries);
     }
 
@@ -68,7 +68,7 @@ public class Geometries extends Intersectable {
     protected List<GeoPoint> findIntersections(Ray ray, double max) {
         List<GeoPoint> intersections = null;
         for (Intersectable geo : _geometries) {
-            List<GeoPoint> tempIntersections = geo.findIntersections(ray,max);
+            List<GeoPoint> tempIntersections = geo.getFindIntersections(ray,max);
             if (tempIntersections != null) {
                 if (intersections == null)
                     intersections = new LinkedList<GeoPoint>();
