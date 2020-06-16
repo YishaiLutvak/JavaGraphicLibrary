@@ -72,7 +72,7 @@ public class DepthOfFieldTest {
         Intersectable.set_actBoundingBox(true);
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                1175, 3, 9, false));
+                1175, 3, 9, true));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -84,7 +84,7 @@ public class DepthOfFieldTest {
         Sphere mirrorSphere =  new Sphere(new Color(60,0,0), new Material(0.05, 0.05, 60,0.0,0.9),
                 5000,new Point3D(0,4950,6000));
 
-        mirrorSphere.set_max_Y(60);
+        mirrorSphere.set_max_Y(50);
 
         Geometries lightBall = new Geometries(new Sphere(new Color(30,30,30),new Material(0.4, 0.4, 500,0.6,0),//
                 10,new Point3D(-70,-70,150)),

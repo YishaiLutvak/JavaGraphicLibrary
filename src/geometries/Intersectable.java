@@ -125,11 +125,11 @@ public abstract class Intersectable {
         double start_Y = start.get_y().get();
         double start_Z = start.get_z().get();
 
-        Vector direction = ray.get_direction();
+        Point3D direction = ray.get_direction().get_head();
 
-        double direction_X = direction.get_head().get_x().get();
-        double direction_Y = direction.get_head().get_y().get();
-        double direction_Z = direction.get_head().get_z().get();
+        double direction_X = direction.get_x().get();
+        double direction_Y = direction.get_y().get();
+        double direction_Z = direction.get_z().get();
 
         double max_t_for_X;
         double min_t_for_X;
