@@ -69,6 +69,7 @@ public class DepthOfFieldTest {
 
     @Test
     public void depthOfFieldFullImage() {
+
         Intersectable.set_actBoundingBox(true);
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
@@ -83,28 +84,13 @@ public class DepthOfFieldTest {
 
         Sphere mirrorSphere =  new Sphere(new Color(60,0,0), new Material(0.05, 0.05, 60,0.0,0.9),
                 5000,new Point3D(0,4950,6000));
-
         mirrorSphere.set_max_Y(50);
 
-        Geometries lightBall = new Geometries(new Sphere(new Color(30,30,30),new Material(0.4, 0.4, 500,0.6,0),//
-                10,new Point3D(-70,-70,150)),
+        Geometries lightBall = new Geometries(
+                new Sphere(new Color(30,30,30),new Material(0.4, 0.4, 500,0.6,0),//
+                        10,new Point3D(-70,-70,150)),
                 new Cylinder(new Color(0,51,0), new Material(0.5,0.5,700,0,0),//
                         3,new Ray(new Point3D(-70,-60,150),new Vector(0,1,0)),120 ));
-
-        Geometries table  = new Geometries(
-                //plate of the table
-                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
-                        65,new Ray(new Point3D(0,0,175),new Vector(0,1,0)), 2),
-
-                //legs of the table
-                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
-                        1,new Ray(new Point3D(41,0,160),new Vector(0,1,0)), 50),
-                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
-                        1,new Ray(new Point3D(-41,0,160),new Vector(0,1,0)), 50),
-                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
-                        1,new Ray(new Point3D(39,0,190),new Vector(0,1,0)), 50),
-                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
-                        1,new Ray(new Point3D(-39,0,190),new Vector(0,1,0)), 50));
 
         Geometries bottle = new Geometries(
                 new Cylinder(new Color(30,0,0), new Material(0.5, 0.5, 60,0.5,0),
@@ -114,7 +100,7 @@ public class DepthOfFieldTest {
                 new Sphere(new Color(30,0,0), new Material(0.5, 0.5, 60,0.5,0),
                         10,new Point3D(10,-25,175)));
 
-        Geometries KiddushCup = new Geometries(
+        Geometries kiddushCup = new Geometries(
                 new Cylinder(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
                         6,new Ray(new Point3D(-15,0,175),new Vector(0,-1,0)), 2),
                 new Cylinder(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
@@ -123,6 +109,41 @@ public class DepthOfFieldTest {
                         6,new Ray(new Point3D(-15,-13,175),new Vector(0,-1,0)), 10),
                 new Sphere(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
                         6,new Point3D(-15,-13,175)));
+
+        Geometries bottleAndKiddushCup = new Geometries(bottle,kiddushCup);
+
+        Cylinder flateTable = new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                65,new Ray(new Point3D(0,0,175),new Vector(0,1,0)), 2);
+
+        Geometries leftLegs  = new Geometries(
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(-41,0,160),new Vector(0,1,0)), 50),
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(-39,0,190),new Vector(0,1,0)), 50));
+
+        Geometries rightLegs  = new Geometries(
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(41,0,160),new Vector(0,1,0)), 50),
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(39,0,190),new Vector(0,1,0)), 50));
+
+        Geometries table  = new Geometries(
+                /*//plate of the table
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        65,new Ray(new Point3D(0,0,175),new Vector(0,1,0)), 2),
+                //legs of the table
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(-41,0,160),new Vector(0,1,0)), 50),
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(-39,0,190),new Vector(0,1,0)), 50),
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(41,0,160),new Vector(0,1,0)), 50),
+                new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
+                        1,new Ray(new Point3D(39,0,190),new Vector(0,1,0)), 50)*/
+                flateTable,
+                leftLegs,
+                rightLegs
+        );
 
         Geometries balls = new Geometries(
                 new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 30),
@@ -133,23 +154,47 @@ public class DepthOfFieldTest {
                         120,new Point3D(270,-170,6000))
         );
 
-        Geometries cylinders = new Geometries(
-                new Cylinder(new Color(0,150,50), new Material(0.2, 0.2, 60,0,0.6),
-                        80,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 70),
-                new Cylinder(new Color(0,150,50), new Material(0.2, 0.2, 60,0,0.6),
-                        60,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 110),
-                new Cylinder(new Color(0,150,50), new Material(0.2, 0.2, 60,0,0.6),
-                        40,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 150),
+        Geometries leftCylinders = new Geometries(
                 new Cylinder(new Color(100,50,0), new Material(0.5, 0.5, 60,0,0),
-                        80,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 70),
+                80,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 70),
                 new Cylinder(new Color(100,50,0), new Material(0.5, 0.5, 60,0,0),
                         60,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 110),
                 new Cylinder(new Color(100,50,0), new Material(0.5, 0.5, 60,0,0),
                         40,new Ray(new Point3D(-460,-70,6000),new Vector(-0.1,-1,-0.7)), 150)
         );
 
+        Geometries rightCylinders = new Geometries(
+                new Cylinder(new Color(0,150,50), new Material(0.2, 0.2, 60,0,0.6),
+                        80,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 70),
+                new Cylinder(new Color(0,150,50), new Material(0.2, 0.2, 60,0,0.6),
+                        60,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 110),
+                new Cylinder(new Color(0,150,50), new Material(0.2, 0.2, 60,0,0.6),
+                        40,new Ray(new Point3D(460,-70,6000),new Vector(0.1,-1,-0.7)), 150)
+        );
 
-        scene.addGeometries(plane, mirrorSphere, table, bottle, KiddushCup , balls, cylinders, lightBall);
+        Geometries cylinders = new Geometries(
+                rightCylinders,
+                leftCylinders
+        );
+
+        Geometries farArea = new Geometries(
+                balls,
+                rightCylinders,
+                leftCylinders,
+                mirrorSphere
+        );
+
+        Geometries closeArea = new Geometries(
+                leftLegs,
+                rightLegs,
+                flateTable,
+                kiddushCup,
+                bottle,
+                lightBall
+        );
+
+
+        scene.addGeometries(plane, table, bottle, kiddushCup, lightBall, mirrorSphere, balls, cylinders);
 
 
         scene.addLights(
