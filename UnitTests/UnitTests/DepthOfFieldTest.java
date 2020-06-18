@@ -88,8 +88,8 @@ public class DepthOfFieldTest {
         Sphere mirrorSphere =  new Sphere(new Color(60,0,0), new Material(0.05, 0.05, 60,0.0,0.9),
                 5000,new Point3D(0,4950,6000));
         mirrorSphere.set_max_Y(50);
-       /* mirrorSphere.set_max_Z(6050);
-        mirrorSphere.set_min_Z(5000);*/
+        mirrorSphere.set_max_Z(6050);
+        mirrorSphere.set_min_Z(5000);
         mirrorSphere.set_max_X(600);
         mirrorSphere.set_min_X(-600);
 
@@ -112,7 +112,7 @@ public class DepthOfFieldTest {
                 6,new Ray(new Point3D(-15,-13,175),new Vector(0,-1,0)), 10);
         Cylinder downCylinderCup =new Cylinder(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
                 6,new Ray(new Point3D(-15,0,175),new Vector(0,-1,0)), 2);
-        Cylinder middleylinderCup = new Cylinder(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
+        Cylinder middleCylinderCup = new Cylinder(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
                 1,new Ray(new Point3D(-15,-2,175),new Vector(0,-1,0)), 5);
         Sphere sphereCup = new Sphere(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
                 6,new Point3D(-15,-13,175));
@@ -153,11 +153,21 @@ public class DepthOfFieldTest {
         Sphere rightBall = new Sphere(new Color(0,50,0), new Material(0.1, 0.1 ,0,0.8,0.8),
                 120,new Point3D(270,-170,6000));
 
+     /*   Geometries myGeometries = new Geometries(
+                plane, mirrorSphere,
+                lightSphere,lightCylinder,
+                downCylinderBottle,upCylinderBottle,sphereBottle,
+                upCylinderCup,downCylinderCup,middleCylinderCup,sphereCup,
+                flatTable,leftFrontLeg,rightFrontLeg,leftBehindLeg,rightBehindLeg,
+                leftBigCylinder,leftBigCylinder,leftLittleCylinder,
+                rightBigCylinder,rightMediumCCylinder,rightLittleCylinder,
+                middleBall,rightBall,leftBall
+        );
 
         Geometries kiddushCup = new Geometries(
                 upCylinderCup,
                 downCylinderCup,
-                middleylinderCup,
+                middleCylinderCup,
                 sphereCup
         );
 
@@ -194,7 +204,7 @@ public class DepthOfFieldTest {
                 middleBall
         );
 
-       /* Geometries leftLegs  = new Geometries(
+       *//* Geometries leftLegs  = new Geometries(
                 leftFrontLeg,
                 leftBehindLeg
         );
@@ -202,7 +212,7 @@ public class DepthOfFieldTest {
         Geometries rightLegs  = new Geometries(
                 rightFrontLeg,
                 rightBehindLeg
-        );*/
+        );*//*
 
         Geometries frontLegs  = new Geometries(
                 rightFrontLeg,
@@ -218,8 +228,8 @@ public class DepthOfFieldTest {
                 flatTable,
                 behindLegs,
                 frontLegs
-                /*leftLegs,
-                rightLegs*/
+                *//*leftLegs,
+                rightLegs*//*
         );
 
         Geometries cylinders = new Geometries(
@@ -230,8 +240,8 @@ public class DepthOfFieldTest {
         Geometries farArea = new Geometries(
                 balls,
                 cylinders,
-                /*rightCylinders,
-                leftCylinders,*/
+                *//*rightCylinders,
+                leftCylinders,*//*
                 mirrorSphere
         );
 
@@ -243,8 +253,20 @@ public class DepthOfFieldTest {
         );
 
 
-        scene.addGeometries(plane,closeArea,farArea/* table, bottle, kiddushCup, lightBall  balls, cylinders, mirrorSphere*/);
+        scene.addGeometries(plane,closeArea,farArea*//* table, bottle, kiddushCup, lightBall  balls, cylinders, mirrorSphere*//*);*/
 
+        scene.addGeometries(
+                plane, mirrorSphere,
+                lightSphere,lightCylinder,
+                downCylinderBottle,upCylinderBottle,sphereBottle,
+                upCylinderCup,downCylinderCup,middleCylinderCup,sphereCup,
+                flatTable,leftFrontLeg,rightFrontLeg,leftBehindLeg,rightBehindLeg,
+                leftBigCylinder,leftMediumCylinder,leftLittleCylinder,
+                rightBigCylinder,rightMediumCCylinder,rightLittleCylinder,
+                middleBall,rightBall,leftBall
+        );
+
+        scene.getGeometries().createTree(2);
 
         scene.addLights(
                 new PointLight(new Color(200,200,200),//

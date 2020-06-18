@@ -77,4 +77,32 @@ public class Geometries extends Intersectable {
         }
         return intersections;
     }
+
+    public void createTree(int depthOfTree){
+        for (int i = 0 ;i < depthOfTree; i++){
+            int counterOfGroups = 0;
+            for (int k = 0 ;k < _geometries.size()-counterOfGroups; k++){
+                Intersectable GroupCurrentIntersectable = null;
+                for (int j = k+1 ; j < _geometries.size()-counterOfGroups; j++) {
+                    if (false){//condition to grouping - to complete
+                        if (GroupCurrentIntersectable == null) {
+                            GroupCurrentIntersectable = new Geometries();
+                            ((Geometries)GroupCurrentIntersectable).add(_geometries.get(k));
+                            _geometries.remove(k);
+                            k--;
+                            j--;
+                        }
+                        ((Geometries)GroupCurrentIntersectable).add(_geometries.get(j));
+                        _geometries.remove(j);
+                        j--;
+                    }
+                }
+                if (GroupCurrentIntersectable != null) {
+                    ((Geometries) GroupCurrentIntersectable).add(GroupCurrentIntersectable);
+                    counterOfGroups++;
+                    k--;
+                }
+            }
+        }
+    }
 }
