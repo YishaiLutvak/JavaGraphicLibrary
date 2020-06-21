@@ -79,29 +79,30 @@ public class Geometries extends Intersectable {
     }
 
     public void createTree(int depthOfTree){
+        depthOfTree = Math.min(depthOfTree,2);
         for (int i = 0 ;i < depthOfTree; i++){
-            int counterOfGroups = 0;
-            for (int k = 0 ;k < _geometries.size()-counterOfGroups; k++){
+            for (int k =  _geometries.size()-1 ;k > 0; k--){
                 Intersectable GroupCurrentIntersectable = null;
-                for (int j = k+1 ; j < _geometries.size()-counterOfGroups; j++) {
-                    if (false){//condition to grouping - to complete
+                for (int j = k-1 ; j > 0; j--) {
+                    if (/*_geometries.get(k).box._max_Z != Double.POSITIVE_INFINITY &&*/
+                            _geometries.get(j).box._max_X <= _geometries.get(k).box._max_X &&
+                            _geometries.get(k).box._min_X <= _geometries.get(j).box._min_X &&
+                            _geometries.get(j).box._max_Z <= _geometries.get(k).box._max_Z &&
+                            _geometries.get(k).box._min_Z <= _geometries.get(j).box._min_Z) {
                         if (GroupCurrentIntersectable == null) {
                             GroupCurrentIntersectable = new Geometries();
                             ((Geometries)GroupCurrentIntersectable).add(_geometries.get(k));
-                            _geometries.remove(k);
-                            k--;
-                            j--;
                         }
                         ((Geometries)GroupCurrentIntersectable).add(_geometries.get(j));
                         _geometries.remove(j);
-                        j--;
+                        k--;
                     }
                 }
-                if (GroupCurrentIntersectable != null) {
-                    ((Geometries) GroupCurrentIntersectable).add(GroupCurrentIntersectable);
-                    counterOfGroups++;
-                    k--;
-                }
+                if (GroupCurrentIntersectable != null)
+                    _geometries.add(GroupCurrentIntersectable);
+                else
+                    _geometries.add(_geometries.get(k));
+                _geometries.remove(k);
             }
         }
     }

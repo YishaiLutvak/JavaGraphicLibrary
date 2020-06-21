@@ -161,7 +161,7 @@ public class Tube extends RadialGeometry {
         if (t2 <= 0) // t1 < t2 <= 0 < max
             return null;
         if (t1 > 0 && (alignZero(t2 - max) <= 0) ) // 0 < t1 < t2 < max
-            return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
+            return List.of(new GeoPoint(this,ray.getPoint(t1))/*,new GeoPoint(this,ray.getPoint(t2))*/);
         if (t1 > 0 && (alignZero(t1 - max) <= 0)) // 0 < t1 < max < t2
             return List.of(new GeoPoint(this,ray.getPoint(t1)));
         if (t2 > 0 && (alignZero(t2 - max) <= 0)) // t1 <= 0 < t2 < max

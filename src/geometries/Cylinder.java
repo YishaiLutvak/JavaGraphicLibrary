@@ -20,6 +20,7 @@ public class Cylinder extends Tube {
     /****************Constructors***************/
 
     private void buildBoundingBox(){
+
         if (this._axisRay.get_direction().get_head().get_x().get() == 0 &&
                 this._axisRay.get_direction().get_head().get_z().get() ==0){
             if (this._axisRay.get_direction().get_head().get_y().get() > 0){
@@ -37,22 +38,46 @@ public class Cylinder extends Tube {
             this.box._min_Z = this._axisRay.get_start().get_z().get() - _radius;
         }
         else {
-            double start_X, end_X, start_Y, end_Y, start_Z, end_Z;
+            double xCenterBottom, xCenterTop;
 
-            start_X = _axisRay.get_start().get_x().get();
-            end_X = _axisRay.getPoint(_height).get_x().get();
-            this.box._max_X = Math.max(start_X,end_X) + _radius;
-            this.box._min_X = Math.min(start_X,end_X) - _radius;
+            xCenterBottom = _axisRay.get_start().get_x().get();
+            xCenterTop = _axisRay.getPoint(_height).get_x().get();
+            Point3D normal = _axisRay.get_direction().get_head();
+            double sqrX = _radius*Math.sqrt(1 - normal.get_x().get()*normal.get_x().get());
 
-            start_Y = _axisRay.get_start().get_y().get();
-            end_Y = _axisRay.getPoint(_height).get_y().get();
-            this.box._max_Y = Math.max(start_Y,end_Y) + _radius;
-            this.box._min_Y = Math.min(start_Y,end_Y) - _radius;
+            double max_x_bottom = xCenterBottom + sqrX;
+            double min_x_bottom = xCenterBottom -sqrX;
+            double max_x_top = xCenterTop + sqrX;
+            double min_x_top = xCenterTop - sqrX;
 
-            start_Z = _axisRay.get_start().get_z().get();
-            end_Z = _axisRay.getPoint(_height).get_z().get();
-            this.box._max_Z = Math.max(start_Z,end_Z) + _radius;
-            this.box._min_Z = Math.min(start_Z,end_Z) - _radius;
+            this.box._max_X = max_x_bottom > max_x_top? max_x_bottom: max_x_top;
+            this.box._min_X = min_x_bottom < min_x_top? min_x_bottom: min_x_top;
+
+            double yCenterBottom, yCenterTop;
+            yCenterBottom = _axisRay.get_start().get_y().get();
+            yCenterTop = _axisRay.getPoint(_height).get_y().get();
+            double sqrY = _radius*Math.sqrt(1 - normal.get_y().get()*normal.get_y().get());
+
+            double max_y_bottom = yCenterBottom + sqrY;
+            double min_y_bottom = yCenterBottom - sqrY;
+            double max_y_top = yCenterTop + sqrY;
+            double min_y_top = yCenterTop - sqrY;
+
+            this.box._max_Y = max_y_bottom > max_y_top? max_y_bottom: max_y_top;
+            this.box._min_Y = min_y_bottom < min_y_top? min_y_bottom: min_y_top;
+
+            double zCenterBottom, zCenterTop;
+            zCenterBottom = _axisRay.get_start().get_z().get();
+            zCenterTop = _axisRay.getPoint(_height).get_z().get();
+            double sqrZ = _radius*Math.sqrt(1 - normal.get_z().get()*normal.get_z().get());
+
+            double max_z_bottom = zCenterBottom + sqrZ;
+            double min_z_bottom = zCenterBottom - sqrZ;
+            double max_z_top = zCenterTop + sqrZ;
+            double min_z_top = zCenterTop - sqrZ;
+
+            this.box._max_Z = max_z_bottom > max_z_top? max_z_bottom: max_z_top;
+            this.box._min_Z = min_z_bottom < min_z_top? min_z_bottom: min_z_top;
         }
     }
     /**
