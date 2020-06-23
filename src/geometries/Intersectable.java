@@ -18,13 +18,13 @@ public abstract class Intersectable {
         Intersectable._actBoundingBox = _actBoundingBox;
     }
 
-    protected class Box{
-        protected double _max_X = Double.POSITIVE_INFINITY;
-        protected double _min_X = Double.NEGATIVE_INFINITY;
-        protected double _max_Y = Double.POSITIVE_INFINITY;
-        protected double _min_Y = Double.NEGATIVE_INFINITY;
-        protected double _max_Z = Double.POSITIVE_INFINITY;
-        protected double _min_Z = Double.NEGATIVE_INFINITY;
+    public class Box{
+        public double _max_X = Double.POSITIVE_INFINITY;
+        public double _min_X = Double.NEGATIVE_INFINITY;
+        public double _max_Y = Double.POSITIVE_INFINITY;
+        public double _min_Y = Double.NEGATIVE_INFINITY;
+        public double _max_Z = Double.POSITIVE_INFINITY;
+        public double _min_Z = Double.NEGATIVE_INFINITY;
     }
 
     protected Box box = new Box();
