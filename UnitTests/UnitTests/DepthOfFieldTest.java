@@ -70,10 +70,10 @@ public class DepthOfFieldTest {
     @Test
     public void depthOfFieldFullImage() {
 
-        Intersectable.set_actBoundingBox(true);
+        Intersectable.set_actBoundingBox(false);
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                7000, 9, 9, false));
+                1175, 3, 9, true));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -224,7 +224,7 @@ public class DepthOfFieldTest {
         );
 
 //        scene.getGeometries().createTree(1);
-        scene.getGeometries().createTree(2);
+//        scene.getGeometries().createTree(2);
 
         scene.addLights(
                 new PointLight(new Color(200,200,200),//
@@ -239,7 +239,7 @@ public class DepthOfFieldTest {
                         new Point3D(-2.5,-13,150), new Vector(0.5, 0, 1), 1, 0.0001, 0.000005, 20)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldBox1", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldBox4", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
