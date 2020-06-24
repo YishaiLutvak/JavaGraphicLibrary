@@ -200,7 +200,7 @@ public class Camera {
         double apertureWidth = screenWidth/nX*_aperture;
         double apertureHeight = screenHeight/nY*_aperture;
 
-        // Calculate the length and width of the pixel of focalPlane
+        // Calculate the length and width of the pixel of aperture
         double FPX = apertureWidth/_dimensionRays;
         double FPY = apertureHeight/_dimensionRays;
 
