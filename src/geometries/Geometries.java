@@ -77,6 +77,11 @@ public class Geometries extends Intersectable {
         }
         return intersections;
     }
+
+    /**
+     *
+     * @param depthOfTree
+     */
     public void createTree(int depthOfTree){
         Intersectable tempGeometries = new Geometries();
 
@@ -96,6 +101,11 @@ public class Geometries extends Intersectable {
         for(Intersectable geo: ((Geometries)tempGeometries)._geometries)
             _geometries.add(geo);
     }
+
+    /**
+     *
+     * @param depthOfTree
+     */
     public void createTreeRec(int depthOfTree) {
 
         Intersectable topRightCloseVoxel = null;
@@ -108,45 +118,52 @@ public class Geometries extends Intersectable {
         Intersectable downLeftFarVoxel = null;
 
         for (int i = 0; i < _geometries.size(); i++) {
-            if (_geometries.get(i).getMiddleZ() < this.getMiddleZ())
-                if (_geometries.get(i).getMiddleY() < this.getMiddleY())
-                    if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
+            if (_geometries.get(i).getMiddleZ() < this.getMiddleZ()){
+                if (_geometries.get(i).getMiddleY() < this.getMiddleY()){
+                    if (_geometries.get(i).getMiddleX() > this.getMiddleX()){
                         if (topRightCloseVoxel == null)
                             topRightCloseVoxel = new Geometries();
                         ((Geometries) topRightCloseVoxel).add(_geometries.get(i));
-                    } else {
+                    }
+                    else {
                         if (topLeftCloseVoxel == null)
                             topLeftCloseVoxel = new Geometries();
                         ((Geometries) topLeftCloseVoxel).add(_geometries.get(i));
                     }
+                }
                 else {
                     if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
                         if (downRightCloseVoxel == null)
                             downRightCloseVoxel = new Geometries();
                         ((Geometries) downRightCloseVoxel).add(_geometries.get(i));
-                    } else {
+                    }
+                    else {
                         if (downLeftCloseVoxel == null)
                             downLeftCloseVoxel = new Geometries();
                         ((Geometries) downLeftCloseVoxel).add(_geometries.get(i));
                     }
                 }
+            }
             else {
-                if (_geometries.get(i).getMiddleY() < this.getMiddleY())
+                if (_geometries.get(i).getMiddleY() < this.getMiddleY()){
                     if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
                         if (topRightFarVoxel == null)
                             topRightFarVoxel = new Geometries();
                         ((Geometries) topRightFarVoxel).add(_geometries.get(i));
-                    } else {
+                    }
+                    else {
                         if (topLeftFarVoxel == null)
                             topLeftFarVoxel = new Geometries();
                         ((Geometries) topLeftFarVoxel).add(_geometries.get(i));
                     }
+                }
                 else {
                     if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
                         if (downRightFarVoxel == null)
                             downRightFarVoxel = new Geometries();
                         ((Geometries) downRightFarVoxel).add(_geometries.get(i));
-                    } else {
+                    }
+                    else {
                         if (downLeftFarVoxel == null)
                             downLeftFarVoxel = new Geometries();
                         ((Geometries) downLeftFarVoxel).add(_geometries.get(i));
@@ -156,13 +173,85 @@ public class Geometries extends Intersectable {
         }
 
         _geometries.clear();
+
         if(topRightCloseVoxel != null) {
             if (((Geometries)topRightCloseVoxel)._geometries.size() == 1)
                 _geometries.add(((Geometries)topRightCloseVoxel)._geometries.get(0));
-            else
-
-
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)topRightCloseVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(topRightCloseVoxel);
+            }
         }
 
+        if(topLeftCloseVoxel != null) {
+            if (((Geometries)topLeftCloseVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)topLeftCloseVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)topLeftCloseVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(topLeftCloseVoxel);
+            }
+        }
+
+        if(downRightCloseVoxel != null) {
+            if (((Geometries)downRightCloseVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)downRightCloseVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)downRightCloseVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(downRightCloseVoxel);
+            }
+        }
+
+        if(downLeftCloseVoxel != null) {
+            if (((Geometries)downLeftCloseVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)downLeftCloseVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)downLeftCloseVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(downLeftCloseVoxel);
+            }
+        }
+
+        if(topRightFarVoxel != null) {
+            if (((Geometries)topRightFarVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)topRightFarVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)topRightFarVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(topRightFarVoxel);
+            }
+        }
+
+        if(topLeftFarVoxel != null) {
+            if (((Geometries)topLeftFarVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)topLeftFarVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)topLeftFarVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(topLeftFarVoxel);
+            }
+        }
+
+        if(downRightFarVoxel != null) {
+            if (((Geometries)downRightFarVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)downRightFarVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)downRightFarVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(downRightFarVoxel);
+            }
+        }
+
+        if(downLeftFarVoxel != null) {
+            if (((Geometries)downLeftFarVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)downLeftFarVoxel)._geometries.get(0));
+            else{
+                if(depthOfTree > 1)
+                    ((Geometries)downLeftFarVoxel).createTreeRec(depthOfTree -1);
+                _geometries.add(downLeftFarVoxel);
+            }
+        }
     }
 }
