@@ -18,33 +18,54 @@ public abstract class Intersectable {
         Intersectable._actBoundingBox = _actBoundingBox;
     }
 
-    public class Box{
-        public double _max_X = Double.POSITIVE_INFINITY;
-        public double _min_X = Double.NEGATIVE_INFINITY;
-        public double _max_Y = Double.POSITIVE_INFINITY;
-        public double _min_Y = Double.NEGATIVE_INFINITY;
-        public double _max_Z = Double.POSITIVE_INFINITY;
-        public double _min_Z = Double.NEGATIVE_INFINITY;
+    protected class Box{
+        protected double _max_X = Double.POSITIVE_INFINITY;
+        protected double _min_X = Double.NEGATIVE_INFINITY;
+        protected double _max_Y = Double.POSITIVE_INFINITY;
+        protected double _min_Y = Double.NEGATIVE_INFINITY;
+        protected double _max_Z = Double.POSITIVE_INFINITY;
+        protected double _min_Z = Double.NEGATIVE_INFINITY;
+
     }
 
     protected Box box = new Box();
 
+    /**
+     *
+     * @return
+     */
     public Box getBox() {
         return box;
     }
 
+    /**
+     *
+     * @param _max_X
+     */
     public void set_max_X(double _max_X) {
         this.box._max_X = _max_X;
     }
 
+    /**
+     *
+     * @param _min_X
+     */
     public void set_min_X(double _min_X) {
         this.box._min_X = _min_X;
     }
 
+    /**
+     *
+     * @param _max_Y
+     */
     public void set_max_Y(double _max_Y) {
         this.box._max_Y = _max_Y;
     }
 
+    /**
+     *
+     * @param _min_Y
+     */
     public void set_min_Y(double _min_Y) {
         this.box._min_Y = _min_Y;
     }
@@ -57,6 +78,29 @@ public abstract class Intersectable {
         this.box._min_Z = _min_Z;
     }
 
+    /**
+     *
+      * @return
+     */
+    public double getMiddleX(){
+       return box._min_X + (box._max_X - box._min_X)/2;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getMiddleY(){
+        return box._min_Y + (box._max_Y - box._min_Y)/2;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getMiddleZ(){
+        return box._min_Z + (box._max_Z - box._min_Z)/2;
+    }
 
     /**
      * Represent a point and the geometry it belong to

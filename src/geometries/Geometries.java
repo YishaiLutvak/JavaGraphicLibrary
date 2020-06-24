@@ -77,33 +77,92 @@ public class Geometries extends Intersectable {
         }
         return intersections;
     }
-
     public void createTree(int depthOfTree){
-        depthOfTree = Math.min(depthOfTree,2);
-        for (int i = 0 ;i < depthOfTree; i++){
-            for (int k =  _geometries.size()-1 ;k > 0; k--){
-                Intersectable GroupCurrentIntersectable = null;
-                for (int j = k-1 ; j > 0; j--) {
-                    if (/*_geometries.get(k).box._max_Z != Double.POSITIVE_INFINITY &&*/
-                            _geometries.get(j).box._max_X <= _geometries.get(k).box._max_X &&
-                            _geometries.get(k).box._min_X <= _geometries.get(j).box._min_X &&
-                            _geometries.get(j).box._max_Z <= _geometries.get(k).box._max_Z &&
-                            _geometries.get(k).box._min_Z <= _geometries.get(j).box._min_Z) {
-                        if (GroupCurrentIntersectable == null) {
-                            GroupCurrentIntersectable = new Geometries();
-                            ((Geometries)GroupCurrentIntersectable).add(_geometries.get(k));
-                        }
-                        ((Geometries)GroupCurrentIntersectable).add(_geometries.get(j));
-                        _geometries.remove(j);
-                        k--;
+        Intersectable tempGeometries = new Geometries();
+
+        for (int i = 0; i < _geometries.size(); i++){
+            if      (_geometries.get(i).getBox()._max_X == Double.POSITIVE_INFINITY ||
+                    _geometries.get(i).getBox()._max_Y == Double.POSITIVE_INFINITY ||
+                    _geometries.get(i).getBox()._max_Z == Double.POSITIVE_INFINITY ||
+                    _geometries.get(i).getBox()._min_X == Double.NEGATIVE_INFINITY ||
+                    _geometries.get(i).getBox()._min_Y == Double.NEGATIVE_INFINITY ||
+                    _geometries.get(i).getBox()._min_Z == Double.NEGATIVE_INFINITY){
+                ((Geometries)tempGeometries).add(_geometries.get(i));
+                _geometries.remove(i);
+            }
+
+        }
+        createTreeRec(depthOfTree);
+        for(Intersectable geo: ((Geometries)tempGeometries)._geometries)
+            _geometries.add(geo);
+    }
+    public void createTreeRec(int depthOfTree) {
+
+        Intersectable topRightCloseVoxel = null;
+        Intersectable topLeftCloseVoxel = null;
+        Intersectable downRightCloseVoxel = null;
+        Intersectable downLeftCloseVoxel = null;
+        Intersectable topRightFarVoxel = null;
+        Intersectable topLeftFarVoxel = null;
+        Intersectable downRightFarVoxel = null;
+        Intersectable downLeftFarVoxel = null;
+
+        for (int i = 0; i < _geometries.size(); i++) {
+            if (_geometries.get(i).getMiddleZ() < this.getMiddleZ())
+                if (_geometries.get(i).getMiddleY() < this.getMiddleY())
+                    if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
+                        if (topRightCloseVoxel == null)
+                            topRightCloseVoxel = new Geometries();
+                        ((Geometries) topRightCloseVoxel).add(_geometries.get(i));
+                    } else {
+                        if (topLeftCloseVoxel == null)
+                            topLeftCloseVoxel = new Geometries();
+                        ((Geometries) topLeftCloseVoxel).add(_geometries.get(i));
+                    }
+                else {
+                    if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
+                        if (downRightCloseVoxel == null)
+                            downRightCloseVoxel = new Geometries();
+                        ((Geometries) downRightCloseVoxel).add(_geometries.get(i));
+                    } else {
+                        if (downLeftCloseVoxel == null)
+                            downLeftCloseVoxel = new Geometries();
+                        ((Geometries) downLeftCloseVoxel).add(_geometries.get(i));
                     }
                 }
-                if (GroupCurrentIntersectable != null)
-                    _geometries.add(GroupCurrentIntersectable);
-                else
-                    _geometries.add(_geometries.get(k));
-                _geometries.remove(k);
+            else {
+                if (_geometries.get(i).getMiddleY() < this.getMiddleY())
+                    if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
+                        if (topRightFarVoxel == null)
+                            topRightFarVoxel = new Geometries();
+                        ((Geometries) topRightFarVoxel).add(_geometries.get(i));
+                    } else {
+                        if (topLeftFarVoxel == null)
+                            topLeftFarVoxel = new Geometries();
+                        ((Geometries) topLeftFarVoxel).add(_geometries.get(i));
+                    }
+                else {
+                    if (_geometries.get(i).getMiddleX() > this.getMiddleX()) {
+                        if (downRightFarVoxel == null)
+                            downRightFarVoxel = new Geometries();
+                        ((Geometries) downRightFarVoxel).add(_geometries.get(i));
+                    } else {
+                        if (downLeftFarVoxel == null)
+                            downLeftFarVoxel = new Geometries();
+                        ((Geometries) downLeftFarVoxel).add(_geometries.get(i));
+                    }
+                }
             }
         }
+
+        _geometries.clear();
+        if(topRightCloseVoxel != null) {
+            if (((Geometries)topRightCloseVoxel)._geometries.size() == 1)
+                _geometries.add(((Geometries)topRightCloseVoxel)._geometries.get(0));
+            else
+
+
+        }
+
     }
 }
