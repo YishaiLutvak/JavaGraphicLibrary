@@ -2,8 +2,6 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
-import primitives.Vector;
-
 import java.util.List;
 
 /**
@@ -236,9 +234,9 @@ public abstract class Intersectable {
         }
 
         //Check the maximal and the minimal value for t
-        double temp_max = Math.min(max_t_for_Y,max_t_for_X);
-        double temp_min = Math.max(min_t_for_Y,min_t_for_X);
-        temp_min = Math.max(temp_min,0);
+        double temp_max = max_t_for_Y < max_t_for_X ? max_t_for_Y : max_t_for_X;
+        double temp_min = min_t_for_Y > min_t_for_X ? min_t_for_Y : min_t_for_X;
+        temp_min = temp_min > 0 ? temp_min:0;
 
         if (temp_max < temp_min) return false;
 
@@ -264,8 +262,8 @@ public abstract class Intersectable {
             }
         }
 
-        temp_max = Math.min(max_t_for_Z,temp_max);
-        temp_min = Math.max(min_t_for_Z,temp_min);
+        temp_max = max_t_for_Z < temp_max? max_t_for_Z : temp_max;
+        temp_min = min_t_for_Z > temp_min? min_t_for_Z : temp_min;
 
         if (temp_max < temp_min) return false;
 
