@@ -18,6 +18,12 @@ public abstract class Intersectable {
         Intersectable._actBoundingBox = _actBoundingBox;
     }
 
+    /**
+     * Inner class Box represented a struct of  a box parallel to axis
+     * that contain the Inetrsectable. By default have infinity values
+     * and when the Intersectable is impelements the borders of the
+     * Inetersectable is the borders of the box.
+     */
     protected class Box{
         protected double _max_X = Double.POSITIVE_INFINITY;
         protected double _min_X = Double.NEGATIVE_INFINITY;
@@ -31,56 +37,64 @@ public abstract class Intersectable {
     protected Box box = new Box();
 
     /**
-     *
-     * @return
+     * getter
+     * @return the Box of the intersectable.
      */
     public Box getBox() {
         return box;
     }
 
     /**
-     *
-     * @param _max_X
+     * setter
+     * @param _max_X the maximum value of axis x of the box
      */
     public void set_max_X(double _max_X) {
         this.box._max_X = _max_X;
     }
 
     /**
-     *
-     * @param _min_X
+     * setter
+     * @param _min_X the minimum value of axis x of the box
      */
     public void set_min_X(double _min_X) {
         this.box._min_X = _min_X;
     }
 
     /**
-     *
-     * @param _max_Y
+     * setter
+     * @param _max_Y the maximum value of axis Y of the box
      */
     public void set_max_Y(double _max_Y) {
         this.box._max_Y = _max_Y;
     }
 
     /**
-     *
-     * @param _min_Y
+     * setter
+     * @param _min_Y the minimum value of axis Y of the box
      */
     public void set_min_Y(double _min_Y) {
         this.box._min_Y = _min_Y;
     }
 
+    /**
+     * setter
+     * @param _max_Z the maximum value of  axis Z of the box
+     */
     public void set_max_Z(double _max_Z) {
         this.box._max_Z = _max_Z;
     }
 
+    /**
+     * setter
+     * @param _min_Z the minimum value of  axis Z of the box
+     */
     public void set_min_Z(double _min_Z) {
         this.box._min_Z = _min_Z;
     }
 
     /**
      *
-      * @return
+      * @return the middle point on the axis X of the box
      */
     public double getMiddleX(){
        return box._min_X + (box._max_X - box._min_X)/2;
@@ -88,7 +102,7 @@ public abstract class Intersectable {
 
     /**
      *
-     * @return
+     * @return the middle point on the axis Y of the box
      */
     public double getMiddleY(){
         return box._min_Y + (box._max_Y - box._min_Y)/2;
@@ -96,7 +110,7 @@ public abstract class Intersectable {
 
     /**
      *
-     * @return
+     * @return the middle point on the axis Z of the box
      */
     public double getMiddleZ(){
         return box._min_Z + (box._max_Z - box._min_Z)/2;
@@ -181,7 +195,7 @@ public abstract class Intersectable {
         //If the direction_X is negative then the _min_X give the maximal value
         if (direction_X < 0) {
             max_t_for_X = (box._min_X - start_X) / direction_X;
-            // Check if the Intersectble is behind the camera
+            // Check if the Intersectable is behind the camera
             if (max_t_for_X <= 0) return false;
             min_t_for_X = (box._max_X - start_X) / direction_X;
         }

@@ -1,7 +1,6 @@
 package geometries;
 
 import primitives.Ray;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +12,9 @@ public class Geometries extends Intersectable {
 
     private List<Intersectable> _geometries;
 
+    /**
+     * default constructor
+     */
     public Geometries() {
         this.box._max_X = Double.NEGATIVE_INFINITY;
         this.box._min_X = Double.POSITIVE_INFINITY;
@@ -79,12 +81,16 @@ public class Geometries extends Intersectable {
     }
 
     /**
-     *
-     * @param depthOfTree
+     * main function for bounding tree building . Act the
+     * recursion depthOf TreeRec. The infinity
+     * geometries is not include in the recursion and go
+     * by the end to the root of the tree
+     * @param depthOfTree the depth of recursion
      */
     public void createTree(int depthOfTree){
         Intersectable tempGeometries = new Geometries();
 
+        //Remove all the infinity geometries
         for (int i = 0; i < _geometries.size(); i++){
             if      (_geometries.get(i).getBox()._max_X == Double.POSITIVE_INFINITY ||
                     _geometries.get(i).getBox()._max_Y == Double.POSITIVE_INFINITY ||
@@ -103,8 +109,10 @@ public class Geometries extends Intersectable {
     }
 
     /**
-     *
-     * @param depthOfTree
+     * Recursive function for bounding tree building. Build an octree of voxels
+     * and send to the next stage of recursion any voxel contains more than
+     * ong geometries.
+     * @param depthOfTree the depth of recursion
      */
     public void createTreeRec(int depthOfTree) {
 
@@ -117,6 +125,7 @@ public class Geometries extends Intersectable {
         Intersectable downRightFarVoxel = null;
         Intersectable downLeftFarVoxel = null;
 
+        //Insert any Geometries in the Geometries t the right voxel
         for (int i = 0; i < _geometries.size(); i++) {
             if (_geometries.get(i).getMiddleZ() < this.getMiddleZ()){
                 if (_geometries.get(i).getMiddleY() < this.getMiddleY()){
@@ -174,6 +183,7 @@ public class Geometries extends Intersectable {
 
         _geometries.clear();
 
+        //check for each voxel if it contain more than one geometries
         if(topRightCloseVoxel != null) {
             if (((Geometries)topRightCloseVoxel)._geometries.size() == 1)
                 _geometries.add(((Geometries)topRightCloseVoxel)._geometries.get(0));
