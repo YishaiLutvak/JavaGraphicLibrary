@@ -262,8 +262,8 @@ public abstract class Intersectable {
             }
         }
 
-        temp_max = max_t_for_Z < temp_max? max_t_for_Z : temp_max;
-        temp_min = min_t_for_Z > temp_min? min_t_for_Z : temp_min;
+        temp_max = max_t_for_Z < temp_max ? max_t_for_Z : temp_max;
+        temp_min = min_t_for_Z > temp_min ? min_t_for_Z : temp_min;
 
         if (temp_max < temp_min) return false;
 
