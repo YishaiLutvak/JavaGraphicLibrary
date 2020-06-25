@@ -86,9 +86,9 @@ public class DepthOfFieldTest {
         Sphere mirrorSphere =  new Sphere(new Color(60,0,0), new Material(0.05, 0.05, 60,0.0,0.9),
                 5000,new Point3D(0,4950,6000));
         mirrorSphere.set_max_Y(50);
-        mirrorSphere.set_max_Z(6150);
+        mirrorSphere.set_max_Z(6020);
         mirrorSphere.set_min_Z(5000);
-        mirrorSphere.set_max_X(600);
+        mirrorSphere.set_max_X(605);
         mirrorSphere.set_min_X(-600);
 
 
@@ -238,7 +238,7 @@ public class DepthOfFieldTest {
                         new Point3D(-2.5,-13,150), new Vector(0.5, 0, 1), 1, 0.0001, 0.000005, 20)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldBoxTree", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("depthOfFieldBoxTree2", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
