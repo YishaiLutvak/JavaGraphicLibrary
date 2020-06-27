@@ -13,15 +13,25 @@ public class Geometries extends Intersectable {
     private List<Intersectable> _geometries;
 
     /**
-     * default constructor
+     * Initial the max/min values in order that the first geometries
+     * will give the right value
      */
-    public Geometries() {
+    private void ResetBox(){
         this.box._max_X = Double.NEGATIVE_INFINITY;
         this.box._min_X = Double.POSITIVE_INFINITY;
         this.box._max_Y = Double.NEGATIVE_INFINITY;
         this.box._min_Y = Double.POSITIVE_INFINITY;
         this.box._max_Z = Double.NEGATIVE_INFINITY;
         this.box._min_Z = Double.POSITIVE_INFINITY;
+    }
+
+    /**
+     * default constructor
+     */
+    public Geometries() {
+        //Initial the max/min values in order that the first geometries
+        //will give the right value
+        this.ResetBox();
         _geometries = new LinkedList<Intersectable>();
     }
 
@@ -31,8 +41,6 @@ public class Geometries extends Intersectable {
      * @param geometries to add to the collection
      */
     public Geometries(Intersectable... geometries) {
-        //Initial the max/min values in order that the first geometries
-        //will give the right value
         this();
         add(geometries);
     }
@@ -81,31 +89,40 @@ public class Geometries extends Intersectable {
     }
 
     /**
-     * main function for bounding tree building . Act the
-     * recursion depthOf TreeRec. The infinity
-     * geometries is not include in the recursion and go
+     * main function for bounding tree building .
+     * Act the recursion depthOf TreeRec.
+     * The infinity geometries is not include in the recursion and go
      * by the end to the root of the tree
      * @param depthOfTree the depth of recursion
      */
     public void createTree(int depthOfTree){
-        Intersectable tempGeometries = new Geometries();
 
-        //Remove all the infinity geometries
-        for (int i = 0; i < _geometries.size(); i++){
-            if      (_geometries.get(i).getBox()._max_X == Double.POSITIVE_INFINITY ||
-                    _geometries.get(i).getBox()._max_Y == Double.POSITIVE_INFINITY ||
-                    _geometries.get(i).getBox()._max_Z == Double.POSITIVE_INFINITY ||
-                    _geometries.get(i).getBox()._min_X == Double.NEGATIVE_INFINITY ||
-                    _geometries.get(i).getBox()._min_Y == Double.NEGATIVE_INFINITY ||
-                    _geometries.get(i).getBox()._min_Z == Double.NEGATIVE_INFINITY){
-                ((Geometries)tempGeometries).add(_geometries.get(i));
-                _geometries.remove(i);
-            }
+        Intersectable infinityGeometries = new Geometries();
+        Intersectable finiteGeometries = new Geometries();
 
+        //Remove all the infinity geometries before sending for recursion
+        for(Intersectable geo: this._geometries){
+            if (geo.getBox()._max_X == Double.POSITIVE_INFINITY ||
+                    geo.getBox()._max_Y == Double.POSITIVE_INFINITY ||
+                    geo.getBox()._max_Z == Double.POSITIVE_INFINITY ||
+                    geo.getBox()._min_X == Double.NEGATIVE_INFINITY ||
+                    geo.getBox()._min_Y == Double.NEGATIVE_INFINITY ||
+                    geo.getBox()._min_Z == Double.NEGATIVE_INFINITY)
+                ((Geometries)infinityGeometries).add(geo);
+            else
+                ((Geometries)finiteGeometries).add(geo);
         }
-        createTreeRec(depthOfTree);
-        for(Intersectable geo: ((Geometries)tempGeometries)._geometries)
-            _geometries.add(geo);
+
+        this._geometries.clear();
+        this.ResetBox();
+
+        for(Intersectable geo: ((Geometries)finiteGeometries)._geometries)
+            this.add(geo);
+
+        this.createTreeRec(depthOfTree);
+
+        for(Intersectable geo: ((Geometries)infinityGeometries)._geometries)
+            this.add(geo);
     }
 
     /**

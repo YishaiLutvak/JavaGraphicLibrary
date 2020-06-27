@@ -223,7 +223,7 @@ public class DepthOfFieldTest {
                 lightCylinder,lightSphere
         );
 
-        scene.getGeometries().createTree(15);
+        scene.getGeometries().createTree(9);
 
         scene.addLights(
                 new PointLight(new Color(200,200,200),//
