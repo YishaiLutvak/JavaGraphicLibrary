@@ -95,7 +95,7 @@ public class Geometries extends Intersectable {
      * by the end to the root of the tree
      * @param depthOfTree the depth of recursion
      */
-    public void createTree(int depthOfTree){
+        public void createTree(int depthOfTree){
 
         Intersectable infinityGeometries = new Geometries();
         Intersectable finiteGeometries = new Geometries();

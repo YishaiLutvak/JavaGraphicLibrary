@@ -134,7 +134,7 @@ public class Plane extends Geometry{
      * @return a list of intersect points
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray, double max) {
+    protected List<GeoPoint> findIntersections(Ray ray, double max) {
         Vector p0Q;
         try {
             p0Q = _p.subtract(ray.get_start());

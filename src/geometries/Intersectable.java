@@ -144,7 +144,8 @@ public abstract class Intersectable {
 
     /**
      * The functions looks for intersection points between a basic or a composite
-     * geometry and a given ray. the function returns null if there are no intersections
+     * geometry and a given ray.
+     * the function returns null if there are no intersections
      * The default value of max is Double.POSITIVE_INFINITY
      * @param ray the ray to intersect a geometries
      * @return list of intersection points
@@ -153,11 +154,19 @@ public abstract class Intersectable {
         return getFindIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
+    /**
+     * The function is a filter for the findIntersections function
+     * and runs it only if necessary
+     * @param ray the ray to intersect a geometries
+     * @param max the maximum range from the source of the ray to the point
+     * @return list of intersection points
+     */
     public List<GeoPoint> getFindIntersections(Ray ray,double max) {
         if(!_actBoundingBox || isIntersectionWithBox(ray))
             return findIntersections(ray, max);
         return null;
     }
+
     /**
      *  The functions looks for intersection points between a basic or a composite
      *  geometry and a given ray. the function returns null if there are no intersections

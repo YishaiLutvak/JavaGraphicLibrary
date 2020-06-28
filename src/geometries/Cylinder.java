@@ -170,7 +170,7 @@ public class Cylinder extends Tube {
      * @return a list of intersection points, if any.
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray, double max) {
+    protected List<GeoPoint> findIntersections(Ray ray, double max) {
         Plane planeBottom = new Plane(_axisRay.get_start(),_axisRay.get_direction());
         Plane planeTop = new Plane(_axisRay.getPoint(_height),_axisRay.get_direction());
         List<GeoPoint> intersections = null;

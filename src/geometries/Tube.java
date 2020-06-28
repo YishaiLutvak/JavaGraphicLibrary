@@ -97,7 +97,7 @@ public class Tube extends RadialGeometry {
      * @return a list of intersection points, if any.
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray, double max) {
+    protected List<GeoPoint> findIntersections(Ray ray, double max) {
 
         Point3D p0 = ray.get_start();
         Vector v = ray.get_direction();

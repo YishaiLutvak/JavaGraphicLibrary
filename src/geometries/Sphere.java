@@ -93,7 +93,7 @@ public class Sphere extends RadialGeometry {
      * @return a list of intersect points
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray, double max) {
+    protected List<GeoPoint> findIntersections(Ray ray, double max) {
         Point3D p0 =  ray.get_start();
         Vector v =  ray.get_direction();
         Vector u;

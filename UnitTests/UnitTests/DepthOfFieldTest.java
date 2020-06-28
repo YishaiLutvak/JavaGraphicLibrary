@@ -73,7 +73,7 @@ public class DepthOfFieldTest {
         Intersectable.set_actBoundingBox(true);
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                1175, 3, 9, true));
+                1175, 3, 9, false));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
