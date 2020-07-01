@@ -46,7 +46,6 @@ public class Polygon extends Geometry {
      */
     public Polygon(Color emissionLight, Material material, Point3D... vertices) {
         super(emissionLight, material);
-        this.ResetBox();
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -89,6 +88,7 @@ public class Polygon extends Geometry {
     }
 
     private void buildBox() {
+        this.ResetBox();
         for (Point3D vertex : _vertices) {
             if (vertex.get_x().get() > this.box._max_X)
                 this.box._max_X = vertex.get_x().get();

@@ -73,7 +73,7 @@ public class DepthOfFieldTest {
         Intersectable.set_actBoundingBox(true);
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, -120, -1000), new Vector(0, 0.05, 1), new Vector(0, -1, 0.05),
-                1175, 3, 9, false));
+                7000/*1175*/, 9, 9, false));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -130,19 +130,19 @@ public class DepthOfFieldTest {
                 1,new Ray(new Point3D(-39,0,190),new Vector(0,1,0)), 50);
 
 
-        Triangle Tri1 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
+        Triangle leftTri1 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
                 new Point3D(-28, 0, 182), new Point3D(-35, 0, 168), new Point3D(-35, -14, 175));
-        Triangle Tri2 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
+        Triangle leftTri2 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
                 new Point3D(-42, 0, 182), new Point3D(-35, 0, 168), new Point3D(-35, -14, 175));
-        Triangle Tri3 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
+        Triangle leftTri3 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
                 new Point3D(-28, 0, 182), new Point3D(-42, 0, 182), new Point3D(-35, -14, 175));
 
 
-        Triangle Tri4 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
+        Triangle rightTri1 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
                 new Point3D(28, 0, 182), new Point3D(35, 0, 168), new Point3D(35, -14, 175));
-        Triangle Tri5 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
+        Triangle rightTri2 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
                 new Point3D(42, 0, 182), new Point3D(35, 0, 168), new Point3D(35, -14, 175));
-        Triangle Tri6 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
+        Triangle rightTri3 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
                 new Point3D(28, 0, 182), new Point3D(42, 0, 182), new Point3D(35, -14, 175));
 
 
@@ -187,6 +187,18 @@ public class DepthOfFieldTest {
 //                sphereBottle
 //        );
 //
+//        Geometries leftTriangles = new Geometries(
+//                leftTri1,
+//                leftTri2,
+//                leftTri3
+//        );
+//
+//        Geometries rightTriangles = new Geometries(
+//                rightTri1,
+//                rightTri2,
+//                rightTri3
+//        );
+//
 //        Geometries leftCylinders = new Geometries(
 //                leftBigCylinder,
 //                leftMediumCylinder,
@@ -223,7 +235,9 @@ public class DepthOfFieldTest {
 //        Geometries closeArea = new Geometries(
 //                table,
 //                kiddushCup,
-//                bottle
+//                bottle,
+//                leftTriangles,
+//                rightTriangles
 //        );
 //
 //
@@ -233,7 +247,8 @@ public class DepthOfFieldTest {
                 plane,
                 mirrorSphere,
                 middleBall,rightBall,leftBall,
-                Tri1,Tri2,Tri3,Tri4,Tri5,Tri6,
+                leftTri1,leftTri2,leftTri3,
+                rightTri1,rightTri2,rightTri3,
                 rightLittleCylinder,rightMediumCCylinder,rightBigCylinder,
                 leftLittleCylinder,leftMediumCylinder,leftBigCylinder,
                 leftFrontLeg,rightFrontLeg,leftBehindLeg,rightBehindLeg,flatTable,
@@ -257,7 +272,7 @@ public class DepthOfFieldTest {
                         new Point3D(-2.5,-13,150), new Vector(0.5, 0, 1), 1, 0.0001, 0.000005, 20)
         );
 
-        ImageWriter imageWriter = new ImageWriter("depthOfFieldBoxTree2", 200, 200, 600, 600);
+        ImageWriter imageWriter = new ImageWriter("testDOF2", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();
