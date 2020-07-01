@@ -46,6 +46,7 @@ public class Polygon extends Geometry {
      */
     public Polygon(Color emissionLight, Material material, Point3D... vertices) {
         super(emissionLight, material);
+        this.ResetBox();
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -53,8 +54,10 @@ public class Polygon extends Geometry {
         // polygon with this plane.
         // The plane holds the invariant normal (orthogonal unit) vector to the polygon
         _plane = new Plane(vertices[0], vertices[1], vertices[2]);
-        if (vertices.length == 3) return; // no need for more tests for a Triangle
-
+        if (vertices.length == 3) {
+            buildBox();
+            return; // no need for more tests for a Triangle
+        }
         Vector n = _plane.getNormal();
 
         // Subtracting any subsequent points will throw an IllegalArgumentException
@@ -81,6 +84,24 @@ public class Polygon extends Geometry {
             edge2 = vertices[i].subtract(vertices[i - 1]);
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
+        }
+        buildBox();
+    }
+
+    private void buildBox() {
+        for (Point3D vertex : _vertices) {
+            if (vertex.get_x().get() > this.box._max_X)
+                this.box._max_X = vertex.get_x().get();
+            if (vertex.get_x().get() < this.box._min_X)
+                this.box._min_X = vertex.get_x().get();
+            if (vertex.get_y().get() > this.box._max_Y)
+                this.box._max_Y = vertex.get_y().get();
+            if (vertex.get_y().get() < this.box._min_Y)
+                this.box._min_Y = vertex.get_y().get();
+            if (vertex.get_z().get() > this.box._max_Z)
+                this.box._max_Z = vertex.get_z().get();
+            if (vertex.get_z().get() < this.box._min_Z)
+                this.box._min_Z = vertex.get_z().get();
         }
     }
 

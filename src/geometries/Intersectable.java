@@ -115,6 +115,19 @@ public abstract class Intersectable {
     }
 
     /**
+     * Initial the max/min values in order that the first values of box
+     * will give the right value
+     */
+    protected void ResetBox(){
+        this.box._max_X = Double.NEGATIVE_INFINITY;
+        this.box._min_X = Double.POSITIVE_INFINITY;
+        this.box._max_Y = Double.NEGATIVE_INFINITY;
+        this.box._min_Y = Double.POSITIVE_INFINITY;
+        this.box._max_Z = Double.NEGATIVE_INFINITY;
+        this.box._min_Z = Double.POSITIVE_INFINITY;
+    }
+
+    /**
      * Represent a point and the geometry it belong to
      */
     public static class GeoPoint {

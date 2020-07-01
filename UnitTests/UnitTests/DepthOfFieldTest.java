@@ -104,6 +104,8 @@ public class DepthOfFieldTest {
                 2,new Ray(new Point3D(10,-35,175),new Vector(0,-1,0)), 10);
         Sphere sphereBottle = new Sphere(new Color(30,0,0), new Material(0.5, 0.5, 60,0.5,0),
                 10,new Point3D(10,-25,175));
+        sphereBottle.set_max_Y(-25);
+
 
 
         Cylinder upCylinderCup = new Cylinder(new Color(40,40,40), new Material(0.3, 0.5, 60,0.2,0.5),
@@ -126,6 +128,22 @@ public class DepthOfFieldTest {
                 1,new Ray(new Point3D(39,0,190),new Vector(0,1,0)), 50);
         Cylinder leftBehindLeg = new Cylinder(new Color(153,76,0), new Material(0.5, 0.5, 60,0.5,0),//
                 1,new Ray(new Point3D(-39,0,190),new Vector(0,1,0)), 50);
+
+
+        Triangle Tri1 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
+                new Point3D(-28, 0, 182), new Point3D(-35, 0, 168), new Point3D(-35, -14, 175));
+        Triangle Tri2 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
+                new Point3D(-42, 0, 182), new Point3D(-35, 0, 168), new Point3D(-35, -14, 175));
+        Triangle Tri3 = new Triangle(new Color(0,102,102), new Material(0.5, 0.5, 60,0.2,0),
+                new Point3D(-28, 0, 182), new Point3D(-42, 0, 182), new Point3D(-35, -14, 175));
+
+
+        Triangle Tri4 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
+                new Point3D(28, 0, 182), new Point3D(35, 0, 168), new Point3D(35, -14, 175));
+        Triangle Tri5 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
+                new Point3D(42, 0, 182), new Point3D(35, 0, 168), new Point3D(35, -14, 175));
+        Triangle Tri6 = new Triangle(new Color(102,0,102), new Material(0.5, 0.5, 60,0.2,0),
+                new Point3D(28, 0, 182), new Point3D(42, 0, 182), new Point3D(35, -14, 175));
 
 
         Cylinder leftBigCylinder = new Cylinder(new Color(100,50,0), new Material(0.5, 0.5, 60,0,0),
@@ -215,6 +233,7 @@ public class DepthOfFieldTest {
                 plane,
                 mirrorSphere,
                 middleBall,rightBall,leftBall,
+                Tri1,Tri2,Tri3,Tri4,Tri5,Tri6,
                 rightLittleCylinder,rightMediumCCylinder,rightBigCylinder,
                 leftLittleCylinder,leftMediumCylinder,leftBigCylinder,
                 leftFrontLeg,rightFrontLeg,leftBehindLeg,rightBehindLeg,flatTable,

@@ -13,19 +13,6 @@ public class Geometries extends Intersectable {
     private List<Intersectable> _geometries;
 
     /**
-     * Initial the max/min values in order that the first geometries
-     * will give the right value
-     */
-    private void ResetBox(){
-        this.box._max_X = Double.NEGATIVE_INFINITY;
-        this.box._min_X = Double.POSITIVE_INFINITY;
-        this.box._max_Y = Double.NEGATIVE_INFINITY;
-        this.box._min_Y = Double.POSITIVE_INFINITY;
-        this.box._max_Z = Double.NEGATIVE_INFINITY;
-        this.box._min_Z = Double.POSITIVE_INFINITY;
-    }
-
-    /**
      * default constructor
      */
     public Geometries() {
@@ -129,6 +116,8 @@ public class Geometries extends Intersectable {
      * Recursive function for bounding tree building. Build an octree of voxels
      * and send to the next stage of recursion any voxel contains more than
      * ong geometries.
+     * The idea of octree hierarchy was taken from:
+     * https://www.scratchapixel.com/lessons/advanced-rendering/introduction-acceleration-structure/bounding-volume-hierarchy-BVH-part2
      * @param depthOfTree the depth of recursion
      */
     public void createTreeRec(int depthOfTree) {
